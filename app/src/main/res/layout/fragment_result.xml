@@ -1,15 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.easy.sumit.lifeline.Fragments.ResultFragment"
-    android:id="@+id/resultLayout">
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.easy.sumit.lifeline.Fragments.ResultFragment"
+    android:background="#ffffff">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listResultView"
-        android:choiceMode="singleChoice"
-        android:layout_alignParentLeft="true" />
+    <ListView android:id="@+id/list" android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:layout_weight="1" />
 
 </RelativeLayout>

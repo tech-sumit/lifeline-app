@@ -1,4 +1,4 @@
-package com.easy.sumit.lifeline.ActivityHandlers;
+package com.easy.sumit.lifeline.Activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -17,6 +17,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncResponse{
     private EditText user_name,user_pass;
     private boolean login_status;
     private String personName="";
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +46,13 @@ public class LoginActivity extends AppCompatActivity implements AsyncResponse{
     @Override
     protected void onStop() {
         finish();
+        alertDialog.dismiss();
         super.onStop();
     }
 
     @Override
     public void processFinish(String output) {
-        AlertDialog alertDialog= new AlertDialog.Builder(this).create();
+        alertDialog= new AlertDialog.Builder(this).create();
         alertDialog.setTitle("Login");
         alertDialog.setMessage(output);
         alertDialog.show();

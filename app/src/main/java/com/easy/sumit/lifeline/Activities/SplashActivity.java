@@ -1,4 +1,4 @@
-package com.easy.sumit.lifeline.ActivityHandlers;
+package com.easy.sumit.lifeline.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.easy.sumit.lifeline.R;
 
-public class Splash extends AppCompatActivity {
+public class SplashActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +15,7 @@ public class Splash extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         int SPLASH_TIME_OUT = 3000;
         new Handler().postDelayed(() -> {
-            Intent i = new Intent(Splash.this, LoginActivity.class);
+            Intent i = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(i);
         }, SPLASH_TIME_OUT);
     }

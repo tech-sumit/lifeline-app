@@ -13,18 +13,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityHandlers.Splash">
+        <activity android:name=".Activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ActivityHandlers.LoginActivity" />
-        <activity android:name=".ActivityHandlers.PreRegisterActivity" />
-        <activity android:name=".ActivityHandlers.RegisterActivity" />
+        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".Activities.PreRegisterActivity" />
+        <activity android:name=".Activities.RegisterActivity" />
         <activity
-            android:name=".ActivityHandlers.MainActivity"
+            android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

@@ -81,15 +81,12 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse{
             }
         });
         RemoteDataRetriever remoteDataRetriever=new RemoteDataRetriever(this);
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(!bloodGroup.equals("")) {
-                    remoteDataRetriever.execute(user_name, "2","1", bloodGroup);
-                }
-                else{
-                    Toast.makeText(getActivity(),"Please select blood group",Toast.LENGTH_SHORT).show();
-                }
+        buttonSearch.setOnClickListener(view1 -> {
+            if(!bloodGroup.equals("")) {
+                remoteDataRetriever.execute(user_name, "2","1", bloodGroup);
+            }
+            else{
+                Toast.makeText(getActivity(),"Please select blood group",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -103,87 +100,10 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse{
         FragmentManager fragmentManager=getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.personSearchFragment,resultFragment).commit();
+        buttonSearch.setVisibility(View.INVISIBLE);
+        buttonSearch.setClickable(false);
+        personBloodGroup.setVisibility(View.INVISIBLE);
+        personBloodGroup.setClickable(false);
     }
 
 }
-/*package com.easy.sumit.lifeline.Fragments;
-
-import android.annotation.TargetApi;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import com.easy.sumit.lifeline.R;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.List;
-
-public class ResultFragment extends Fragment {
-
-    ListView listResultView;
-    String output="";
-    String itemTitles[];
-    ArrayAdapter<String> arrayAdapter;
-    List<String> itemList;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if(getArguments()!=null){
-            output=getArguments().getString("output");
-        }
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        return inflater.inflate(R.layout.fragment_result, container, false);
-    }
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        try {
-            Log.d("OUTPUT String",output);
-            JSONArray jsonArray=new JSONArray(output);
-            Log.i("******OUTPUT******",output);
-            itemTitles=new String[jsonArray.length()];
-            JSONObject json;
-            arrayAdapter=new ArrayAdapter(getContext(),R.layout.support_simple_spinner_dropdown_item);
-            for(int i=0;i<jsonArray.length();i++){
-                json=jsonArray.getJSONObject(i);
-                itemTitles[i]="";
-                itemTitles[i]+="Name: "+json.getString("name");
-                itemTitles[i]+=" Gender: "+json.getString("gender");
-                itemTitles[i]+=" HIV Status: "+json.getString("hiv_status");
-                itemTitles[i]+=" Address: "+json.getString("address");
-                itemTitles[i]+=" Contact No. "+json.getString("contact_no");
-                arrayAdapter.add(itemTitles[i]);
-            }
-            for(int i=0;i<itemTitles.length;i++){
-                arrayAdapter.add(itemTitles[i]);
-                Log.i("***Data***",itemTitles[i]);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        listResultView= (ListView) getActivity().findViewById(R.id.listResultView);
-        listResultView.setAdapter(arrayAdapter);
-
-    }
-}
-*/

@@ -1,4 +1,4 @@
-package com.easy.sumit.lifeline.ActivityHandlers;
+package com.easy.sumit.lifeline.Activities;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
