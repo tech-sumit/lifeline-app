@@ -26,7 +26,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.R;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
+import com.easy.sumit.lifeline.datamodal.Person;
+import com.easy.sumit.lifeline.datamodal.URLList;
 import com.easy.sumit.lifeline.utils.Constants;
 import com.easy.sumit.lifeline.utils.ContactHandler;
 
@@ -227,8 +228,10 @@ public class DetailResult extends Fragment {
     private class PhoneEndListener extends PhoneStateListener {
         @Override
         public void onCallStateChanged ( int state, String incomingNumber){
+            //final StringRequest stringRequest = new StringRequest(Request.Method.POST,
+            //        "http://10.0.2.2:9090/lifeline_app/call_log.php", new Response.Listener<String>() {
             final StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                    "http://10.0.2.2:9090/lifeline_app/call_log.php", new Response.Listener<String>() {
+                    URLList.getUrl(getContext(),"call_log"), new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("***INFO***", "Review Added:" + response);

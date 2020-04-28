@@ -17,9 +17,9 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.easy.sumit.lifeline.R;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.RemoteDataRetriever;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.RemoteLocationRetriever;
+import com.easy.sumit.lifeline.datamodal.Person;
+import com.easy.sumit.lifeline.backgroundworkers.RemoteDataRetriever;
+import com.easy.sumit.lifeline.backgroundworkers.RemoteLocationRetriever;
 import com.easy.sumit.lifeline.utils.Constants;
 
 public class PersonSearchFragment extends Fragment implements View.OnClickListener{

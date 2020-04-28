@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.R;
+import com.easy.sumit.lifeline.datamodal.URLList;
 import com.easy.sumit.lifeline.utils.Constants;
 
 import java.io.UnsupportedEncodingException;
@@ -31,7 +32,7 @@ public class PreRegisterActivity extends AppCompatActivity{
 
     private EditText user_name,user_mail,user_pass,user_pass_conf,text_sec_answer;
     private Spinner secQuestionSpinner;
-    private String check_username_url = "http://10.0.2.2:9090/lifeline_app/check_username.php";
+    private String check_username_url="";
     private String sec_question="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class PreRegisterActivity extends AppCompatActivity{
         user_pass_conf= (EditText) findViewById(R.id.user_pass_conf_register);
         secQuestionSpinner= (Spinner) findViewById(R.id.spinnerSecQuestion);
         text_sec_answer= (EditText) findViewById(R.id.text_sec_answer);
+        check_username_url= URLList.getUrl(this,"check_username");
         ArrayAdapter<CharSequence> arrayAdapterSecQuestion= ArrayAdapter.createFromResource(this,
                 R.array.sec_questions,
                 R.layout.support_simple_spinner_dropdown_item);

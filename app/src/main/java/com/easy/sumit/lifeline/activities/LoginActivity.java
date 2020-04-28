@@ -25,8 +25,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.R;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.LoginBackgroundWorker;
+import com.easy.sumit.lifeline.datamodal.Person;
+import com.easy.sumit.lifeline.datamodal.URLList;
+import com.easy.sumit.lifeline.backgroundworkers.LoginBackgroundWorker;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,7 +45,6 @@ public class LoginActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         person=new Person();
         user_name= (EditText) findViewById(R.id.user_name_register);
         user_pass= (EditText) findViewById(R.id.user_pass_register);
@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity{
                         if(!user_name_edittext.getText().toString().equals("")&&
                                 !sec_question_answer_edittext.getText().toString().equals("")&&
                                 !sec_question[0].equals("")){
-                            String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                            String url = URLList.getUrl(LoginActivity.this,"login");
                             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -207,12 +207,6 @@ public class LoginActivity extends AppCompatActivity{
     public void onRegister(View view){
         Intent intent=new Intent(this,PreRegisterActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
     }
 
     @Override

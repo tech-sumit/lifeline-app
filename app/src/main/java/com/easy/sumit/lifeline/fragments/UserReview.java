@@ -26,9 +26,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.R;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.ReviewAdapter;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.ReviewModel;
+import com.easy.sumit.lifeline.datamodal.Person;
+import com.easy.sumit.lifeline.datamodal.ReviewAdapter;
+import com.easy.sumit.lifeline.datamodal.ReviewModel;
+import com.easy.sumit.lifeline.datamodal.URLList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -82,7 +83,7 @@ public class UserReview extends Fragment {
         Log.i("**ResultFragment", "List adapter initialised");
     }
     private void setListAdapter(){
-        String call_log_url = "http://10.0.2.2:9090/lifeline_app/call_log.php";
+        String call_log_url = URLList.getUrl(getContext(),"call_log");
         StringRequest stringRequest=new StringRequest(Request.Method.POST, call_log_url , new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -160,7 +161,7 @@ public class UserReview extends Fragment {
         Button notiCancel= (Button) alertDialog.findViewById(R.id.notiCancel);
         final EditText notiText= (EditText) alertDialog.findViewById(R.id.notiText);
 
-        final String call_log_url = "http://10.0.2.2:9090/lifeline_app/call_log.php";
+        final String call_log_url = URLList.getUrl(getContext(),"call_log");
 
         assert notiYES != null;
         notiYES.setOnClickListener(new View.OnClickListener() {

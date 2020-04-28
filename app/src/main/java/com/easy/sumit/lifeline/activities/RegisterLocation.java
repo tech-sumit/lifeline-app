@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.easy.sumit.lifeline.R;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.RemoteLocationRetriever;
+import com.easy.sumit.lifeline.backgroundworkers.RemoteLocationRetriever;
 import com.easy.sumit.lifeline.utils.Constants;
 
 import java.util.ArrayList;

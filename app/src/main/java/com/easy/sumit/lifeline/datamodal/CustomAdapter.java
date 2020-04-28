@@ -1,4 +1,4 @@
-package com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal;
+package com.easy.sumit.lifeline.datamodal;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -14,12 +14,12 @@ import com.easy.sumit.lifeline.R;
 
 import java.util.ArrayList;
 
-public class ReviewAdapter extends BaseAdapter implements OnClickListener {
+public class CustomAdapter extends BaseAdapter implements OnClickListener {
 
     private static LayoutInflater inflater = null;
-    private ReviewModel tempValues = null;
+    private ListModel tempValues = null;
     private ArrayList data;
-    public ReviewAdapter(Fragment fragment, ArrayList data) {
+    public CustomAdapter(Fragment fragment, ArrayList data) {
         this.data = data;
         inflater = (LayoutInflater) fragment.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -37,20 +37,19 @@ public class ReviewAdapter extends BaseAdapter implements OnClickListener {
     }
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View view = convertView;
+        View vi = convertView;
         ViewHolder holder;
 
         if (convertView == null) {
-            view = inflater.inflate(R.layout.review_item, null);
+            vi = inflater.inflate(R.layout.list_item, null);
 
             holder = new ViewHolder();
-            holder.name = (TextView) view.findViewById(R.id.name_text);
-            holder.user_name= (TextView) view.findViewById(R.id.from_name_text);
-            holder.date = (TextView) view.findViewById(R.id.date_text);
-            holder.time= (TextView) view.findViewById(R.id.time_text);
-            view.setTag(holder);
+            holder.name = (TextView) vi.findViewById(R.id.name_text);
+            holder.hivText = (TextView) vi.findViewById(R.id.last_donated_text);
+            holder.genderText = (TextView) vi.findViewById(R.id.gender_text);
+            vi.setTag(holder);
         } else {
-            holder = (ViewHolder) view.getTag();
+            holder = (ViewHolder) vi.getTag();
         }
 
         if (data.size() <= 0) {
@@ -58,14 +57,13 @@ public class ReviewAdapter extends BaseAdapter implements OnClickListener {
         }
         else {
             tempValues = null;
-            tempValues = (ReviewModel) data.get(position);
+            tempValues = (ListModel) data.get(position);
 
-            holder.name.setText(tempValues.getFrom_user());
-            holder.user_name.setText(tempValues.getFrom_user_name());
-            holder.date.setText(tempValues.getDate());
-            holder.time.setText(tempValues.getTime());
+            holder.name.setText(tempValues.getName());
+            holder.genderText.setText(tempValues.getGender());
+            holder.hivText.setText(tempValues.getLastDonated());
         }
-        return view;
+        return vi;
     }
 
     @Override
@@ -76,9 +74,8 @@ public class ReviewAdapter extends BaseAdapter implements OnClickListener {
     public static class ViewHolder {
 
         public TextView name;
-        public TextView user_name;
-        public TextView date;
-        public TextView time;
+        public TextView hivText;
+        public TextView genderText;
 
     }
 }

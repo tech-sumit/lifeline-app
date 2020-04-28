@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>call_log</key>
+        <value>http://lifelinebloodbank.esy.es/lifeline/call_log.php</value>
+    </entry>
+    <entry>
+        <key>check_username</key>
+        <value>http://lifelinebloodbank.esy.es/lifeline/check_username.php</value>
+    </entry>
+    <entry>
+        <key>eula</key>
+        <value>http://lifelinebloodbank.esy.es/lifeline/eula.html</value>
+    </entry>
+    <entry>
+        <key>getData</key>
+        <value>http://lifelinebloodbank.esy.es/lifeline/getData.php</value>
+    </entry>
+    <entry>
+        <key>getLocation</key>
+        <value>http://lifelinebloodbank.esy.es/lifeline/getLocation.php</value>
+    </entry>
+    <entry>
+        <key>login</key>
+        <value>http://lifelinebloodbank.esy.es/lifeline/login.php</value>
+    </entry>
+    <entry>
+        <key>register</key>
+        <value>http://lifelinebloodbank.esy.es/lifeline/register.php</value>
+    </entry>
+    <entry>
+        <key>webpage</key>
+        <value>http://lifelinebloodbank.esy.es/lifeline/webpage.php</value>
+    </entry>
+</defaultsMap>

@@ -1,4 +1,4 @@
-package com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal;
+package com.easy.sumit.lifeline.datamodal;
 
 import android.content.Context;
 import android.content.SharedPreferences;

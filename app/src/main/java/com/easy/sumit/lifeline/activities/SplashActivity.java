@@ -14,7 +14,9 @@ import android.util.Log;
 
 import com.easy.sumit.lifeline.R;
 import com.easy.sumit.lifeline.fragments.TermsConditionsFragment;
+import com.easy.sumit.lifeline.datamodal.URLList;
 import com.easy.sumit.lifeline.utils.Constants;
+import com.easy.sumit.lifeline.utils.UrlUpdateService;
 
 public class SplashActivity extends AppCompatActivity {
     private Intent i;
@@ -29,6 +31,22 @@ public class SplashActivity extends AppCompatActivity {
         login_status=pref1.getString(Constants.LOGIN_STATUS,null);
         tncStatus=pref.getString("tncStatus",null);
         final int SPLASH_TIME_OUT = 3000;
+
+        URLList.setDefaultPreferences(this);
+        startService(new Intent(SplashActivity.this, UrlUpdateService.class));
+
+        SharedPreferences pref3 = getSharedPreferences("lifeline_urls", Context.MODE_PRIVATE);
+        Log.i("***Data Update Pref.***","Urls{"+
+                "\n"+pref3.getString("call_log",null)+
+                "\n"+pref3.getString("getData",null)+
+                "\n"+pref3.getString("check_username",null)+
+                "\n"+pref3.getString("eula",null)+
+                "\n"+pref3.getString("getLocation",null)+
+                "\n"+pref3.getString("login",null)+
+                "\n"+pref3.getString("register",null)+
+                "\n"+pref3.getString("webpage",null)+
+                "\n}");
+
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -52,6 +70,7 @@ public class SplashActivity extends AppCompatActivity {
                     }else{
                         TermsConditionsFragment termsConditionsFragment=new TermsConditionsFragment();
                         FragmentManager fragmentManager=getSupportFragmentManager();
+
                         fragmentManager.beginTransaction()
                                 .replace(R.id.splashLayout,termsConditionsFragment).commit();
                     }

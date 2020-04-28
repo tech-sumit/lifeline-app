@@ -1,35 +1,43 @@
 {
   "project_info": {
-    "project_number": "523124846054",
-    "firebase_url": "https://lifeline-fe8c2.firebaseio.com",
-    "project_id": "lifeline-fe8c2",
-    "storage_bucket": "lifeline-fe8c2.appspot.com"
+    "project_number": "631776463011",
+    "firebase_url": "https://lifeline-6e5d1.firebaseio.com",
+    "project_id": "lifeline-6e5d1",
+    "storage_bucket": "lifeline-6e5d1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:523124846054:android:a26ec2325b4e7bb6",
+        "mobilesdk_app_id": "1:631776463011:android:a26ec2325b4e7bb6",
         "android_client_info": {
           "package_name": "com.easy.sumit.lifeline"
         }
       },
       "oauth_client": [
         {
-          "client_id": "523124846054-5qti1v6v1h6im334uqnna0706pnb882n.apps.googleusercontent.com",
+          "client_id": "631776463011-jakaehkkh5vghnpins2jdpcbf1gd16rd.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.easy.sumit.lifeline",
-            "certificate_hash": "0a4dbfeee9b597aaebc8eb694f7607fc370ca7af"
+            "certificate_hash": "fff39a9dcc2edafee7194aa2890c237de2ec2ee1"
           }
         },
         {
-          "client_id": "523124846054-1bom63ir64sf2nvjfj6t1rc3s177ijrp.apps.googleusercontent.com",
+          "client_id": "631776463011-6cjgdlfgh3d48ithqf12fpncitldnmto.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.easy.sumit.lifeline",
+            "certificate_hash": "0c3fb4c290951ab71c7ef35efcac922d11f27a07"
+          }
+        },
+        {
+          "client_id": "631776463011-57ii8ikmd56lo769un9dnkj4m73lvi72.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCBuK1bUCc7rTN_B2ACu6fr_C3MXkVKdBk"
+          "current_key": "AIzaSyCM8Gt8ghYzP5jlEpLlmv-g8Im2H7rytRI"
         }
       ],
       "services": {
@@ -40,7 +48,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "523124846054-1bom63ir64sf2nvjfj6t1rc3s177ijrp.apps.googleusercontent.com",
+              "client_id": "631776463011-57ii8ikmd56lo769un9dnkj4m73lvi72.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -12,9 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.easy.sumit.lifeline.R;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.CustomAdapter;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.ListModel;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
+import com.easy.sumit.lifeline.datamodal.CustomAdapter;
+import com.easy.sumit.lifeline.datamodal.ListModel;
+import com.easy.sumit.lifeline.datamodal.Person;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -108,8 +108,6 @@ public class ResultFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        //listResultView.setVisibility(View.INVISIBLE);
-        //listResultView.setClickable(false);
     }
 
     @Override

@@ -14,8 +14,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.easy.sumit.lifeline.R;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.RegisterBackgroundWorker;
+import com.easy.sumit.lifeline.datamodal.Person;
+import com.easy.sumit.lifeline.backgroundworkers.RegisterBackgroundWorker;
 import com.easy.sumit.lifeline.utils.Constants;
 
 public class RegisterActivity extends AppCompatActivity{
@@ -137,11 +137,6 @@ public class RegisterActivity extends AppCompatActivity{
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         super.onSaveInstanceState(outState, outPersistentState);
         Bundle bundle=new Bundle();
-        /*
-            private EditText person_name, person_age, person_address, person_contact,person_last_donated;
-            private Spinner person_blood_group, person_gender;
-            private Person person;
-         */
         bundle.putString(Constants.USER_NAME,person.getUser_name());
         bundle.putString(Constants.USER_MAIL,person.getUser_mail());
         bundle.putString(Constants.USER_PASS,person.getUser_pass());

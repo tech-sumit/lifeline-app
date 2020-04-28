@@ -30,7 +30,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.R;
 import com.easy.sumit.lifeline.activities.LoginActivity;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
+import com.easy.sumit.lifeline.datamodal.Person;
+import com.easy.sumit.lifeline.datamodal.URLList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -121,7 +122,7 @@ public class ProfileFragment extends Fragment{
                                         if(!confPassword.getText().toString().equals("")){
                                             if(newPassword.getText().toString().equals(""+confPassword.getText().toString())){
                                                 if(!(newPassword.getText().toString().length() <5)) {
-                                                    String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                                                    String url = URLList.getUrl(getContext(),"getData");
                                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                                                         @Override
                                                         public void onResponse(String response) {
@@ -201,7 +202,7 @@ public class ProfileFragment extends Fragment{
                                             }
                                         }
                                         Log.i("Date",""+newLastDonated.getText().toString());
-                                        String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                                        String url = URLList.getUrl(getContext(),"getData");
                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                                             @Override
                                             public void onResponse(String response) {
@@ -271,7 +272,7 @@ public class ProfileFragment extends Fragment{
                                 try {
                                     if(!newContactNo.getText().equals("")) {
                                         Log.i("Contact no: ",""+newContactNo.getText().toString());
-                                        String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                                        String url = URLList.getUrl(getContext(),"getData");
                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                                             @Override
                                             public void onResponse(String response) {
@@ -347,7 +348,7 @@ public class ProfileFragment extends Fragment{
                                 if(!q_answer.getText().equals("")||!sec_question[0].equals("")) {
                                     Log.i("Security Question: ",""+sec_question[0]);
                                     Log.i("Security Answer: ",""+q_answer.getText().toString());
-                                    String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                                    String url = URLList.getUrl(getContext(),"getData");
                                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                                         @Override
                                         public void onResponse(String response) {
@@ -400,7 +401,7 @@ public class ProfileFragment extends Fragment{
                                 if(!newAge.getText().equals("")) {
                                     try{
                                         if(Integer.parseInt(newAge.getText().toString())>17){
-                                            String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                                            String url = URLList.getUrl(getContext(),"getData");
                                             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                                                 @Override
                                                 public void onResponse(String response) {
@@ -457,7 +458,7 @@ public class ProfileFragment extends Fragment{
                         yesButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                                String url = URLList.getUrl(getContext(),"getData");
                                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {

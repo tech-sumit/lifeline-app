@@ -23,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.LoginActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
@@ -42,6 +41,14 @@
             android:name=".activities.RegisterLocation"
             android:configChanges="orientation|keyboardHidden|screenSize" />
 
+        <service
+            android:name=".utils.UrlUpdateService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".utils.NewsService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.easy.sumit.lifeline.utils.BackgroundWorkers;
+package com.easy.sumit.lifeline.backgroundworkers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.activities.LoginActivity;
 import com.easy.sumit.lifeline.activities.MainActivity;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
+import com.easy.sumit.lifeline.datamodal.Person;
+import com.easy.sumit.lifeline.datamodal.URLList;
 import com.easy.sumit.lifeline.utils.Constants;
 
 import java.util.HashMap;
@@ -24,7 +25,7 @@ import java.util.Map;
 
 public class LoginBackgroundWorker{
     private LoginActivity loginActivity;
-    String login_url = "http://10.0.2.2:9090/lifeline_app/login.php";
+    String login_url ="";
     private boolean login_status;
     private Person person;
     public LoginBackgroundWorker(LoginActivity loginActivity, Person person){
@@ -32,6 +33,7 @@ public class LoginBackgroundWorker{
         this.person=person;
     }
     public void start(){
+        login_url = URLList.getUrl(loginActivity,"login");
         StringRequest stringRequest=new StringRequest(Request.Method.POST, login_url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

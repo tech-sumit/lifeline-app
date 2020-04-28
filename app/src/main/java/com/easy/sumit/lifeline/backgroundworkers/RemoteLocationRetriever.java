@@ -1,4 +1,4 @@
-package com.easy.sumit.lifeline.utils.BackgroundWorkers;
+package com.easy.sumit.lifeline.backgroundworkers;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.easy.sumit.lifeline.datamodal.URLList;
 import com.easy.sumit.lifeline.utils.Constants;
 
 import org.json.JSONArray;
@@ -37,7 +38,7 @@ public class RemoteLocationRetriever{
         this.bundle=bundle;
     }
     public void start(){
-        String url = "http://10.0.2.2:9090/lifeline_app/getLocation.php";
+        String url = URLList.getUrl(activity,"getLocation");
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

@@ -63,9 +63,19 @@
         <item>What is your favourite primary school teacher?</item>
         <item>What is your favourite writer?</item>
         <item>What is the name of your childhood best friend?</item>
+        <item>Any secerate code word for verification?</item>
     </string-array>
     <string name="title_activity_main">Lifeline</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="call_log">http://lifelinebloodbank.esy.es/lifeline/call_log.php</string>
+    <string name="check_username">http://lifelinebloodbank.esy.es/lifeline/check_username.php</string>
+    <string name="eula">http://lifelinebloodbank.esy.es/lifeline/eula.html</string>
+    <string name="getData">http://lifelinebloodbank.esy.es/lifeline/getData.php</string>
+    <string name="getLocation">http://lifelinebloodbank.esy.es/lifeline/getLocation.php</string>
+    <string name="login">http://lifelinebloodbank.esy.es/lifeline/login.php</string>
+    <string name="register">http://lifelinebloodbank.esy.es/lifeline/register.php</string>
+    <string name="webpage">http://lifelinebloodbank.esy.es/lifeline/webpage.php</string>
 </resources>

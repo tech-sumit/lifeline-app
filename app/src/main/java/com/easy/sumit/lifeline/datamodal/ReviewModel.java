@@ -1,4 +1,4 @@
-package com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal;
+package com.easy.sumit.lifeline.datamodal;
 
 /**
  * Created by Sumit on 15-06-2017.

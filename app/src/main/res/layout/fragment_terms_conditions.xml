@@ -2,22 +2,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
     android:background="@android:color/darker_gray"
     android:padding="3dp"
     tools:context="com.easy.sumit.lifeline.fragments.TermsConditionsFragment">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorBackground"
+        android:orientation="vertical"
         tools:context="com.easy.sumit.lifeline.fragments.TermsConditionsFragment"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
 
         <TextView
             android:id="@+id/textView23"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
@@ -35,53 +37,32 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <ScrollView
-            android:id="@+id/scrollView3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView23"
-            app:layout_constraintVertical_bias="0.0">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView25"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    android:textColor="@color/colorText" />
-            </LinearLayout>
-        </ScrollView>
+        <TextView
+            android:id="@+id/policy_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:paddingBottom="10dp"
+            android:text="By clicking Accept you agree Policies availible at this link,"
+            android:textAlignment="center"
+            android:textColor="@android:color/holo_blue_bright"
+            android:textSize="14sp" />
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView3"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintRight_toRightOf="parent">
 
             <Button
                 android:id="@+id/declineButton"
@@ -104,6 +85,6 @@
                 android:textColor="@color/colorButtonForeground" />
         </LinearLayout>
 
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
 </LinearLayout>

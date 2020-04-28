@@ -32,7 +32,8 @@ import com.easy.sumit.lifeline.fragments.ContactUs;
 import com.easy.sumit.lifeline.fragments.PersonSearchFragment;
 import com.easy.sumit.lifeline.fragments.ProfileFragment;
 import com.easy.sumit.lifeline.fragments.UserReview;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
+import com.easy.sumit.lifeline.datamodal.Person;
+import com.easy.sumit.lifeline.datamodal.URLList;
 import com.easy.sumit.lifeline.utils.Constants;
 
 import java.util.HashMap;
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity
             }
         }
         webView= (WebView) findViewById(R.id.webView);
-        webView.loadUrl("http://10.0.2.2:9090/lifeline_app/webpage.php");
+        webView.loadUrl(URLList.getUrl(this,"webpage"));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -87,8 +88,8 @@ public class MainActivity extends AppCompatActivity
 
     public void setPerson(){
         StringRequest stringRequest=new StringRequest(Request.Method.POST,
-                "http://10.0.2.2:9090/lifeline_app/getData.php", new Response.Listener<String>() {
-            @Override
+                URLList.getUrl(this,"getData"), new Response.Listener<String>() {
+                @Override
             public void onResponse(String response) {
                 person.setAll(response);
                 person.updatePreferences(MainActivity.this);

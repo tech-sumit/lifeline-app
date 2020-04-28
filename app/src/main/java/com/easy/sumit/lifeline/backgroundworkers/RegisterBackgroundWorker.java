@@ -1,4 +1,4 @@
-package com.easy.sumit.lifeline.utils.BackgroundWorkers;
+package com.easy.sumit.lifeline.backgroundworkers;
 
 import android.content.Intent;
 import android.util.Log;
@@ -13,7 +13,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.activities.LoginActivity;
 import com.easy.sumit.lifeline.activities.RegisterActivity;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
+import com.easy.sumit.lifeline.datamodal.Person;
+import com.easy.sumit.lifeline.datamodal.URLList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class RegisterBackgroundWorker{
         this.person=person;
     }
     public void start(){
-        String url = "http://10.0.2.2:9090/lifeline_app/register.php";
+        String url = URLList.getUrl(registerActivity,"register");
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

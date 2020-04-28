@@ -1,4 +1,4 @@
-package com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal;
+package com.easy.sumit.lifeline.datamodal;
 
 public class ListModel {
     private Person person;

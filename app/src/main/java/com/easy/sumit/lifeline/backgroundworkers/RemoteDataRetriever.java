@@ -1,4 +1,4 @@
-package com.easy.sumit.lifeline.utils.BackgroundWorkers;
+package com.easy.sumit.lifeline.backgroundworkers;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -15,6 +15,7 @@ import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.R;
 import com.easy.sumit.lifeline.fragments.PersonSearchFragment;
 import com.easy.sumit.lifeline.fragments.ResultFragment;
+import com.easy.sumit.lifeline.datamodal.URLList;
 import com.easy.sumit.lifeline.utils.Constants;
 
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class RemoteDataRetriever{
         this.bundle=bundle;
     }
     public void start(){
-        String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+        String url = URLList.getUrl(personSearchFragment.getContext(),"getData");
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

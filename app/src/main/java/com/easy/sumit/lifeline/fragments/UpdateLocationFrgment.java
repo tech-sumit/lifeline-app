@@ -20,8 +20,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.R;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.RemoteLocationRetriever;
+import com.easy.sumit.lifeline.datamodal.Person;
+import com.easy.sumit.lifeline.datamodal.URLList;
+import com.easy.sumit.lifeline.backgroundworkers.RemoteLocationRetriever;
 import com.easy.sumit.lifeline.utils.Constants;
 
 import java.util.HashMap;
@@ -131,7 +132,7 @@ public class UpdateLocationFrgment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(!state.equals("")||!district.equals("")||!sub_district.equals("")) {
-                    String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                    String url = URLList.getUrl(getContext(),"getData");
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
