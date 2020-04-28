@@ -1,10 +1,15 @@
 package com.easy.sumit.lifeline.Activities;
 
-import android.app.AlertDialog;
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -18,7 +23,6 @@ public class LoginActivity extends AppCompatActivity implements AsyncResponse{
     private EditText user_name,user_pass;
     private boolean login_status;
     private String personName="";
-    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +31,11 @@ public class LoginActivity extends AppCompatActivity implements AsyncResponse{
 
         user_name= (EditText) findViewById(R.id.user_name_register);
         user_pass= (EditText) findViewById(R.id.user_pass_register);
-
+        if (ActivityCompat.checkSelfPermission(this
+                , Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+        }
     }
 
     public void onLogin(View view){
@@ -35,10 +43,20 @@ public class LoginActivity extends AppCompatActivity implements AsyncResponse{
         String user_pass_text = user_pass.getText().toString();
 
         LoginBackgroundWorker loginBackgroundWorker=new LoginBackgroundWorker(this);
-        loginBackgroundWorker.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR,user_name_text, user_pass_text);
-
+        loginBackgroundWorker.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR,user_name_text, user_pass_text,getIMEI());
+        Log.i("IMEI_NO",""+getIMEI());
     }
 
+    private String getIMEI(){
+        if (ActivityCompat.checkSelfPermission(this
+                , Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+        }
+
+        TelephonyManager telephonyManager= (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager.getDeviceId();
+    }
     public void onRegister(View view){
         Intent intent=new Intent(this,PreRegisterActivity.class);
         startActivity(intent);
@@ -46,10 +64,7 @@ public class LoginActivity extends AppCompatActivity implements AsyncResponse{
 
     @Override
     public void processFinish(String output) {
-        alertDialog= new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Login");
-        alertDialog.setMessage(output);
-        alertDialog.show();
+        Snackbar.make(getCurrentFocus(),output,Snackbar.LENGTH_LONG).show();
         if(!output.equals("")){
             login_status=checkLogin(output);
             if(login_status){

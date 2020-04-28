@@ -3,6 +3,7 @@ package com.easy.sumit.lifeline.Activities;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.easy.sumit.lifeline.R;
 import com.easy.sumit.lifeline.utils.RemoteLocationRetriever;
@@ -22,25 +22,27 @@ import java.util.ArrayList;
 
 public class RegisterLocation extends AppCompatActivity{
 
-    Spinner stateSpinner;
-    Spinner districtSpinner;
-    Spinner subdistrictSpinner;
-    Button buttonSearch;
+    private Spinner stateSpinner;
+    private Spinner districtSpinner;
+    private Spinner subdistrictSpinner;
+    private Button buttonSearch;
 
     JSONArray jsonArray;
     JSONObject jsonObject;
-    ArrayAdapter arrayAdapter;
+    private ArrayAdapter arrayAdapter;
 
-    RemoteLocationRetriever remoteLocationRetriever;
+    private RemoteLocationRetriever remoteLocationRetriever;
 
-    String user_name;
-    String user_mail;
-    String user_pass;
-    String state="";
-    String district="";
-    String sub_district="";
-    ArrayList<String> arrayList;
-    int s=0,d=0,u=0;
+    private String user_name;
+    private String user_mail;
+    private String user_pass;
+    private String state="";
+    private String district="";
+    private String sub_district="";
+    private ArrayList<String> arrayList;
+    private int s=0;
+    private int d=0;
+    private int u=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +61,7 @@ public class RegisterLocation extends AppCompatActivity{
             user_pass = bundle.getString("user_pass");
         }
 
-        arrayList = new ArrayList<String>();
+        arrayList = new ArrayList<>();
         arrayAdapter = ArrayAdapter.createFromResource(this,
                 R.array.state,
                 android.R.layout.simple_dropdown_item_1line);
@@ -69,21 +71,19 @@ public class RegisterLocation extends AppCompatActivity{
         districtSpinner.setOnItemSelectedListener(new DistrictEventListener(this));
         subdistrictSpinner.setOnItemSelectedListener(new SubDistrictEventListener(this));
 
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(u==1){
-                    startRegisterActivity();
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),
-                            "Please select location properly",
-                            Toast.LENGTH_LONG).show();
-                }
+        buttonSearch.setOnClickListener(view -> {
+            if(u==1){
+                startRegisterActivity();
+            }
+            else{
+                Snackbar.make(view,
+                              "Please select location properly",
+                              Snackbar.LENGTH_SHORT)
+                        .show();
             }
         });
     }
-    void startRegisterActivity(){
+    private void startRegisterActivity(){
         Log.i("State:",""+state);
         Log.i("District:",""+district);
         Log.i("Sub_District:",""+sub_district);

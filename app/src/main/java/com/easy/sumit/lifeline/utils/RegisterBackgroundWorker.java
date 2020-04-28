@@ -39,6 +39,7 @@ public class RegisterBackgroundWorker extends AsyncTask<String,Void,String> {
         String state = strings[10];
         String district = strings[11];
         String sub_district = strings[12];
+        String IMEI_NO=strings[13];
         try {
             String check_username_url = "http://10.0.2.2:9090/lifeline_app/register.php";
             HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(check_username_url).openConnection();
@@ -74,8 +75,9 @@ public class RegisterBackgroundWorker extends AsyncTask<String,Void,String> {
                     URLEncoder.encode("district", "UTF-8") + "=" +
                             URLEncoder.encode(district, "UTF-8") + "&" +
                     URLEncoder.encode("sub_district", "UTF-8") + "=" +
-                            URLEncoder.encode(sub_district, "UTF-8");
-
+                            URLEncoder.encode(sub_district, "UTF-8") + "&" +
+                    URLEncoder.encode("IMEI_NO", "UTF-8") + "=" +
+                            URLEncoder.encode(IMEI_NO, "UTF-8");
 
             bufferedWriter.write(post_data);
             bufferedWriter.flush();

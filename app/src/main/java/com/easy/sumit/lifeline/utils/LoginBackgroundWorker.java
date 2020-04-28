@@ -25,6 +25,8 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... strings) {
         String user_name = strings[0];
         String user_pass = strings[1];
+        String IMEI_NO = strings[2];
+
 
         try {
             String login_url = "http://10.0.2.2:9090/lifeline_app/login.php";
@@ -36,7 +38,8 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
             String post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8") + "&" +
-                    URLEncoder.encode("user_pass", "UTF-8") + "=" + URLEncoder.encode(user_pass, "UTF-8");
+                    URLEncoder.encode("user_pass", "UTF-8") + "=" + URLEncoder.encode(user_pass, "UTF-8") + "&" +
+                    URLEncoder.encode("IMEI_NO", "UTF-8") + "=" + URLEncoder.encode(IMEI_NO, "UTF-8");
 
             bufferedWriter.write(post_data);
             bufferedWriter.flush();

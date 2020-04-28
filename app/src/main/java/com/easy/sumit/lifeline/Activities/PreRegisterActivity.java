@@ -2,6 +2,7 @@ package com.easy.sumit.lifeline.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -38,11 +39,17 @@ public class PreRegisterActivity extends AppCompatActivity implements AsyncRespo
                 checkUsernameBackgroundWorker.execute(user_name.getText().toString());
             }
             else{
-                Toast.makeText(this,"Passwords not match",Toast.LENGTH_LONG).show();
+                Snackbar.make(view,
+                              "Passwords not match",
+                              Snackbar.LENGTH_SHORT)
+                        .show();
             }
         }
         else {
-            Toast.makeText(this,"Please fill all fields",Toast.LENGTH_LONG).show();
+            Snackbar.make(view,
+                          "Please fill all fields",
+                          Snackbar.LENGTH_SHORT)
+                    .show();
         }
     }
 
@@ -63,7 +70,7 @@ public class PreRegisterActivity extends AppCompatActivity implements AsyncRespo
         }
 
         else{
-            Toast.makeText(this,""+output,Toast.LENGTH_LONG).show();
+            Snackbar.make(getCurrentFocus(),""+output,Snackbar.LENGTH_SHORT);
         }
     }
 

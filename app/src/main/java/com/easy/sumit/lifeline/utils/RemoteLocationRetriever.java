@@ -89,25 +89,29 @@ public class RemoteLocationRetriever extends AsyncTask<String,Void,String> {
         initSpinner(spinner,result);
         Log.i("***Info***","Spinner Innicialised.");
     }
-    void initSpinner(Spinner spinner, String string){
+    private void initSpinner(Spinner spinner, String string){
         try {
             String label="";
-            if(location_level.equals("1")){
-                label="state";
-            }else if(location_level.equals("2")){
-                label="district";
-            }else if(location_level.equals("3")){
-                label="sub_district";
+            switch (location_level) {
+                case "1":
+                    label = "state";
+                    break;
+                case "2":
+                    label = "district";
+                    break;
+                case "3":
+                    label = "sub_district";
+                    break;
             }
             Log.i("Locaion Level:",""+label);
             Log.i("JSON Input String:",""+string);
-            arrayList = new ArrayList<String>();
+            arrayList = new ArrayList<>();
             jsonArray=new JSONArray(string);
             for(int i=0;i<jsonArray.length();i++){
                 Log.d("\n"+label+" "+i,jsonArray.getString(i));
                 arrayList.add(jsonArray.getJSONObject(i).getString(label));
             }
-            arrayAdapter=new ArrayAdapter<String>(activity,
+            arrayAdapter= new ArrayAdapter<>(activity,
                     android.R.layout.simple_dropdown_item_1line,
                     arrayList);
             spinner.setAdapter(arrayAdapter);

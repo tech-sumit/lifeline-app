@@ -1,9 +1,9 @@
 package com.easy.sumit.lifeline.Fragments;
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -14,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.easy.sumit.lifeline.R;
 import com.easy.sumit.lifeline.utils.AsyncResponse;
@@ -30,24 +29,15 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
     private Spinner districtSpinner;
     private Spinner sub_districtSpinner;
     private Button buttonSearch;
-    private View view;
-    private ArrayAdapter<CharSequence> arrayAdapterBloodGroup;
-    private ArrayAdapter arrayAdapter;
     private String bloodGroup="";
     private String state="";
     private String district="";
     private String sub_district="";
-    private int s=0,d=0,u=0;
+    private int d=0;
+    private int s=0;
+    private int u=0;
     private RemoteDataRetriever remoteDataRetriever;
     private RemoteLocationRetriever remoteLocationRetriever;
-
-    public PersonSearchFragment(){
-
-    }
-    @SuppressLint("ValidFragment")
-    public PersonSearchFragment(View view){
-        this.view=view;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,7 +68,7 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
         districtSpinner= (Spinner) getActivity().findViewById(R.id.districtSelector);
         sub_districtSpinner= (Spinner) getActivity().findViewById(R.id.sub_districtSelector);
 
-        arrayAdapter = ArrayAdapter.createFromResource(getContext(),
+        ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.state,
                 android.R.layout.simple_dropdown_item_1line);
         stateSpinner.setAdapter(arrayAdapter);
@@ -86,7 +76,7 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
         stateSpinner.setOnItemSelectedListener(new StateEventListener(this));
         districtSpinner.setOnItemSelectedListener(new DistrictEventListener(this));
         sub_districtSpinner.setOnItemSelectedListener(new SubDistrictEventListener(this));
-        arrayAdapterBloodGroup = ArrayAdapter.
+        ArrayAdapter<CharSequence> arrayAdapterBloodGroup = ArrayAdapter.
                 createFromResource(getContext(),
                         R.array.blood_groups,
                         R.layout.support_simple_spinner_dropdown_item);
@@ -108,18 +98,28 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
 
     @Override
     public void processFinish(String output) {
-        ResultFragment resultFragment=new ResultFragment();
-        Bundle bundle=new Bundle();
-        bundle.putString("output",output);
-        resultFragment.setArguments(bundle);
-        FragmentManager fragmentManager=getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.personSearchFragment,resultFragment).commit();
-        buttonSearch.setVisibility(View.INVISIBLE);
-        buttonSearch.setClickable(false);
-        personBloodGroup.setVisibility(View.INVISIBLE);
-        personBloodGroup.setClickable(false);
-        remoteDataRetriever.cancel(true);
+        if(!output.equals("")) {
+            ResultFragment resultFragment = new ResultFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("output", output);
+            resultFragment.setArguments(bundle);
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.personSearchFragment, resultFragment)
+                    .commit();
+
+            /*fragmentManager.beginTransaction()
+                    .add(resultFragment,"ResultFragment").commit();
+            */
+            buttonSearch.setVisibility(View.INVISIBLE);
+            buttonSearch.setClickable(false);
+            personBloodGroup.setVisibility(View.INVISIBLE);
+            personBloodGroup.setClickable(false);
+            remoteDataRetriever.cancel(true);
+        }
+        else{
+            Snackbar.make(getView(),"Sorry, no data found",Snackbar.LENGTH_SHORT);
+        }
     }
 
     @Override
@@ -129,7 +129,10 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
             remoteDataRetriever.execute(user_name, "2","4", bloodGroup,state,district,sub_district);
         }
         else{
-            Toast.makeText(getActivity(),"Please select blood group",Toast.LENGTH_SHORT).show();
+            Snackbar.make(view,
+                          "Please select blood group",
+                          Snackbar.LENGTH_SHORT)
+                    .show();
         }
     }
     class StateEventListener implements AdapterView.OnItemSelectedListener{
@@ -144,7 +147,7 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
             remoteLocationRetriever=new RemoteLocationRetriever(personSearchFragment.getActivity(),districtSpinner);
             remoteLocationRetriever.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR,user_name,"1","2",state);
 
-            s=1;
+            s = 1;
             d=0;
             u=0;
         }

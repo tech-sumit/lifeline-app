@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class CustomAdapter extends BaseAdapter implements OnClickListener {
 
     private static LayoutInflater inflater = null;
-    ListModel tempValues = null;
+    private ListModel tempValues = null;
     private ArrayList data;
     public CustomAdapter(Fragment fragment, ArrayList data) {
         this.data = data;

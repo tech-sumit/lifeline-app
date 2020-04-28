@@ -14,22 +14,21 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:src="@mipmap/ic_launcher"
-        android:layout_weight="1.97"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.23" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textAlignment="center"
         android:textSize="28dp"
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/user_name_Nav" />
+        android:id="@+id/user_name_Nav"
+        android:layout_weight="0.20"
+        android:layout_marginTop="5dp" />
 
 </LinearLayout>

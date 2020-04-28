@@ -28,10 +28,25 @@
                 android:id="@+id/person_name"
                 android:hint="Name" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Blood Group"
+                android:id="@+id/textView4"
+                android:layout_marginTop="5dp"
+                android:textSize="17dp" />
+
             <Spinner
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/person_blood_group" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Gender"
+                android:id="@+id/textView5"
+                android:textSize="17dp" />
 
             <Spinner
                 android:layout_width="fill_parent"
@@ -45,6 +60,13 @@
                 android:ems="10"
                 android:id="@+id/person_age"
                 android:hint="Age" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select HIV Status"
+                android:id="@+id/textView6"
+                android:textSize="17dp" />
 
             <Spinner
                 android:layout_width="fill_parent"

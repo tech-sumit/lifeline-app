@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -30,7 +30,7 @@ public class ResultFragment extends Fragment {
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<ListModel> arrayList = new ArrayList<>();
     private int OUTPUT_STATUS = 0;
-
+    private JSONArray jsonArray;
     private CustomAdapter adapter;
 
 
@@ -65,10 +65,10 @@ public class ResultFragment extends Fragment {
         if (OUTPUT_STATUS == 0) {
             try {
                 Log.d("OUTPUT String", output);
-                JSONArray jsonArray = new JSONArray(output);
+                jsonArray = new JSONArray(output);
                 Log.i("******OUTPUT******", output);
                 JSONObject json;
-                arrayList = new ArrayList<ListModel>();
+                arrayList = new ArrayList<>();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     json = jsonArray.getJSONObject(i);
                     ListModel data = new ListModel();
@@ -88,13 +88,23 @@ public class ResultFragment extends Fragment {
             }
             listResultView = (ListView) getActivity().findViewById(R.id.list);
             listResultView.setAdapter(adapter);
-            listResultView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    ListModel listModel = arrayList.get(i);
-                    Log.i("***Item Selected***", listModel.getName());
-                }
+            listResultView.setOnItemClickListener((adapterView, view1, i, l) -> {
+                ListModel listModel = arrayList.get(i);
+                Log.i("***Item Selected***", listModel.getName());
+                DetailResult detailResult=DetailResult.newInstance(jsonArray,i);
+                FragmentManager fragmentManager=getFragmentManager();
+                fragmentManager.beginTransaction()
+                               .replace(R.id.resultLayout,detailResult)
+                               .addToBackStack("DetailResult")
+                               .commit();
             });
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listResultView.setVisibility(View.INVISIBLE);
+        listResultView.setClickable(false);
     }
 }

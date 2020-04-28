@@ -57,8 +57,6 @@
         <item>F</item>
     </string-array>
 
-    <string-array name="result_resource"></string-array>
-
     <string-array name="hiv_status">
         <item>Positive</item>
         <item>Negative</item>

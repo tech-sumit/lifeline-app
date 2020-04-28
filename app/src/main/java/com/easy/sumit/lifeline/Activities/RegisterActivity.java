@@ -1,9 +1,14 @@
 package com.easy.sumit.lifeline.Activities;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -107,12 +112,23 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
         person_hiv_status.setAdapter(arrayAdapterHivStatus);
     }
 
+    private String getIMEI(){
+        if (ActivityCompat.checkSelfPermission(this
+                , Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
+        }
+
+        TelephonyManager telephonyManager= (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager.getDeviceId();
+    }
 
     public void onRegister(View view) {
         String name = person_name.getText().toString();
         String age = person_age.getText().toString();
         String address = person_address.getText().toString();
         String contact_no = person_contact.getText().toString();
+        String IMEI_NO=getIMEI();
 
         registerBackgroundWorker = new RegisterBackgroundWorker(this);
         registerBackgroundWorker.execute(name,
@@ -127,7 +143,8 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
                 user_pass,
                 state,
                 district,
-                sub_district);
+                sub_district,
+                IMEI_NO);
     }
 
     @Override

@@ -30,7 +30,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="State"
             android:id="@+id/textState"
-            android:textAlignment="center" />
+            android:textAlignment="textStart"
+            android:textSize="20dp" />
 
         <Spinner
             android:layout_width="match_parent"
@@ -44,7 +45,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="District"
             android:id="@+id/textDistrict"
-            android:textAlignment="center" />
+            android:textAlignment="textStart"
+            android:textSize="20dp" />
 
         <Spinner
             android:layout_width="match_parent"
@@ -59,7 +61,8 @@
             android:text="Sub District"
             android:id="@+id/textSubdistrict"
             android:layout_gravity="center_horizontal"
-            android:textAlignment="center" />
+            android:textAlignment="textStart"
+            android:textSize="20dp" />
 
         <Spinner
             android:layout_width="match_parent"
