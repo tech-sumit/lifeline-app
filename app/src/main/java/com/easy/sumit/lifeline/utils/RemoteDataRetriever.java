@@ -1,6 +1,7 @@
 package com.easy.sumit.lifeline.utils;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -46,8 +47,9 @@ public class RemoteDataRetriever extends AsyncTask<String,Void,String> {
                             URLEncoder.encode(total_data, "UTF-8");
             if(strings.length>3){
                 for(int i=3;i<strings.length;i++){
+                    Log.i("String["+i+"]:",strings[i]+"   AS:data"+(i-2));
                     post_data+="&"+
-                            URLEncoder.encode("data"+(i-3),"UTF-8") + "=" +
+                            URLEncoder.encode("data"+(i-2),"UTF-8") + "=" +
                             URLEncoder.encode(strings[i],"UTF-8");
                 }
 

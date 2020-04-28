@@ -49,12 +49,6 @@ public class ProfileFragment extends Fragment implements AsyncResponse{
     public void processFinish(String output) {
         try {
             Log.i("******OUTPUT******",output);
-//            JSONArray jArray=new JSONArray(output);
-//            JSONObject json[] = new JSONObject[5];
-/*            for(int i=0;i<jArray.length();i++){
-                json[i]=jArray.getJSONObject(i);
-            }
-*/
             JSONObject json=new JSONObject(output);
             personName.setText(json.getString("name"));
             personMail.setText(json.getString("user_mail"));

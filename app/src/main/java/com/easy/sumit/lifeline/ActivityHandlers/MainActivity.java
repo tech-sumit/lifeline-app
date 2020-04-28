@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.easy.sumit.lifeline.Fragments.PersonSearchFragment;
 import com.easy.sumit.lifeline.Fragments.ProfileFragment;
 import com.easy.sumit.lifeline.R;
 
@@ -27,15 +28,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-/*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-*/
         Bundle bundle=getIntent().getExtras();
         user_name=bundle.getString("user_name");
         personName=bundle.getString("personName");
@@ -71,7 +63,6 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {
@@ -80,9 +71,16 @@ public class MainActivity extends AppCompatActivity
             bundle.putString("user_name",user_name);
             profileFragment.setArguments(bundle);
             FragmentManager fragmentManager=getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_home_relative_layout,profileFragment).commit();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_home_relative_layout,profileFragment).commit();
         } else if (id == R.id.nav_person) {
-
+            PersonSearchFragment personSearchFragment=new PersonSearchFragment();
+            Bundle bundle=new Bundle();
+            bundle.putString("user_name",user_name);
+            personSearchFragment.setArguments(bundle);
+            FragmentManager fragmentManager=getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.content_home_relative_layout,personSearchFragment).commit();
         } else if (id == R.id.nav_settings) {
 
         } else if (id == R.id.nav_contact) {
