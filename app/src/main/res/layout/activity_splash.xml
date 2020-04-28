@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.easy.sumit.lifeline.Splash"
+    tools:context=".ActivityHandlers.Splash"
     android:background="@mipmap/lifeline_background">
 
     <TextView

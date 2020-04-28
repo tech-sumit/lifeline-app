@@ -1,9 +1,11 @@
 package com.easy.sumit.lifeline;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
     private Spinner person_blood_group, person_gender, person_hiv_status;
     private Button buttonRegister;
 
+    private LocationManager locationManager;
     private GoogleApiClient googleApiClient;
     private Location location;
     private LocationRequest mLocationRequest;
@@ -38,6 +41,8 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
     private ArrayAdapter<CharSequence> arrayAdapterBloodGroup;
     private ArrayAdapter<CharSequence> arrayAdapterGender;
     private ArrayAdapter<CharSequence> arrayAdapterHivStatus;
+
+    private AlertDialog alertDialog;
 
     private String name = "",
             blood_group = "",
@@ -67,11 +72,14 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
         person_gender = (Spinner) findViewById(R.id.person_gender);
         person_hiv_status = (Spinner) findViewById(R.id.person_hiv_status);
 
-        user_name=savedInstanceState.getString("user_name");
-        user_mail=savedInstanceState.getString("user_mail");
-        user_pass=savedInstanceState.getString("user_pass");
+        Bundle bundle=getIntent().getExtras();
+        user_name=bundle.getString("user_name");
+        user_mail=bundle.getString("user_mail");
+        user_pass=bundle.getString("user_pass");
 
         buttonRegister = (Button) findViewById(R.id.buttonRegister2);
+
+        locationManager= (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         initArrayAdapter();
         initLocation();
@@ -127,28 +135,6 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
         person_hiv_status.setAdapter(arrayAdapterHivStatus);
     }
 
-    private void initLocation() {
-        if (googleApiClient == null) {
-            googleApiClient = new GoogleApiClient.Builder(this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-        }
-
-    }
-
-    @Override
-    protected void onStart() {
-        googleApiClient.connect();
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        googleApiClient.disconnect();
-        super.onStop();
-    }
 
     public void onRegister(View view) {
         name=person_name.getText().toString();
@@ -173,13 +159,39 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
 
     @Override
     public void processFinish(String output) {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog = new AlertDialog.Builder(this).create();
         alertDialog.setTitle("Register");
         alertDialog.setMessage(output);
         alertDialog.show();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    //Location Management Code:
+
+    @Override
+    protected void onStart() {
+        googleApiClient.connect();
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        googleApiClient.disconnect();
+        alertDialog.dismiss();
+        super.onStop();
+    }
+
+    private void initLocation() {
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
+
     }
 
     @Override
@@ -209,8 +221,8 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
 
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(50000);
-        mLocationRequest.setFastestInterval(25000);
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 

@@ -1,21 +1,20 @@
-package com.easy.sumit.lifeline;
+package com.easy.sumit.lifeline.ActivityHandlers;
 
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.easy.sumit.lifeline.BackgroundWorker.AsyncResponse;
-import com.easy.sumit.lifeline.BackgroundWorker.CheckUsernameBackgroundWorker;
+import com.easy.sumit.lifeline.R;
+import com.easy.sumit.lifeline.utils.AsyncResponse;
+import com.easy.sumit.lifeline.utils.CheckUsernameBackgroundWorker;
 
 public class PreRegisterActivity extends AppCompatActivity implements AsyncResponse{
 
     private EditText user_name,user_mail,user_pass,user_pass_conf;
-    private Button buttonRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +24,6 @@ public class PreRegisterActivity extends AppCompatActivity implements AsyncRespo
         user_mail= (EditText) findViewById(R.id.user_mail_register);
         user_pass= (EditText) findViewById(R.id.user_pass_register);
         user_pass_conf= (EditText) findViewById(R.id.user_pass_conf_register);
-        buttonRegister= (Button) findViewById(R.id.buttonRegister1);
 
     }
     public void onPreRegister(View view){
@@ -36,7 +34,7 @@ public class PreRegisterActivity extends AppCompatActivity implements AsyncRespo
 
             if(user_pass.getText().toString().equals(user_pass_conf.getText().toString())){
                 CheckUsernameBackgroundWorker checkUsernameBackgroundWorker=
-                        new CheckUsernameBackgroundWorker(this,this);
+                        new CheckUsernameBackgroundWorker(this);
                 checkUsernameBackgroundWorker.execute(user_name.getText().toString());
             }
             else{
@@ -50,24 +48,34 @@ public class PreRegisterActivity extends AppCompatActivity implements AsyncRespo
 
     @Override
     public void processFinish(String output) {
-        if(output.equals("Successfull")){
-            AlertDialog alertDialog= new AlertDialog.Builder(this).create();
+        AlertDialog alertDialog;
+        if(output.equals("Successful")) {
+            alertDialog = new AlertDialog.Builder(this).create();
             alertDialog.setTitle("Register");
             alertDialog.setMessage(output);
             alertDialog.show();
-            Intent intent=new Intent(this,RegisterActivity.class);
-            intent.putExtra("user_name",user_name.getText().toString());
-            intent.putExtra("user_mail",user_mail.getText().toString());
-            intent.putExtra("user_pass",user_pass.getText().toString());
-            startActivity(intent);
-            finish();
-        }
-        else{
 
-            AlertDialog alertDialog= new AlertDialog.Builder(this).create();
+            Intent intent = new Intent(this, RegisterActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("user_name", user_name.getText().toString());
+            bundle.putString("user_mail", user_mail.getText().toString());
+            bundle.putString("user_pass", user_pass.getText().toString());
+            intent.putExtras(bundle);
+
+            startActivity(intent);
+        }
+
+        else{
+            alertDialog = new AlertDialog.Builder(this).create();
             alertDialog.setTitle("Register");
             alertDialog.setMessage(output);
             alertDialog.show();
         }
+    }
+
+    @Override
+    protected void onStop() {
+        finish();
+        super.onStop();
     }
 }

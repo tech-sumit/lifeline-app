@@ -11,16 +11,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name="android.support.multidex.MultiDexApplication">
-        <activity android:name=".Splash">
+        <activity android:name=".ActivityHandlers.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".PreRegisterActivity" />
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".ActivityHandlers.LoginActivity" />
+        <activity android:name=".ActivityHandlers.PreRegisterActivity" />
+        <activity android:name=".ActivityHandlers.RegisterActivity" />
     </application>
 
 </manifest>
