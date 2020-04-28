@@ -92,9 +92,11 @@ public class ContactHandler {
     }
 
     public void deleteLog() {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(context,
+                Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(activity,
-                    new String[]{Manifest.permission.READ_CALL_LOG}, 1);
+                    new String[]{Manifest.permission.READ_CALL_LOG,
+                            Manifest.permission.WRITE_CALL_LOG}, 1);
         }
 
         ContentResolver contentResolver = context.getContentResolver();

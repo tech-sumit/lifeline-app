@@ -69,7 +69,7 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+<!--
     <string name="call_log">http://lifelinebloodbank.esy.es/lifeline/call_log.php</string>
     <string name="check_username">http://lifelinebloodbank.esy.es/lifeline/check_username.php</string>
     <string name="eula">http://lifelinebloodbank.esy.es/lifeline/eula.html</string>
@@ -78,4 +78,14 @@
     <string name="login">http://lifelinebloodbank.esy.es/lifeline/login.php</string>
     <string name="register">http://lifelinebloodbank.esy.es/lifeline/register.php</string>
     <string name="webpage">http://lifelinebloodbank.esy.es/lifeline/webpage.php</string>
+    -->
+    <string name="call_log">http://10.0.2.2:9090/lifeline_app/call_log.php</string>
+    <string name="check_username">http://10.0.2.2:9090/lifeline_app/check_username.php</string>
+    <string name="eula">http://10.0.2.2:9090/lifeline_app/eula.html</string>
+    <string name="getData">http://10.0.2.2:9090/lifeline_app/getData.php</string>
+    <string name="getLocation">http://10.0.2.2:9090/lifeline_app/getLocation.php</string>
+    <string name="login">http://10.0.2.2:9090/lifeline_app/login.php</string>
+    <string name="register">http://10.0.2.2:9090/lifeline_app/register.php</string>
+    <string name="webpage">http://10.0.2.2:9090/lifeline_app/webpage.php</string>
+
 </resources>

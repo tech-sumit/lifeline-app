@@ -7,14 +7,17 @@ import com.easy.sumit.lifeline.R;
 
 /**
  * Created by Sumit on 27-07-2017.
+ * Project : Lifeline
  */
 
 public class URLList {
     public static String getUrl(Context context,String url){
         SharedPreferences pref;
         String fetched_url="";
-        pref = context.getSharedPreferences("lifeline_urls", Context.MODE_PRIVATE);
-        fetched_url=pref.getString(""+url,null);
+        if(context!=null){
+            pref = context.getSharedPreferences("lifeline_urls", Context.MODE_PRIVATE);
+            fetched_url=pref.getString(""+url,null);
+        }
         return fetched_url;
     }
 

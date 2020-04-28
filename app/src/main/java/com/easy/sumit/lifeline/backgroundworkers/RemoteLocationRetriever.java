@@ -1,6 +1,7 @@
 package com.easy.sumit.lifeline.backgroundworkers;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -19,6 +20,7 @@ import com.easy.sumit.lifeline.utils.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,13 +40,16 @@ public class RemoteLocationRetriever{
         this.bundle=bundle;
     }
     public void start(){
-        String url = URLList.getUrl(activity,"getLocation");
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        Volley.newRequestQueue(activity).add(
+                new StringRequest(Request.Method.POST,
+                        URLList.getUrl(activity,"getLocation"),
+                        new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 initSpinner(spinner, response);
             }
-        }, new Response.ErrorListener() {
+        },
+                        new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
@@ -59,11 +64,12 @@ public class RemoteLocationRetriever{
                 stringMap.put("db_action",bundle.getString("db_action"));
                 stringMap.put("location_level",bundle.getString("location_level"));
                 stringMap.put("data",bundle.getString("data"));
+                Log.i("Data tobe posted",""+bundle.getString(Constants.USER_NAME)
+                        +"\n"+bundle.getString("db_action")
+                        +"\n"+bundle.getString("location_level"));
                 return stringMap;
             }
-        };
-        RequestQueue requestQueue= Volley.newRequestQueue(activity);
-        requestQueue.add(stringRequest);
+        });
     }
     private void initSpinner(Spinner spinner, String string){
         try {
@@ -83,10 +89,13 @@ public class RemoteLocationRetriever{
             Log.i("JSON Input String:",""+string);
             ArrayList<String> arrayList = new ArrayList<>();
             JSONArray jsonArray = new JSONArray(string);
+            JSONObject arrayList_ID = new JSONObject();
             for(int i = 0; i< jsonArray.length(); i++){
                 Log.d("\n"+label+" "+i, jsonArray.getString(i));
                 arrayList.add(jsonArray.getJSONObject(i).getString(label));
+                arrayList_ID.put(""+i,""+jsonArray.getJSONObject(i).getString(label+"_id"));
             }
+            activity.getSharedPreferences("lifeline_data", Context.MODE_PRIVATE).edit().putString(""+label,""+arrayList_ID.toString()).apply();
             ArrayAdapter arrayAdapter = new ArrayAdapter<>(activity,
                     android.R.layout.simple_dropdown_item_1line,
                     arrayList);

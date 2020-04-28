@@ -5,12 +5,12 @@ android {
         config {
         }
     }
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.1'
     defaultConfig {
         applicationId "com.easy.sumit.lifeline"
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 26
         signingConfig signingConfigs.config
         versionCode 3
         versionName '1.0'
@@ -31,9 +31,9 @@ dependencies {
     compile project(':volley')
     compile 'com.android.support:appcompat-v7:25.2.0'
     compile 'com.android.support:design:25.2.0'
-    compile 'com.android.support:support-v4:25.2.0'
     compile 'com.android.support:recyclerview-v7:25.2.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.google.firebase:firebase-config:10.2.6'
+    compile 'com.android.support:support-v13:26.0.0-alpha1'
 }
 apply plugin: 'com.google.gms.google-services'

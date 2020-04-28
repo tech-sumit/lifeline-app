@@ -16,11 +16,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.android.volley.toolbox.StringRequest;
 import com.easy.sumit.lifeline.R;
 import com.easy.sumit.lifeline.datamodal.Person;
 import com.easy.sumit.lifeline.backgroundworkers.RemoteDataRetriever;
 import com.easy.sumit.lifeline.backgroundworkers.RemoteLocationRetriever;
 import com.easy.sumit.lifeline.utils.Constants;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class PersonSearchFragment extends Fragment implements View.OnClickListener{
 
@@ -159,7 +163,7 @@ public class PersonSearchFragment extends Fragment implements View.OnClickListen
             bundle.putString(Constants.USER_NAME,person.getUser_name());
             bundle.putString("db_action","1");
             bundle.putString("location_level","2");
-            bundle.putString("data",state);
+            bundle.putString("data",""+(stateSpinner.getSelectedItemPosition()+1));
             remoteLocationRetriever.updateData(districtSpinner,bundle);
             remoteLocationRetriever.start();
             s=1;
@@ -180,16 +184,28 @@ public class PersonSearchFragment extends Fragment implements View.OnClickListen
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             district=districtSpinner.getSelectedItem().toString();
-            Bundle bundle=new Bundle();
-            bundle.putString(Constants.USER_NAME,person.getUser_name());
-            bundle.putString("db_action","1");
-            bundle.putString("location_level","3");
-            bundle.putString("data",district);
-            remoteLocationRetriever.updateData(sub_districtSpinner,bundle);
-            remoteLocationRetriever.start();
+            JSONObject jsonObject=null;
+            try {
+                jsonObject=new JSONObject(""+getContext()
+                        .getSharedPreferences("lifeline_data",
+                                Context.MODE_PRIVATE).getString("district",null));
+                Log.i("Preference",""+getContext()
+                        .getSharedPreferences("lifeline_data",
+                                Context.MODE_PRIVATE).getString("district",null)+
+                        "\n"+jsonObject.getString(""+districtSpinner.getSelectedItemPosition()));
+                Bundle bundle=new Bundle();
+                bundle.putString(Constants.USER_NAME,person.getUser_name());
+                bundle.putString("db_action","1");
+                bundle.putString("location_level","3");
+                bundle.putString("data",jsonObject.getString(""+(districtSpinner.getSelectedItemPosition())));
+                remoteLocationRetriever.updateData(sub_districtSpinner,bundle);
+                remoteLocationRetriever.start();
 
-            d=1;
-            u=0;
+                d=1;
+                u=0;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override

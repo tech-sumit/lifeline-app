@@ -118,15 +118,14 @@ public class DetailResult extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        name_text = (TextView) view.findViewById(R.id.nameText);
-        gender_text = (TextView) view.findViewById(R.id.genderText);
-        address_text = (TextView) view.findViewById(R.id.addressText);
-        blood_group_text = (TextView) view.findViewById(R.id.bloodGroupText);
-        last_donated_text = (TextView) view.findViewById(R.id.lastDonatedText);
-        Button call_button = (Button) view.findViewById(R.id.call_button);
-        previous_button = (Button) view.findViewById(R.id.previousButton);
-        next_button = (Button) view.findViewById(R.id.nextButton);
-
+        name_text = view.findViewById(R.id.nameText);
+        gender_text = view.findViewById(R.id.genderText);
+        address_text = view.findViewById(R.id.addressText);
+        blood_group_text = view.findViewById(R.id.bloodGroupText);
+        last_donated_text = view.findViewById(R.id.lastDonatedText);
+        Button call_button = view.findViewById(R.id.call_button);
+        previous_button = view.findViewById(R.id.previousButton);
+        next_button = view.findViewById(R.id.nextButton);
 
         contactHandler = new ContactHandler(getActivity());
         name_text.setText(person.getName());
