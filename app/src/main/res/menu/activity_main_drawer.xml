@@ -9,19 +9,30 @@
             android:title="Home" />
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_person"
+            android:icon="@drawable/ic_profile"
             android:title="My Profile" />
         <item
             android:id="@+id/nav_person"
-            android:icon="@drawable/ic_blood"
+            android:icon="@drawable/ic_search"
             android:title="Search Person" />
+        <item
+            android:id="@+id/nav_review"
+            android:icon="@drawable/ic_review"
+            android:title="User Review" />
+
         <item
             android:id="@+id/nav_contact"
             android:icon="@drawable/ic_contact"
             android:title="Contact Us" />
 
         <item
+            android:id="@+id/nav_about_us"
+            android:icon="@drawable/ic_about"
+            android:title="About Us" />
+
+        <item
             android:id="@+id/nav_log_out"
+            android:icon="@drawable/ic_exit"
             android:title="Log Out" />
     </group>
 

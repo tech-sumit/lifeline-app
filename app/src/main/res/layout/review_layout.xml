@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/notiLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Is the call recived by this Lifeline app user is for valid reasons? "
+            android:textAlignment="viewStart"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/buttonColor" />
+
+        <Button
+            android:id="@+id/notiYES"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/buttonBackgroundColor"
+            android:text="YES"
+            android:textAlignment="center"
+            android:textColor="@color/buttonColor"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/notiNO"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/buttonBackgroundColor"
+            android:text="NO, Report User"
+            android:textAlignment="center"
+            android:textColor="@color/buttonColor"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/notiClose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/buttonBackgroundColor"
+            android:text="Close"
+            android:textAlignment="center"
+            android:textColor="@color/buttonColor"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/notiLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/notiText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:inputType="textMultiLine"
+            android:textColor="@color/buttonColor" />
+
+        <Button
+            android:id="@+id/notiReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/buttonBackgroundColor"
+            android:text="Submit"
+            android:textColor="@color/buttonColor"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/notiCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/buttonBackgroundColor"
+            android:text="Cancel"
+            android:textColor="@color/buttonColor"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

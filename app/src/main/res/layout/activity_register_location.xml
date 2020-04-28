@@ -9,81 +9,86 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.easy.sumit.lifeline.activities.RegisterLocation">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/linearLayout">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textView3"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Set Location"
-            android:textAlignment="center"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/buttonColor" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textState"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="State"
-            android:textAlignment="textStart"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/buttonColor"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="Set Location"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/buttonColor" />
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/stateSpinner"
-            android:textAlignment="center" />
+            <TextView
+                android:id="@+id/textState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="State"
+                android:textAlignment="textStart"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/buttonColor"
+                android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/textDistrict"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="District"
-            android:textAlignment="textStart"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/buttonColor"
-            android:textSize="20dp" />
+            <Spinner
+                android:id="@+id/stateSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center" />
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/districtSpinner"
-            android:textAlignment="center" />
+            <TextView
+                android:id="@+id/textDistrict"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="District"
+                android:textAlignment="textStart"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/buttonColor"
+                android:textSize="20dp" />
 
-        <TextView
-            android:id="@+id/textSubdistrict"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Sub District"
-            android:textAlignment="textStart"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/buttonColor"
-            android:textSize="20dp" />
+            <Spinner
+                android:id="@+id/districtSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center" />
 
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/subdistrictSpinner"
-            android:textAlignment="center" />
+            <TextView
+                android:id="@+id/textSubdistrict"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Sub District"
+                android:textAlignment="textStart"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/buttonColor"
+                android:textSize="20dp" />
 
-        <Button
-            android:id="@+id/submitButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/buttonBackgroundColor"
-            android:text="Submit"
-            android:textAlignment="center"
-            android:textColor="@color/buttonColor" />
+            <Spinner
+                android:id="@+id/subdistrictSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/submitButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@color/buttonBackgroundColor"
+                android:text="Submit"
+                android:textAlignment="center"
+                android:textColor="@color/buttonColor" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

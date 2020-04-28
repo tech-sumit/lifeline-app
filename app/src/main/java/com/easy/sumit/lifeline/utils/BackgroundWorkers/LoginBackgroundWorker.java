@@ -1,13 +1,9 @@
 package com.easy.sumit.lifeline.utils.BackgroundWorkers;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -84,17 +80,6 @@ public class LoginBackgroundWorker{
         RequestQueue requestQueue= Volley.newRequestQueue(loginActivity);
         requestQueue.add(stringRequest);
 
-    }
-
-    private String getIMEI(){
-        if (ActivityCompat.checkSelfPermission(loginActivity
-                , Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(loginActivity,
-                    new String[]{Manifest.permission.READ_PHONE_STATE}, 1);
-        }
-
-        TelephonyManager telephonyManager= (TelephonyManager)loginActivity.getSystemService(Context.TELEPHONY_SERVICE);
-        return telephonyManager.getDeviceId();
     }
     private boolean checkLogin(String output){
         try{

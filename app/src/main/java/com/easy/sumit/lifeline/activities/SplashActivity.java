@@ -8,19 +8,26 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.easy.sumit.lifeline.R;
+import com.easy.sumit.lifeline.fragments.TermsConditionsFragment;
 import com.easy.sumit.lifeline.utils.Constants;
 
 public class SplashActivity extends AppCompatActivity {
     private Intent i;
+    private String tncStatus;
+    private String login_status;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        SharedPreferences pref = getSharedPreferences("lifeline", Context.MODE_PRIVATE);
-        final String login_status=pref.getString(Constants.LOGIN_STATUS,null);
+        SharedPreferences pref = getSharedPreferences("lifeline_tnc", Context.MODE_PRIVATE);
+        SharedPreferences pref1 = getSharedPreferences("lifeline", Context.MODE_PRIVATE);
+        login_status=pref1.getString(Constants.LOGIN_STATUS,null);
+        tncStatus=pref.getString("tncStatus",null);
         final int SPLASH_TIME_OUT = 3000;
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -30,16 +37,31 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if ( login_status != null) {
-                    i = new Intent(SplashActivity.this, MainActivity.class);
-                    Bundle bundle=new Bundle();
-                    bundle.putString("last_activity","SplashActivity.java");
-                    i.putExtras(bundle);
+                Log.i("tncStatus",""+tncStatus);
+                if(tncStatus!=null){
+                    if(tncStatus.equals("true")) {
+                        if (login_status != null) {
+                            i = new Intent(SplashActivity.this, MainActivity.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("last_activity", "SplashActivity.java");
+                            i.putExtras(bundle);
+                        } else {
+                            i = new Intent(SplashActivity.this, LoginActivity.class);
+                        }
+                        startActivity(i);
+                    }else{
+                        TermsConditionsFragment termsConditionsFragment=new TermsConditionsFragment();
+                        FragmentManager fragmentManager=getSupportFragmentManager();
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.splashLayout,termsConditionsFragment).commit();
+                    }
                 }
                 else{
-                    i = new Intent(SplashActivity.this, LoginActivity.class);
+                    TermsConditionsFragment termsConditionsFragment=new TermsConditionsFragment();
+                    FragmentManager fragmentManager=getSupportFragmentManager();
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.splashLayout,termsConditionsFragment).commit();
                 }
-                startActivity(i);
             }
         }, SPLASH_TIME_OUT);
     }

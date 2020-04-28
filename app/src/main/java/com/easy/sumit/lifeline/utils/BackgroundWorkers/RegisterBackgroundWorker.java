@@ -14,7 +14,6 @@ import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.activities.LoginActivity;
 import com.easy.sumit.lifeline.activities.RegisterActivity;
 import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +34,7 @@ public class RegisterBackgroundWorker{
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.i("Responce",""+response);
                 registerActivity.progressDialog.dismiss();
                 Toast.makeText(registerActivity, response, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(registerActivity, LoginActivity.class);
@@ -54,14 +54,13 @@ public class RegisterBackgroundWorker{
             protected Map<String, String> getParams() throws AuthFailureError {
                 Log.i("INFO","Username: "+person.getUser_name()+
                         "\nMail: "+person.getUser_mail()+
-                        "\nPassword"+person.getUser_pass()+
+                        "\nPassword: "+person.getUser_pass()+
                         "\nName: "+person.getName()+
                         "\nAge: "+person.getAge()+
                         "\nBlood group: "+person.getBlood_group()+
                         "\nGender: "+person.getGender()+
                         "\nAddress: "+person.getAddress()+
                         "\nContact no.: "+person.getContact_no()+
-                        "\nCountry: "+person.getCountry()+
                         "\nState: "+person.getState()+
                         "\nDistrict: "+person.getDistrict()+
                         "\nSub district: "+person.getSub_district()+
@@ -82,8 +81,6 @@ public class RegisterBackgroundWorker{
                 stringMap.put("district",person.getDistrict());
                 stringMap.put("sub_district",person.getSub_district());
 
-                String fID = FirebaseInstanceId.getInstance().getToken();
-                stringMap.put("firebaseID",fID);
                 return stringMap;
 
             }

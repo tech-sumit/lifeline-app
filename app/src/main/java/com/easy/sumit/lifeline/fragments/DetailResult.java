@@ -2,6 +2,7 @@ package com.easy.sumit.lifeline.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,7 +41,8 @@ public class DetailResult extends Fragment {
     private static JSONArray jsonArray;
     private Person person=new Person();
 
-
+    private String user_name;
+    private String name;
     private TextView name_text;
     private TextView gender_text;
     private TextView address_text;
@@ -54,7 +56,7 @@ public class DetailResult extends Fragment {
     private int json_length = 0;
     private int previousState=0;
 
-    public static DetailResult newInstance(JSONArray jsonarray,int viewCount) {
+    public static DetailResult newInstance(JSONArray jsonarray,int viewCount,String user_name,String name) {
         jsonArray = jsonarray;
         view_count=viewCount;
         DetailResult fragment = new DetailResult();
@@ -71,6 +73,8 @@ public class DetailResult extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        fragment.user_name=user_name;
+        fragment.name =name;
         return fragment;
     }
     @Override
@@ -131,10 +135,12 @@ public class DetailResult extends Fragment {
         last_donated_text.setText("Last Donated:".concat(person.getLast_donated()));
         if(view_count==0){
             previous_button.setEnabled(false);
+            previous_button.setBackgroundColor(Color.argb(255,253,248,209));
         }
 
         if (view_count == json_length) {
             next_button.setEnabled(false);
+            next_button.setBackgroundColor(Color.argb(255,253,248,209));
         }
 
         call_button.setOnClickListener(new View.OnClickListener() {
@@ -169,9 +175,11 @@ public class DetailResult extends Fragment {
                         e.printStackTrace();
                     }
                     previous_button.setEnabled(true);
+                    previous_button.setBackgroundColor(Color.argb(255,255,249,196));
                 }
                 if (view_count == (json_length)) {
                     next_button.setEnabled(false);
+                    next_button.setBackgroundColor(Color.argb(255,253,248,209));
                 }
             }
         });
@@ -192,9 +200,11 @@ public class DetailResult extends Fragment {
                         e.printStackTrace();
                     }
                     next_button.setEnabled(true);
+                    next_button.setBackgroundColor(Color.argb(255,255,249,196));
                 }
                 if (view_count == 0) {
                     previous_button.setEnabled(false);
+                    previous_button.setBackgroundColor(Color.argb(255,253,248,209));
                 }
             }
         });
@@ -217,49 +227,55 @@ public class DetailResult extends Fragment {
     private class PhoneEndListener extends PhoneStateListener {
         @Override
         public void onCallStateChanged ( int state, String incomingNumber){
+            final StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                    "http://10.0.2.2:9090/lifeline_app/call_log.php", new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("***INFO***", "Review Added:" + response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    Toast.makeText(getActivity(), "Connection Failed", Toast.LENGTH_LONG).show();
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> stringMap = new HashMap<>();
+                    stringMap.put("user_name", ""+person.getUser_name());
+                    stringMap.put("choice", "1");
+                    stringMap.put("from_user", ""+name);
+                    stringMap.put("from_user_name", ""+user_name);
+                    Log.i("Data call_log","user_name: "+user_name+"name: "+name+"\nfrom_user: "+person.getUser_name());
+                    return stringMap;
+                }
+            };
             try{
                 switch (state) {
                     //Hangup
                     case TelephonyManager.CALL_STATE_IDLE:
+                        if(previousState==TelephonyManager.CALL_STATE_OFFHOOK){
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    contactHandler.deleteLog();
+                                    if(getActivity()!=null){
+                                        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+                                        requestQueue.add(stringRequest);
+                                    }else{
+                                        Log.e("ERROR","Null Context while passing it to request queue adding call log");
+                                    }
+                                }
+                            }, 1000);
 
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                                "http://10.0.2.2:9090/lifeline_app/fcmnotify.php", new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Log.i("***INFO***", "Notification Sent:" + response);
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                error.printStackTrace();
-                                Toast.makeText(getActivity(), "Connection Failed", Toast.LENGTH_LONG).show();
-                            }
-                        }){
-                            @Override
-                            protected Map<String, String> getParams() throws AuthFailureError {
-                                Map<String, String> stringMap = new HashMap<>();
-                                stringMap.put("user_name", person.getUser_name());
-                                stringMap.put("choice", "2");
-                                return stringMap;
-                            }
-                        };
-                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-                        requestQueue.add(stringRequest);
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                contactHandler.deleteLog();
-                            }
-                        }, 1000);
-                        //}
+                        }
                         previousState=TelephonyManager.CALL_STATE_IDLE;
                         Log.i("Call Status", "CALL_STATE_IDLE");
                         break;
                     //Outgoing
                     case TelephonyManager.CALL_STATE_OFFHOOK:
-                        /*
-                        if(previousState==TelephonyManager.CALL_STATE_IDLE){}
-                        */
+                        //if(previousState==TelephonyManager.CALL_STATE_IDLE){}
                         previousState=TelephonyManager.CALL_STATE_OFFHOOK;
                         Log.i("Call Status", "CALL_STATE_OFFHOOK");
                         break;

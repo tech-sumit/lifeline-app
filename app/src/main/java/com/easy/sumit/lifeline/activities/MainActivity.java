@@ -27,11 +27,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.R;
+import com.easy.sumit.lifeline.fragments.AboutUs;
+import com.easy.sumit.lifeline.fragments.ContactUs;
 import com.easy.sumit.lifeline.fragments.PersonSearchFragment;
 import com.easy.sumit.lifeline.fragments.ProfileFragment;
+import com.easy.sumit.lifeline.fragments.UserReview;
 import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
 import com.easy.sumit.lifeline.utils.Constants;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,7 +72,6 @@ public class MainActivity extends AppCompatActivity
                     break;
             }
         }
-        updateFirebaseID();
         webView= (WebView) findViewById(R.id.webView);
         webView.loadUrl("http://10.0.2.2:9090/lifeline_app/webpage.php");
 
@@ -82,44 +83,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-    }
-
-    private void updateFirebaseID(){
-        final String fid=FirebaseInstanceId.getInstance().getToken();
-        if(fid!=null) {
-            if (!fid.equals("null")) {
-                StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                        "http://10.0.2.2:9090/lifeline_app/fcmnotify.php", new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("**Token Update Responce", "responce:" + response);
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        Toast.makeText(MainActivity.this, "Connection Failed", Toast.LENGTH_LONG).show();
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> stringMap = new HashMap<>();
-                        stringMap.put("user_name", "" + user_name);
-                        stringMap.put("firebaseID", "" + fid);
-                        stringMap.put("choice", "1");
-                        return stringMap;
-                    }
-                };
-                RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-                requestQueue.add(stringRequest);
-                Log.i("***fid***", "" + fid);
-
-            } else {
-                Log.i("***fid***", "NULL :" + fid);
-            }
-        }else{
-            Log.i("***fid***", "NULL fid REFERENCE");
-        }
     }
 
     public void setPerson(){
@@ -186,6 +149,7 @@ public class MainActivity extends AppCompatActivity
             ProfileFragment profileFragment=new ProfileFragment();
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction()
+                    .addToBackStack("ProfileFragment")
                     .replace(R.id.content_home_relative_layout,profileFragment).commit();
         } else if (id == R.id.nav_person) {
             if(webView!=null){
@@ -194,9 +158,26 @@ public class MainActivity extends AppCompatActivity
             PersonSearchFragment personSearchFragment=new PersonSearchFragment();
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction()
+                    .addToBackStack("PersonSearchFragment")
                     .replace(R.id.content_home_relative_layout,personSearchFragment).commit();
+        } else if (id == R.id.nav_review) {
+            UserReview userReview=new UserReview();
+            FragmentManager fragmentManager=getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .addToBackStack("UserReview")
+                    .replace(R.id.content_home_relative_layout,userReview).commit();
         } else if (id == R.id.nav_contact) {
-
+            ContactUs contactUs=new ContactUs();
+            FragmentManager fragmentManager=getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .addToBackStack("ContactUs")
+                    .replace(R.id.content_home_relative_layout,contactUs).commit();
+        } else if (id == R.id.nav_about_us) {
+            AboutUs aboutUs=new AboutUs();
+            FragmentManager fragmentManager=getSupportFragmentManager();
+            fragmentManager.beginTransaction()
+                    .addToBackStack("AboutUs")
+                    .replace(R.id.content_home_relative_layout,aboutUs).commit();
         } else if (id== R.id.nav_log_out){
             SharedPreferences sharedPreferences=getSharedPreferences("lifeline",MODE_PRIVATE);
             sharedPreferences.edit().clear().apply();

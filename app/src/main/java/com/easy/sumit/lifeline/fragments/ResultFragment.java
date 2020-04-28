@@ -14,6 +14,7 @@ import android.widget.ListView;
 import com.easy.sumit.lifeline.R;
 import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.CustomAdapter;
 import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.ListModel;
+import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,11 +29,14 @@ public class ResultFragment extends Fragment {
     private int OUTPUT_STATUS = 0;
     private JSONArray jsonArray;
     private CustomAdapter adapter;
+    private Person person;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        person=new Person();
+        person.setAllByPreferences(getContext());
         if (getArguments() != null) {
             output = getArguments().getString("output");
             if(savedInstanceState!=null){
@@ -90,7 +94,7 @@ public class ResultFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     ListModel listModel = arrayList.get(position);
                     Log.i("***Item Selected***", listModel.getName());
-                    DetailResult detailResult=DetailResult.newInstance(jsonArray,position);
+                    DetailResult detailResult=DetailResult.newInstance(jsonArray,position,person.getUser_name(),person.getName());
                     FragmentManager fragmentManager=getFragmentManager();
                     fragmentManager.beginTransaction()
                             .replace(R.id.resultLayout,detailResult)

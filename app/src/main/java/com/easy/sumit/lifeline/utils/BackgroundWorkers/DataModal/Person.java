@@ -14,6 +14,8 @@ public class Person {
     private String user_name=null;
     private String user_pass=null;
     private String user_mail=null;
+    private String sec_question=null;
+    private String sec_answer=null;
     private String name=null;
     private String blood_group=null;
     private String gender=null;
@@ -36,6 +38,14 @@ public class Person {
 
     public void setUser_mail(String user_mail) {
         this.user_mail = user_mail;
+    }
+
+    public void setSec_question(String sec_question) {
+        this.sec_question = sec_question;
+    }
+
+    public void setSec_answer(String sec_answer) {
+        this.sec_answer = sec_answer;
     }
 
     public void setName(String name) {
@@ -183,6 +193,14 @@ public class Person {
 
     public String getUser_mail(){
         return user_mail;
+    }
+
+    public String getSec_question() {
+        return sec_question;
+    }
+
+    public String getSec_answer() {
+        return sec_answer;
     }
 
     public String getName(){
