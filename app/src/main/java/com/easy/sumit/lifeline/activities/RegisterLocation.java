@@ -31,6 +31,8 @@ public class RegisterLocation extends AppCompatActivity{
     private String user_name;
     private String user_mail;
     private String user_pass;
+    private String sec_question;
+    private String sec_answer;
     private String state="";
     private String district="";
     private String sub_district="";
@@ -54,6 +56,8 @@ public class RegisterLocation extends AppCompatActivity{
             user_name = bundle.getString(Constants.USER_NAME);
             user_mail = bundle.getString(Constants.USER_MAIL);
             user_pass = bundle.getString(Constants.USER_PASS);
+            sec_question= bundle.getString(Constants.SEC_QUESTION);
+            sec_answer= bundle.getString(Constants.SEC_ANSWER);
         }
 
         arrayList = new ArrayList<>();
@@ -87,6 +91,8 @@ public class RegisterLocation extends AppCompatActivity{
         bundle.putString(Constants.USER_NAME,user_name);
         bundle.putString(Constants.USER_MAIL,user_mail);
         bundle.putString(Constants.USER_PASS,user_pass);
+        bundle.putString(Constants.SEC_QUESTION,sec_question);
+        bundle.putString(Constants.SEC_ANSWER,sec_answer);
         bundle.putString(Constants.STATE,state);
         bundle.putString(Constants.DISTRICT,district);
         bundle.putString(Constants.SUB_DISTRICT,sub_district);

@@ -11,8 +11,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,7 +72,7 @@ public class ProfileFragment extends Fragment{
         personGender.setText("Gender: "+person.getGender());
         personLastDonated.setText("Last Donated: "+person.getLast_donated());
         personMail.setText("Mail: "+person.getUser_mail());
-        personContact.setText("Contact No. ".concat(person.getContact_no()));
+        personContact.setText("Contact No. "+person.getContact_no());
         personAddress.setText("Address: "+person.getAddress());
         personUserName.setText("Username: "+person.getUser_name());
         personState.setText("State: "+person.getState());
@@ -90,7 +93,7 @@ public class ProfileFragment extends Fragment{
                 Button changeLastDonated= (Button) view1.findViewById(R.id.changeLastDonated);
                 Button changeLocation= (Button) view1.findViewById(R.id.changeLocation);
                 Button changeContactNo= (Button) view1.findViewById(R.id.changeContactNo);
-
+                Button changeSecurityQuestion= (Button) view1.findViewById(R.id.changeSecurityQuestion);
                 changePassword.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -107,7 +110,7 @@ public class ProfileFragment extends Fragment{
                             public void onClick(View v) {
                                 if(!oldPassword.getText().toString().equals("")){
                                     if(!newPassword.getText().toString().equals("")){
-                                       if(!confPassword.getText().toString().equals("")){
+                                        if(!confPassword.getText().toString().equals("")){
                                             if(newPassword.getText().toString().equals(""+confPassword.getText().toString())){
                                                 if(!(newPassword.getText().toString().length() <5)) {
                                                     String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
@@ -143,9 +146,9 @@ public class ProfileFragment extends Fragment{
                                             }else{
                                                 Toast.makeText(getContext(),"Passwords not match",Toast.LENGTH_SHORT).show();
                                             }
-                                       }else{
-                                           Toast.makeText(getContext(),"Confirm password",Toast.LENGTH_SHORT).show();
-                                       }
+                                        }else{
+                                            Toast.makeText(getContext(),"Confirm password",Toast.LENGTH_SHORT).show();
+                                        }
                                     }else{
                                         Toast.makeText(getContext(),"Enter new password",Toast.LENGTH_SHORT).show();
                                     }
@@ -198,6 +201,7 @@ public class ProfileFragment extends Fragment{
                                                 changeLastDonatedDialog.cancel();
                                                 dialog.cancel();
                                                 person.setLast_donated(newLastDonated.getText().toString());
+                                                person.updatePreferences(getContext());
                                                 personLastDonated.setText("Last donated: "+person.getLast_donated());
                                             }
                                         }, new Response.ErrorListener() {
@@ -267,6 +271,7 @@ public class ProfileFragment extends Fragment{
                                                 changeContactNoDialog.cancel();
                                                 dialog.cancel();
                                                 person.setContact_no(newContactNo.getText().toString());
+                                                person.updatePreferences(getContext());
                                                 personContact.setText("Contact No. "+person.getContact_no());
                                             }
                                         }, new Response.ErrorListener() {
@@ -297,7 +302,77 @@ public class ProfileFragment extends Fragment{
                                     return;
                                 }
                             }
-                        });                    }
+                        });
+                    }
+                });
+
+                changeSecurityQuestion.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        View contactChangeView = View.inflate(getContext(), R.layout.update_sec_question_layout, null);
+                        final Dialog changeSecurityQuestionDialog = new Dialog(getContext());
+                        changeSecurityQuestionDialog.setContentView(contactChangeView);
+                        final String[] sec_question = {""};
+                        final Spinner spinnerSecurityQ= (Spinner) changeSecurityQuestionDialog.findViewById(R.id.spinnerSecurityQ);
+                        ArrayAdapter<CharSequence> arrayAdapterSecQuestion= ArrayAdapter.createFromResource(getContext(),
+                                R.array.sec_questions,
+                                R.layout.support_simple_spinner_dropdown_item);
+                        spinnerSecurityQ.setAdapter(arrayAdapterSecQuestion);
+                        spinnerSecurityQ.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                sec_question[0] =spinnerSecurityQ.getSelectedItem().toString();
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+                        final EditText q_answer = (EditText) changeSecurityQuestionDialog.findViewById(R.id.q_answer);
+                        Button update_button= (Button) changeSecurityQuestionDialog.findViewById(R.id.update_button);
+                        changeSecurityQuestionDialog.show();
+
+                        update_button.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(!q_answer.getText().equals("")||!sec_question[0].equals("")) {
+                                    Log.i("Security Question: ",""+sec_question[0]);
+                                    Log.i("Security Answer: ",""+q_answer.getText().toString());
+                                    String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            Toast.makeText(getContext(), "" + response, Toast.LENGTH_SHORT).show();
+                                            changeSecurityQuestionDialog.cancel();
+                                            dialog.cancel();
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            error.printStackTrace();
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> stringMap = new HashMap<>();
+                                            stringMap.put("user_name", "" + person.getUser_name());
+                                            stringMap.put("db_action", "9");
+                                            stringMap.put("total_data", "2");
+                                            stringMap.put("sec_question", "" + sec_question[0]);
+                                            stringMap.put("sec_answer", "" + q_answer.getText().toString());
+                                            return stringMap;
+                                        }
+                                    };
+                                    RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                                    requestQueue.add(stringRequest);
+                                }
+                                else{
+                                    Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
                 });
             }
         });

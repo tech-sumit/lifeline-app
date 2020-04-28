@@ -24,7 +24,7 @@
                 android:layout_weight="1"
                 android:text="Sumit S. Agrawal"
                 android:textAlignment="center"
-                android:textColor="@color/buttonColor"
+                android:textColor="@color/colorText"
                 android:textSize="35sp"
                 android:textStyle="bold" />
 
@@ -38,7 +38,7 @@
                 android:layout_weight="1"
                 android:text="Entrepreneur software developer"
                 android:textAlignment="center"
-                android:textColor="@color/buttonColor"
+                android:textColor="@color/colorText"
                 android:textSize="20sp" />
 
             <TextView
@@ -51,7 +51,7 @@
                 android:layout_weight="1"
                 android:text="Reach us at,\n17.sumitagrawal@gmail.com"
                 android:textAlignment="center"
-                android:textColor="@color/buttonColor"
+                android:textColor="@color/colorText"
                 android:textSize="20sp" />
 
             <TextView
@@ -64,7 +64,7 @@
                 android:layout_weight="1"
                 android:text="Please type and send your suggestions, ideas, requests below"
                 android:textAlignment="center"
-                android:textColor="@color/buttonColor"
+                android:textColor="@color/colorText"
                 android:textSize="19sp" />
 
             <EditText
@@ -78,7 +78,7 @@
                 android:ems="10"
                 android:hint="Feedback"
                 android:inputType="textMultiLine"
-                android:textColor="@color/buttonColor" />
+                android:textColor="@color/colorText" />
 
             <Button
                 android:id="@+id/send_feedback"
@@ -88,9 +88,9 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                android:background="@color/buttonBackgroundColor"
+                android:background="@color/colorButton"
                 android:text="Send Feedback"
-                android:textColor="@color/buttonColor" />
+                android:textColor="@color/colorButtonForeground" />
 
         </LinearLayout>
     </ScrollView>

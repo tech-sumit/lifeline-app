@@ -10,7 +10,7 @@
             android:layout_height="wrap_content"
             android:text="Name:"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/buttonColor" />
+            android:textColor="@color/colorText" />
     </TableRow>
 
     <TableRow
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="Gender:"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/buttonColor" />
+            android:textColor="@color/colorText" />
     </TableRow>
 
     <TableRow
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:text="Last Donated:"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/buttonColor" />
+            android:textColor="@color/colorText" />
     </TableRow>
 
 

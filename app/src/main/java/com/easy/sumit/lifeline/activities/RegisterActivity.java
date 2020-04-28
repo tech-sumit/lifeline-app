@@ -42,6 +42,8 @@ public class RegisterActivity extends AppCompatActivity{
             person.setUser_name(bundle.getString(Constants.USER_NAME));
             person.setUser_mail(bundle.getString(Constants.USER_MAIL));
             person.setUser_pass(bundle.getString(Constants.USER_PASS));
+            person.setSec_question(bundle.getString(Constants.SEC_QUESTION));
+            person.setSec_answer(bundle.getString(Constants.SEC_ANSWER));
             person.setState(bundle.getString(Constants.STATE));
             person.setDistrict(bundle.getString(Constants.DISTRICT));
             person.setSub_district(bundle.getString(Constants.SUB_DISTRICT));

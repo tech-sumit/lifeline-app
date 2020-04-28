@@ -2,59 +2,57 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/darker_gray"
-    android:orientation="vertical">
+    android:background="@android:color/darker_gray">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:layout_weight="1"
         android:background="@color/colorBackground"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/old_password"
+        <TextView
+            android:id="@+id/textView27"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:ems="10"
-            android:hint="Old password"
-            android:inputType="textPassword"
-            android:textColor="@color/colorText" />
+            android:text="Select security question"
+            android:textColor="@color/colorText"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/spinnerSecurityQ"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1" />
 
         <EditText
-            android:id="@+id/new_password"
+            android:id="@+id/q_answer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="New password"
-            android:inputType="textPassword"
-            android:textColor="@color/colorText" />
-
-        <EditText
-            android:id="@+id/conf_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="Confirm password"
-            android:inputType="textPassword"
+            android:hint="Answer"
+            android:inputType="textPersonName"
             android:textColor="@color/colorText" />
 
         <Button
-            android:id="@+id/updatePassword"
+            android:id="@+id/update_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@color/colorButton"
+            android:padding="5dp"
             android:text="Update"
             android:textColor="@color/colorButtonForeground" />
+
     </LinearLayout>
 
 </LinearLayout>

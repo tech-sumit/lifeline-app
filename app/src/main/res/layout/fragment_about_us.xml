@@ -26,7 +26,7 @@
                 android:layout_weight="1"
                 android:text="@string/app_name"
                 android:textAlignment="center"
-                android:textColor="@android:color/black"
+                android:textColor="@color/colorText"
                 android:textSize="50sp" />
 
             <TextView
@@ -36,6 +36,7 @@
                 android:layout_weight="1"
                 android:text="Version 1.0"
                 android:textAlignment="center"
+                android:textColor="@color/colorText"
                 android:textSize="18sp" />
 
             <TextView
@@ -49,7 +50,7 @@
                 android:text="The Lifeline app is created for people.This app is create to make availiblity of persons with the blood group which is needed in emergency. This app works with the help of peoples. The persons join this app by registering themselfs by sharing proper information with lifeline app. The registered person with the need of blood in emergency case searches selects the proper location and gets the list of all the registered users with taht lcation with the blood group spacified. "
                 android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="?attr/colorControlNormal"
+                android:textColor="@color/colorText"
                 android:textSize="16sp" />
 
             <TextView
@@ -61,7 +62,7 @@
                 android:layout_weight="1"
                 android:text='"Thanking"'
                 android:textAlignment="center"
-                android:textColor="@android:color/background_dark"
+                android:textColor="@color/colorText"
                 android:textSize="18sp" />
 
             <TextView
@@ -72,6 +73,7 @@
                 android:text="I thank my parents to inspire me. The support of my parents and my teachers made this project possible."
                 android:textAlignment="center"
                 android:textAllCaps="false"
+                android:textColor="@color/colorText"
                 android:textSize="16sp" />
 
             <TextView
@@ -82,7 +84,7 @@
                 android:layout_weight="1"
                 android:text="Designed and devloped by,\n Sumit S. Agrawal"
                 android:textAlignment="center"
-                android:textColor="@android:color/background_dark"
+                android:textColor="@color/colorText"
                 android:textSize="18sp" />
 
             <TextView
@@ -93,7 +95,7 @@
                 android:layout_weight="1"
                 android:text='"Making World easy"'
                 android:textAlignment="center"
-                android:textColor="@android:color/background_dark"
+                android:textColor="@color/colorText"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

@@ -96,6 +96,8 @@ public class Person {
         user_name=bundle.getString(Constants.USER_NAME);
         user_pass=bundle.getString(Constants.USER_PASS);
         user_mail=bundle.getString(Constants.USER_MAIL);
+        sec_question=bundle.getString(Constants.SEC_QUESTION);
+        sec_answer=bundle.getString(Constants.SEC_ANSWER);
         name=bundle.getString(Constants.NAME);
         blood_group=bundle.getString(Constants.BLOOD_GROUP);
         gender=bundle.getString(Constants.GENDER);
@@ -117,6 +119,8 @@ public class Person {
                 user_name = jsonObject.getString("user_name");
                 user_pass = jsonObject.getString("user_pass");
                 user_mail = jsonObject.getString("user_mail");
+                sec_question= jsonObject.getString("sec_question");
+                sec_answer= jsonObject.getString("sec_answer");
                 name = jsonObject.getString("name");
                 blood_group = jsonObject.getString("blood_group");
                 gender = jsonObject.getString("gender");
@@ -131,6 +135,8 @@ public class Person {
                 Log.i("***Data***","Person{\n"+getUser_name()+
                                             "\n"+getUser_pass()+
                                             "\n"+getUser_mail()+
+                                            "\n"+getSec_question()+
+                                            "\n"+getSec_answer()+
                                             "\n"+getName()+
                                             "\n"+getBlood_group()+
                                             "\n"+getGender()+
@@ -156,6 +162,8 @@ public class Person {
         user_name=pref.getString("user_name",null);
         user_pass=pref.getString("user_pass",null);
         user_mail=pref.getString("user_mail",null);
+        sec_question=pref.getString("sec_question",null);
+        sec_answer=pref.getString("sec_answer",null);
         name=pref.getString("name",null);
         blood_group=pref.getString("blood_group",null);
         gender=pref.getString("gender",null);
@@ -170,6 +178,8 @@ public class Person {
         Log.i("***Data by pref***","Person{\n"+getUser_name()+
                 "\n"+getUser_pass()+
                 "\n"+getUser_mail()+
+                "\n"+getSec_question()+
+                "\n"+getSec_answer()+
                 "\n"+getName()+
                 "\n"+getBlood_group()+
                 "\n"+getGender()+
@@ -252,6 +262,8 @@ public class Person {
         bundle.putString(Constants.USER_NAME,user_name);
         bundle.putString(Constants.USER_PASS,user_pass);
         bundle.putString(Constants.USER_MAIL,user_mail);
+        bundle.putString(Constants.SEC_QUESTION,sec_question);
+        bundle.putString(Constants.SEC_ANSWER,sec_answer);
         bundle.putString(Constants.NAME,name);
         bundle.putString(Constants.BLOOD_GROUP,blood_group);
         bundle.putString(Constants.GENDER,gender);
@@ -271,6 +283,8 @@ public class Person {
         editor.putString("user_name",user_name);
         editor.putString("user_pass",user_pass);
         editor.putString("user_mail",user_mail);
+        editor.putString("sec_question",sec_question);
+        editor.putString("sec_answer",sec_answer);
         editor.putString("name",name);
         editor.putString("blood_group",blood_group);
         editor.putString("gender",gender);
@@ -287,6 +301,8 @@ public class Person {
                 "\n"+pref.getString("user_name",null)+
                 "\n"+pref.getString("user_pass",null)+
                 "\n"+pref.getString("user_mail",null)+
+                "\n"+pref.getString("sec_question",null)+
+                "\n"+pref.getString("sec_answer",null)+
                 "\n"+pref.getString("name",null)+
                 "\n"+pref.getString("blood_group",null)+
                 "\n"+pref.getString("gender",null)+

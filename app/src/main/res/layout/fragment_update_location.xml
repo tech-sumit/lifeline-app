@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:layout_height="wrap_content"
+    android:background="@android:color/darker_gray"
     tools:context="com.easy.sumit.lifeline.fragments.UpdateLocationFrgment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -10,6 +10,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:background="@color/colorBackground"
         android:orientation="vertical">
 
         <TextView
@@ -21,7 +23,7 @@
             android:text="Set Location"
             android:textAlignment="center"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/buttonColor" />
+            android:textColor="@color/colorText" />
 
         <TextView
             android:id="@+id/textView9"
@@ -32,7 +34,7 @@
             android:text="State"
             android:textAlignment="textStart"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/buttonColor"
+            android:textColor="@color/colorText"
             android:textSize="20dp" />
 
         <Spinner
@@ -52,7 +54,7 @@
             android:text="District"
             android:textAlignment="textStart"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/buttonColor"
+            android:textColor="@color/colorText"
             android:textSize="20dp" />
 
         <Spinner
@@ -73,7 +75,7 @@
             android:text="Sub District"
             android:textAlignment="textStart"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/buttonColor"
+            android:textColor="@color/colorText"
             android:textSize="20dp" />
 
         <Spinner
@@ -91,10 +93,11 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="@color/buttonBackgroundColor"
+            android:background="@color/colorButton"
             android:text="Update"
             android:textAlignment="center"
-            android:textColor="@color/buttonColor" />
+            android:textColor="@color/colorButtonForeground"
+            android:textSize="15sp" />
     </LinearLayout>
 
 </LinearLayout>

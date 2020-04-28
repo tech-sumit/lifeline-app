@@ -3,10 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_margin="10dp"
     tools:context="com.easy.sumit.lifeline.activities.RegisterLocation">
 
     <ScrollView
@@ -27,7 +24,7 @@
                 android:text="Set Location"
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/buttonColor" />
+                android:textColor="@color/colorText" />
 
             <TextView
                 android:id="@+id/textState"
@@ -36,7 +33,7 @@
                 android:text="State"
                 android:textAlignment="textStart"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/buttonColor"
+                android:textColor="@color/colorText"
                 android:textSize="20dp" />
 
             <Spinner
@@ -52,7 +49,7 @@
                 android:text="District"
                 android:textAlignment="textStart"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/buttonColor"
+                android:textColor="@color/colorText"
                 android:textSize="20dp" />
 
             <Spinner
@@ -69,7 +66,7 @@
                 android:text="Sub District"
                 android:textAlignment="textStart"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/buttonColor"
+                android:textColor="@color/colorText"
                 android:textSize="20dp" />
 
             <Spinner
@@ -83,10 +80,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@color/buttonBackgroundColor"
+                android:background="@color/colorButton"
                 android:text="Submit"
                 android:textAlignment="center"
-                android:textColor="@color/buttonColor" />
+                android:textColor="@color/colorButtonForeground" />
 
         </LinearLayout>
     </ScrollView>

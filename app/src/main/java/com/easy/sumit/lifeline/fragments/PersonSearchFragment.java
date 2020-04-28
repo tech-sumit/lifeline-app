@@ -76,7 +76,6 @@ public class PersonSearchFragment extends Fragment implements View.OnClickListen
                 R.array.state,
                 android.R.layout.simple_dropdown_item_1line);
         stateSpinner.setAdapter(arrayAdapter);
-
         stateSpinner.setOnItemSelectedListener(new StateEventListener(this));
         districtSpinner.setOnItemSelectedListener(new DistrictEventListener(this));
         sub_districtSpinner.setOnItemSelectedListener(new SubDistrictEventListener(this));

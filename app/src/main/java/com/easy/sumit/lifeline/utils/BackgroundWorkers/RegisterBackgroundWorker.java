@@ -55,6 +55,8 @@ public class RegisterBackgroundWorker{
                 Log.i("INFO","Username: "+person.getUser_name()+
                         "\nMail: "+person.getUser_mail()+
                         "\nPassword: "+person.getUser_pass()+
+                        "\nSEC Question: "+person.getSec_question()+
+                        "\nSEC Answer: "+person.getSec_answer()+
                         "\nName: "+person.getName()+
                         "\nAge: "+person.getAge()+
                         "\nBlood group: "+person.getBlood_group()+
@@ -70,6 +72,8 @@ public class RegisterBackgroundWorker{
                 stringMap.put("user_name",person.getUser_name());
                 stringMap.put("user_mail",person.getUser_mail());
                 stringMap.put("user_pass",person.getUser_pass());
+                stringMap.put("sec_question",person.getSec_question());
+                stringMap.put("sec_answer",person.getSec_answer());
                 stringMap.put("name",person.getName());
                 stringMap.put("blood_group",person.getBlood_group());
                 stringMap.put("gender",person.getGender());

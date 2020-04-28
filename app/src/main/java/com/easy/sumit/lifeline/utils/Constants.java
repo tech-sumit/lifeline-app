@@ -5,6 +5,8 @@ public class Constants {
     public static final String USER_NAME="USER_NAME";
     public static final String USER_PASS="USER_PASS";
     public static final String USER_MAIL="USER_MAIL";
+    public static final String SEC_QUESTION="SEC_QUESTION";
+    public static final String SEC_ANSWER="SEC_ANSWER";
     public static final String NAME="NAME";
     public static final String BLOOD_GROUP="";
     public static final String GENDER="GENDER";

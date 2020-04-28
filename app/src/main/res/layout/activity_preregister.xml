@@ -3,21 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_margin="10dp"
     tools:context=".activities.PreRegisterActivity">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/scrollView" >
+        android:layout_height="fill_parent">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/user_name_register"
@@ -28,7 +25,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="30dp"
                 android:hint="Username"
-                android:textColor="@color/buttonColor" />
+                android:textColor="@color/colorText" />
 
             <EditText
                 android:id="@+id/user_mail_register"
@@ -41,7 +38,7 @@
                 android:ems="10"
                 android:hint="e-Mail"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/buttonColor" />
+                android:textColor="@color/colorText" />
 
             <EditText
                 android:id="@+id/user_pass_register"
@@ -54,7 +51,7 @@
                 android:ems="10"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:textColor="@color/buttonColor" />
+                android:textColor="@color/colorText" />
 
             <EditText
                 android:id="@+id/user_pass_conf_register"
@@ -67,7 +64,31 @@
                 android:ems="10"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
-                android:textColor="@color/buttonColor" />
+                android:textColor="@color/colorText" />
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="30dp"
+                android:text="Select Security Question"
+                android:textColor="@color/colorText"
+                android:textSize="17dp" />
+
+            <Spinner
+                android:id="@+id/spinnerSecQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/text_sec_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:hint="Answer"
+                android:textColor="@color/colorText" />
 
             <Button
                 android:id="@+id/buttonRegister1"
@@ -76,12 +97,12 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/user_pass_conf_register"
-                android:layout_marginTop="30dp"
-                android:background="@color/buttonBackgroundColor"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimary"
                 android:nestedScrollingEnabled="false"
                 android:onClick="onPreRegister"
                 android:text="Register"
-                android:textColor="@color/buttonColor" />
+                android:textColor="@color/colorButtonForeground" />
 
         </LinearLayout>
     </ScrollView>

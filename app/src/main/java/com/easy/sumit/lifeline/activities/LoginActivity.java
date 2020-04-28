@@ -1,14 +1,19 @@
 package com.easy.sumit.lifeline.activities;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,65 +52,129 @@ public class LoginActivity extends AppCompatActivity{
         forgetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                View passwordChangeView=View.inflate(LoginActivity.this,R.layout.update_password_layout,null);
-                final Dialog changePasswordDialog=new Dialog(LoginActivity.this);
-                changePasswordDialog.setContentView(passwordChangeView);
-                final EditText oldPassword= (EditText) changePasswordDialog.findViewById(R.id.old_password);
-                final EditText newPassword= (EditText) changePasswordDialog.findViewById(R.id.new_password);
-                final EditText confPassword= (EditText) changePasswordDialog.findViewById(R.id.conf_password);
-                Button updatePassword= (Button) changePasswordDialog.findViewById(R.id.updatePassword);
-                changePasswordDialog.show();
-                updatePassword.setOnClickListener(new View.OnClickListener() {
+                AlertDialog.Builder builder= new AlertDialog.Builder(LoginActivity.this);
+                View passwordChangeView=View.inflate(LoginActivity.this,R.layout.forget_password_layout,null);
+                builder.setView(passwordChangeView);
+                builder.setCancelable(true);
+                final AlertDialog forgotPasswordDialog=builder.create();
+                final String[] sec_question = {""};
+
+                final EditText user_name_edittext= (EditText) passwordChangeView.findViewById(R.id.user_name_edittext);
+                final EditText sec_question_answer_edittext=(EditText) passwordChangeView.findViewById(R.id.sec_question_answer_edittext);
+                final EditText pass_text=(EditText) passwordChangeView.findViewById(R.id.pass_text);
+                final EditText conf_pass_text=(EditText) passwordChangeView.findViewById(R.id.conf_pass_text);
+                Button verify_button= (Button) passwordChangeView.findViewById(R.id.verify_button);
+                Button update_password_button=(Button) passwordChangeView.findViewById(R.id.update_password_button);
+
+                final LinearLayout forgot_password1= (LinearLayout) passwordChangeView.findViewById(R.id.forgot_password1);
+                final LinearLayout forgot_password2= (LinearLayout) passwordChangeView.findViewById(R.id.forgot_password2);
+
+                final Spinner sec_questionSpinner= (Spinner) passwordChangeView.findViewById(R.id.sec_questionSpinner);
+                ArrayAdapter<CharSequence> arrayAdapterSecQuestion= ArrayAdapter.createFromResource(LoginActivity.this,
+                        R.array.sec_questions,
+                        R.layout.support_simple_spinner_dropdown_item);
+                sec_questionSpinner.setAdapter(arrayAdapterSecQuestion);
+                sec_questionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        sec_question[0] =sec_questionSpinner.getSelectedItem().toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+                verify_button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(!oldPassword.getText().toString().equals("")){
-                            if(!newPassword.getText().toString().equals("")){
-                                if(!confPassword.getText().toString().equals("")){
-                                    if(newPassword.getText().toString().equals(""+confPassword.getText().toString())){
-                                        if(!(newPassword.getText().toString().length() <5)) {
-                                            String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
-                                            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                                                @Override
-                                                public void onResponse(String response) {
-                                                    Toast.makeText(LoginActivity.this, "" + response, Toast.LENGTH_SHORT).show();
-                                                    changePasswordDialog.cancel();
-                                                }
-                                            }, new Response.ErrorListener() {
-                                                @Override
-                                                public void onErrorResponse(VolleyError error) {
-                                                    error.printStackTrace();
-                                                }
-                                            }) {
-                                                @Override
-                                                protected Map<String, String> getParams() throws AuthFailureError {
-                                                    Map<String, String> stringMap = new HashMap<>();
-                                                    stringMap.put("user_name", "" + person.getUser_name());
-                                                    stringMap.put("db_action", "5");
-                                                    stringMap.put("total_data", "2");
-                                                    stringMap.put("old_password", "" + oldPassword.getText().toString());
-                                                    stringMap.put("new_password", "" + newPassword.getText().toString());
-                                                    return stringMap;
-                                                }
-                                            };
-                                            RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
-                                            requestQueue.add(stringRequest);
-                                        }else{
-                                            Toast.makeText(LoginActivity.this,"Password length is short",Toast.LENGTH_SHORT).show();
+                        if(!user_name_edittext.getText().toString().equals("")&&
+                                !sec_question_answer_edittext.getText().toString().equals("")&&
+                                !sec_question[0].equals("")){
+                            String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    if(response!=null){
+                                        Toast.makeText(LoginActivity.this,""+response,Toast.LENGTH_SHORT).show();
+                                        if(response.equals("User verified")){
+                                            forgot_password1.setVisibility(View.GONE);
+                                            forgot_password2.setVisibility(View.VISIBLE);
                                         }
                                     }else{
-                                        Toast.makeText(LoginActivity.this,"Passwords not match",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this,"Unknown responce",Toast.LENGTH_SHORT).show();
                                     }
-                                }else{
-                                    Toast.makeText(LoginActivity.this,"Confirm password",Toast.LENGTH_SHORT).show();
+                                    Log.i("Responce", ""+response);
                                 }
-                            }else{
-                                Toast.makeText(LoginActivity.this,"Enter new password",Toast.LENGTH_SHORT).show();
-                            }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    error.printStackTrace();
+                                }
+                            }) {
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Map<String, String> stringMap = new HashMap<>();
+                                    stringMap.put("user_name", "" + user_name_edittext.getText().toString());
+                                    stringMap.put("db_action", "11");
+                                    stringMap.put("total_data", "2");
+                                    stringMap.put("sec_question", sec_question[0]);
+                                    stringMap.put("sec_answer", sec_question_answer_edittext.getText().toString());
+                                    return stringMap;
+                                }
+                            };
+                            RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+                            requestQueue.add(stringRequest);
+
                         }else{
-                            Toast.makeText(LoginActivity.this,"Enter old password",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this,"Please fill all fields",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+                update_password_button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(!pass_text.getText().toString().equals("")){
+                            if(!conf_pass_text.getText().toString().equals("")) {
+                                if(pass_text.getText().toString().equals(conf_pass_text.getText().toString())) {
+                                    String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            Toast.makeText(LoginActivity.this, "" + response, Toast.LENGTH_SHORT).show();
+                                            forgotPasswordDialog.cancel();
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            error.printStackTrace();
+                                        }
+                                    }) {
+                                        @Override
+                                        protected Map<String, String> getParams() throws AuthFailureError {
+                                            Map<String, String> stringMap = new HashMap<>();
+                                            stringMap.put("user_name", "" + user_name_edittext.getText().toString());
+                                            stringMap.put("db_action", "10");
+                                            stringMap.put("total_data", "1");
+                                            stringMap.put("new_password", "" + pass_text.getText().toString());
+                                            return stringMap;
+                                        }
+                                    };
+                                    RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+                                    requestQueue.add(stringRequest);
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Passwords not match", Toast.LENGTH_SHORT).show();
+                                }
+                            }else{
+                                Toast.makeText(LoginActivity.this, "Please re-enter password", Toast.LENGTH_SHORT).show();
+                            }
+                        }else{
+                            Toast.makeText(LoginActivity.this, "Please enter new password", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+                forgotPasswordDialog.show();
             }
         });
     }

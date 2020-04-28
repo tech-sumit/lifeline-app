@@ -3,7 +3,7 @@
     android:id="@+id/personSearchFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/colorBackground"
     tools:context="com.easy.sumit.lifeline.fragments.PersonSearchFragment">
 
     <ScrollView
@@ -22,13 +22,12 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_margin="5dp"
-                android:layout_marginTop="28dp"
+                android:layout_margin="20dp"
                 android:text="Select blood group and location "
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/buttonColor"
-                android:textSize="23sp" />
+                android:textColor="@color/colorText"
+                android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/textView17"
@@ -37,14 +36,14 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView2"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:text="Blood group"
                 android:textAlignment="textStart"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/buttonColor"
-                android:textSize="17sp" />
+                android:textColor="@color/colorText"
+                android:textSize="20sp" />
 
             <Spinner
                 android:id="@+id/spinnerBloodGroup"
@@ -62,14 +61,14 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/textView2"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:text="State"
                 android:textAlignment="textStart"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/buttonColor"
-                android:textSize="17sp" />
+                android:textColor="@color/colorText"
+                android:textSize="20sp" />
 
             <Spinner
                 android:id="@+id/stateSelector"
@@ -77,6 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/spinnerBloodGroup"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:textAlignment="center" />
 
             <TextView
@@ -86,14 +86,14 @@
                 android:layout_above="@+id/sub_districtSelector"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:text="District"
                 android:textAlignment="textStart"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/buttonColor"
-                android:textSize="17sp" />
+                android:textColor="@color/colorText"
+                android:textSize="20sp" />
 
             <Spinner
                 android:id="@+id/districtSelector"
@@ -112,14 +112,14 @@
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/stateSelector"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:text="Sub District"
                 android:textAlignment="textStart"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/buttonColor"
-                android:textSize="17sp" />
+                android:textColor="@color/colorText"
+                android:textSize="20sp" />
 
             <Spinner
                 android:id="@+id/sub_districtSelector"
@@ -127,6 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/districtSelector"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:textAlignment="center" />
 
             <Button
@@ -137,11 +138,11 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/sub_districtSelector"
                 android:layout_margin="5dp"
-                android:background="@color/buttonBackgroundColor"
+                android:background="@color/colorButton"
                 android:nestedScrollingEnabled="false"
                 android:text="Search"
-                android:textColor="@color/buttonColor"
-                android:textSize="13sp" />
+                android:textColor="@color/colorButtonForeground"
+                android:textSize="15sp" />
         </LinearLayout>
     </ScrollView>
 

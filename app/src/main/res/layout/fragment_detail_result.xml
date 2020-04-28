@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context="com.easy.sumit.lifeline.fragments.DetailResult"
     android:id="@+id/detailResultLayout"
-    android:background="#ffffff">
+    android:background="@color/colorBackground">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -62,7 +62,7 @@
                             android:text="Name"
                             android:textAlignment="center"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textColor="@color/buttonColor"
+                            android:textColor="@color/colorText"
                             android:textSize="35sp"
                             tools:layout_editor_absoluteX="23dp"
                             tools:layout_editor_absoluteY="8dp" />
@@ -77,7 +77,7 @@
                             android:text="Gender: "
                             android:textAlignment="center"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/buttonColor"
+                            android:textColor="@color/colorText"
                             android:textSize="20sp"
                             tools:layout_editor_absoluteX="33dp"
                             tools:layout_editor_absoluteY="57dp" />
@@ -92,7 +92,7 @@
                             android:text="Last Donated:"
                             android:textAlignment="center"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/buttonColor"
+                            android:textColor="@color/colorText"
                             android:textSize="20sp"
                             tools:layout_editor_absoluteX="8dp"
                             tools:layout_editor_absoluteY="81dp" />
@@ -107,7 +107,7 @@
                             android:text="Address"
                             android:textAlignment="center"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/buttonColor"
+                            android:textColor="@color/colorText"
                             android:textSize="20sp"
                             tools:layout_editor_absoluteX="33dp"
                             tools:layout_editor_absoluteY="113dp" />
@@ -122,7 +122,7 @@
                             android:text="BG"
                             android:textAlignment="center"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:textColor="@color/buttonColor"
+                            android:textColor="@color/colorText"
                             android:textSize="55sp"
                             tools:layout_editor_absoluteX="34dp"
                             tools:layout_editor_absoluteY="144dp" />
@@ -157,10 +157,11 @@
                     android:id="@+id/previousButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/buttonBackgroundColor"
+                    android:layout_marginRight="2dp"
+                    android:background="@color/colorButton"
                     android:text="&lt;"
                     android:textAlignment="center"
-                    android:textColor="@color/buttonColor"
+                    android:textColor="@android:color/white"
                     android:textSize="30dp" />
 
                 <Button
@@ -170,20 +171,21 @@
                     android:layout_column="1"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="0.10"
-                    android:background="@color/buttonBackgroundColor"
+                    android:background="@color/colorButton"
                     android:text="Call Now"
                     android:textAlignment="center"
-                    android:textColor="@color/buttonColor"
+                    android:textColor="@color/colorButtonForeground"
                     android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/nextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/buttonBackgroundColor"
+                    android:layout_marginLeft="2dp"
+                    android:background="@color/colorButton"
                     android:text="&gt;"
                     android:textAlignment="center"
-                    android:textColor="@color/buttonColor"
+                    android:textColor="@android:color/white"
                     android:textSize="30dp" />
 
             </LinearLayout>
@@ -203,6 +205,7 @@
                 android:layout_marginTop="8dp"
                 android:text="Warning: Do not make calls without actual needs. Person can block your account then you will be unable to get this service any more. Calling person without any proper reason or to make missuse of contact is CRIME."
                 android:textAlignment="center"
+                android:textColor="@color/colorText"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"

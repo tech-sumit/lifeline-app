@@ -2,26 +2,37 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:background="@android:color/darker_gray"
+    android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/newContactNo"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_height="match_parent"
+        android:layout_margin="3dp"
         android:layout_weight="1"
-        android:ems="10"
-        android:hint="New contact no"
-        android:inputType="phone"
-        android:textColor="@color/buttonColor" />
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/updateContactNo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-        android:background="@color/buttonBackgroundColor"
-        android:text="Update"
-        android:textColor="@color/buttonColor" />
+        <EditText
+            android:id="@+id/newContactNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="New contact no"
+            android:inputType="phone"
+            android:textColor="@color/colorText" />
+
+        <Button
+            android:id="@+id/updateContactNo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@color/colorButton"
+            android:text="Update"
+            android:textColor="@color/colorButtonForeground" />
+    </LinearLayout>
+
 </LinearLayout>

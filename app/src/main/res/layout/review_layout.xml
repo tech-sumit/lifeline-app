@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorBackground"
-    android:orientation="vertical">
+    android:background="@android:color/darker_gray"
+    android:orientation="vertical"
+    android:padding="3dp">
 
     <LinearLayout
         android:id="@+id/notiLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorBackground"
         android:orientation="vertical"
         android:visibility="visible">
 
@@ -23,7 +25,7 @@
             android:text="Is the call recived by this Lifeline app user is for valid reasons? "
             android:textAlignment="viewStart"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/buttonColor" />
+            android:textColor="@color/colorText" />
 
         <Button
             android:id="@+id/notiYES"
@@ -33,10 +35,10 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:background="@color/buttonBackgroundColor"
+            android:background="@color/colorButton"
             android:text="YES"
             android:textAlignment="center"
-            android:textColor="@color/buttonColor"
+            android:textColor="@color/colorButtonForeground"
             android:textSize="14sp" />
 
         <Button
@@ -47,10 +49,10 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:background="@color/buttonBackgroundColor"
+            android:background="@color/colorButton"
             android:text="NO, Report User"
             android:textAlignment="center"
-            android:textColor="@color/buttonColor"
+            android:textColor="@color/colorButtonForeground"
             android:textSize="14sp" />
 
         <Button
@@ -61,10 +63,10 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:background="@color/buttonBackgroundColor"
+            android:background="@color/colorButton"
             android:text="Close"
             android:textAlignment="center"
-            android:textColor="@color/buttonColor"
+            android:textColor="@color/colorButtonForeground"
             android:textSize="14sp" />
 
     </LinearLayout>
@@ -73,6 +75,7 @@
         android:id="@+id/notiLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorBackground"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -85,7 +88,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:inputType="textMultiLine"
-            android:textColor="@color/buttonColor" />
+            android:textColor="@color/colorText" />
 
         <Button
             android:id="@+id/notiReport"
@@ -95,9 +98,9 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:background="@color/buttonBackgroundColor"
+            android:background="@color/colorButton"
             android:text="Submit"
-            android:textColor="@color/buttonColor"
+            android:textColor="@color/colorButtonForeground"
             android:textSize="14sp" />
 
         <Button
@@ -108,9 +111,9 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            android:background="@color/buttonBackgroundColor"
+            android:background="@color/colorButton"
             android:text="Cancel"
-            android:textColor="@color/buttonColor"
+            android:textColor="@color/colorButtonForeground"
             android:textSize="14sp" />
 
     </LinearLayout>
