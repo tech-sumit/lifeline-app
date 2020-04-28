@@ -56,6 +56,9 @@ public class PreRegisterActivity extends AppCompatActivity implements AsyncRespo
             alertDialog.setMessage(output);
             alertDialog.show();
             Intent intent=new Intent(this,RegisterActivity.class);
+            intent.putExtra("user_name",user_name.getText().toString());
+            intent.putExtra("user_mail",user_mail.getText().toString());
+            intent.putExtra("user_pass",user_pass.getText().toString());
             startActivity(intent);
             finish();
         }
