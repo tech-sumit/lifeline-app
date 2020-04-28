@@ -1,3 +1,4 @@
+
 package com.easy.sumit.lifeline.fragments;
 
 import android.content.ActivityNotFoundException;
@@ -46,6 +47,7 @@ public class UserReview extends Fragment {
     private String user_name="";
     ReviewAdapter adapter;
     ListView listResultView;
+    View view;
     public UserReview(){}
 
     @Override
@@ -67,6 +69,7 @@ public class UserReview extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        this.view=view;
         listResultView = (ListView) view.findViewById(R.id.reviewList);
         setListAdapter();
         listResultView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -115,15 +118,15 @@ public class UserReview extends Fragment {
                             }
                             listResultView.setAdapter(adapter);
                         }else {
-                            Toast.makeText(getContext(), "No reviews available", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(view.getContext(), "No reviews available", Toast.LENGTH_SHORT).show();
                             getFragmentManager().popBackStack();
                         }
                     }else {
-                        Toast.makeText(getContext(), "No reviews available", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "No reviews available", Toast.LENGTH_SHORT).show();
                         getFragmentManager().popBackStack();
                     }
                 }else {
-                    Toast.makeText(getContext(), "No reviews available", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "No reviews available", Toast.LENGTH_SHORT).show();
                     getFragmentManager().popBackStack();
                 }
             }
@@ -147,7 +150,7 @@ public class UserReview extends Fragment {
 
     private void reviewHandler(final String from_user_name,final String date,final String time){
         AlertDialog.Builder builder= new AlertDialog.Builder(getContext());
-        View reviewView=View.inflate(getContext(),R.layout.review_layout,null);
+        View reviewView=View.inflate(view.getContext(),R.layout.review_layout,null);
         builder.setView(reviewView);
         builder.setCancelable(true);
         final AlertDialog alertDialog=builder.create();
@@ -231,7 +234,7 @@ public class UserReview extends Fragment {
                             @Override
                             public void onResponse(String response) {
                                 if(getContext()!=null) {
-                                    Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(view.getContext(), ""+response, Toast.LENGTH_SHORT).show();
                                 }
                                 setListAdapter();
                                 alertDialog.cancel();
@@ -259,10 +262,10 @@ public class UserReview extends Fragment {
                         startActivity(intent);
                     }catch (ActivityNotFoundException exception){
                         exception.printStackTrace();
-                        Toast.makeText(getContext(),"Email clients not found",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(),"Email clients not found",Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(getContext(),"Empty report",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(),"Empty report",Toast.LENGTH_SHORT).show();
                 }
             }
         });

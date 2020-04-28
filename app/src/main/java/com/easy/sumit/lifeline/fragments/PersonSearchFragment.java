@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -140,7 +141,7 @@ public class PersonSearchFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         Bundle bundle=new Bundle();
         bundle.putString(Constants.BLOOD_GROUP, String.valueOf(personBloodGroup.getSelectedItemPosition()));

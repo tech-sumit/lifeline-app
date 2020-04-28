@@ -29,7 +29,6 @@ import com.easy.sumit.lifeline.R;
 import com.easy.sumit.lifeline.datamodal.Person;
 import com.easy.sumit.lifeline.datamodal.URLList;
 import com.easy.sumit.lifeline.utils.Constants;
-import com.easy.sumit.lifeline.utils.ContactHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +50,6 @@ public class DetailResult extends Fragment {
     private TextView last_donated_text;
     private Button previous_button;
     private Button next_button;
-    private ContactHandler contactHandler;
 
     private static int view_count = 0;
     private int json_length = 0;
@@ -127,7 +125,6 @@ public class DetailResult extends Fragment {
         previous_button = view.findViewById(R.id.previousButton);
         next_button = view.findViewById(R.id.nextButton);
 
-        contactHandler = new ContactHandler(getActivity());
         name_text.setText(person.getName());
         gender_text.setText("Gender:".concat(person.getGender()));
         address_text.setText(person.getAddress());
@@ -146,8 +143,6 @@ public class DetailResult extends Fragment {
         call_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                contactHandler.setContact(person.getContact_no());
-                //contactHandler.createContact();
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse("tel:" + person.getContact_no()));
                 startActivity(intent);
@@ -227,8 +222,6 @@ public class DetailResult extends Fragment {
     private class PhoneEndListener extends PhoneStateListener {
         @Override
         public void onCallStateChanged ( int state, String incomingNumber){
-            //final StringRequest stringRequest = new StringRequest(Request.Method.POST,
-            //        "http://10.0.2.2:9090/lifeline_app/call_log.php", new Response.Listener<String>() {
             final StringRequest stringRequest = new StringRequest(Request.Method.POST,
                     URLList.getUrl(getContext(),"call_log"), new Response.Listener<String>() {
                 @Override
@@ -261,7 +254,6 @@ public class DetailResult extends Fragment {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    contactHandler.deleteLog();
                                     if(getActivity()!=null){
                                         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
                                         requestQueue.add(stringRequest);
@@ -270,7 +262,6 @@ public class DetailResult extends Fragment {
                                     }
                                 }
                             }, 1000);
-
                         }
                         previousState=TelephonyManager.CALL_STATE_IDLE;
                         Log.i("Call Status", "CALL_STATE_IDLE");

@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.easy.sumit.lifeline.activities.StartActivity">
+    <item
+        android:id="@+id/nav_contact"
+        android:icon="@drawable/ic_contact"
+        android:title="Contact Us" />
+
+    <item
+        android:id="@+id/nav_about_us"
+        android:icon="@drawable/ic_about"
+        android:title="About Us" />
+
+    <item
+        android:id="@+id/nav_log_out"
+        android:icon="@drawable/ic_exit"
+        android:title="Log Out" />
+</menu>

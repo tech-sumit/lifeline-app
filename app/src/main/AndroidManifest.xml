@@ -48,7 +48,12 @@
         <service
             android:name=".utils.NewsService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <activity
+            android:name=".activities.StartActivity"
+            android:label="@string/title_activity_start"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

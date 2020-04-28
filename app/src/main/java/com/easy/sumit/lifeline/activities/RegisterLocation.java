@@ -1,10 +1,12 @@
 package com.easy.sumit.lifeline.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +16,9 @@ import android.widget.Spinner;
 import com.easy.sumit.lifeline.R;
 import com.easy.sumit.lifeline.backgroundworkers.RemoteLocationRetriever;
 import com.easy.sumit.lifeline.utils.Constants;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -133,11 +138,12 @@ public class RegisterLocation extends AppCompatActivity{
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             state=stateSpinner.getSelectedItem().toString();
+            Log.d("***INFO***","State:"+state);
             Bundle bundle=new Bundle();
             bundle.putString(Constants.USER_NAME,user_name);
             bundle.putString("db_action","1");
             bundle.putString("location_level","2");
-            bundle.putString("data",state);
+            bundle.putString("data",""+(stateSpinner.getSelectedItemPosition()+1));
             remoteLocationRetriever.updateData(districtSpinner,bundle);
             remoteLocationRetriever.start();
             s=1;
@@ -157,16 +163,27 @@ public class RegisterLocation extends AppCompatActivity{
         }
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            district=districtSpinner.getSelectedItem().toString();
-            Bundle bundle=new Bundle();
-            bundle.putString(Constants.USER_NAME,user_name);
-            bundle.putString("db_action","1");
-            bundle.putString("location_level","3");
-            bundle.putString("data",district);
-            remoteLocationRetriever.updateData(subdistrictSpinner,bundle);
-            remoteLocationRetriever.start();
-            d=1;
-            u=0;
+            JSONObject jsonObject=null;
+            try {
+                jsonObject=new JSONObject(""+RegisterLocation.this.getSharedPreferences("lifeline_data",
+                                Context.MODE_PRIVATE).getString("district",null));
+                Log.i("Preference",""+RegisterLocation.this.getSharedPreferences("lifeline_data",
+                        Context.MODE_PRIVATE).getString("district",null)+
+                        "\n"+jsonObject.getString(""+districtSpinner.getSelectedItemPosition()));
+                district=districtSpinner.getSelectedItem().toString();
+                Log.d("***INFO***","District:"+district);
+                Bundle bundle=new Bundle();
+                bundle.putString(Constants.USER_NAME,user_name);
+                bundle.putString("db_action","1");
+                bundle.putString("location_level","3");
+                bundle.putString("data",jsonObject.getString(""+(districtSpinner.getSelectedItemPosition())));
+                remoteLocationRetriever.updateData(subdistrictSpinner,bundle);
+                remoteLocationRetriever.start();
+                d=1;
+                u=0;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -182,7 +199,7 @@ public class RegisterLocation extends AppCompatActivity{
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             sub_district=subdistrictSpinner.getSelectedItem().toString();
-
+            Log.d("***INFO***","SubDistrict:"+sub_district);
             u=1;
         }
 

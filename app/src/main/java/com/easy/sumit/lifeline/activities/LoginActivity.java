@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity{
                         if(!user_name_edittext.getText().toString().equals("")&&
                                 !sec_question_answer_edittext.getText().toString().equals("")&&
                                 !sec_question[0].equals("")){
-                            String url = URLList.getUrl(LoginActivity.this,"login");
+                            String url = URLList.getUrl(LoginActivity.this,"getData");
                             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String response) {
@@ -139,7 +139,7 @@ public class LoginActivity extends AppCompatActivity{
                             if(pass_text.getText().toString().length()>5){
                                 if(!conf_pass_text.getText().toString().equals("")) {
                                     if(pass_text.getText().toString().equals(conf_pass_text.getText().toString())) {
-                                        String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                                        String url = URLList.getUrl(LoginActivity.this,"getData");
                                         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                                             @Override
                                             public void onResponse(String response) {

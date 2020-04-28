@@ -2,34 +2,34 @@
 <defaultsMap>
     <entry>
         <key>call_log</key>
-        <value>http://lifelinebloodbank.esy.es/lifeline/call_log.php</value>
+        <value>http://10.0.2.2:9090/lifeline_app/call_log.php</value>
     </entry>
     <entry>
         <key>check_username</key>
-        <value>http://lifelinebloodbank.esy.es/lifeline/check_username.php</value>
+        <value>http://10.0.2.2:9090/lifeline_app/check_username.php</value>
     </entry>
     <entry>
         <key>eula</key>
-        <value>http://lifelinebloodbank.esy.es/lifeline/eula.html</value>
+        <value>http://10.0.2.2:9090/lifeline_app/eula.html</value>
     </entry>
     <entry>
         <key>getData</key>
-        <value>http://lifelinebloodbank.esy.es/lifeline/getData.php</value>
+        <value>http://10.0.2.2:9090/lifeline_app/getData.php</value>
     </entry>
     <entry>
         <key>getLocation</key>
-        <value>http://lifelinebloodbank.esy.es/lifeline/getLocation.php</value>
+        <value>http://10.0.2.2:9090/lifeline_app/getLocation.php</value>
     </entry>
     <entry>
         <key>login</key>
-        <value>http://lifelinebloodbank.esy.es/lifeline/login.php</value>
+        <value>http://10.0.2.2:9090/lifeline_app/login.php</value>
     </entry>
     <entry>
         <key>register</key>
-        <value>http://lifelinebloodbank.esy.es/lifeline/register.php</value>
+        <value>http://10.0.2.2:9090/lifeline_app/register.php</value>
     </entry>
     <entry>
         <key>webpage</key>
-        <value>http://lifelinebloodbank.esy.es/lifeline/webpage.php</value>
+        <value>http://10.0.2.2:9090/lifeline_app/webpage.php</value>
     </entry>
 </defaultsMap>

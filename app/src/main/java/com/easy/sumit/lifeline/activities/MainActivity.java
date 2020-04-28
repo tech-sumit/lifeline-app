@@ -144,9 +144,9 @@ public class MainActivity extends AppCompatActivity
             intent.putExtras(bundle);
             startActivity(intent);
         } else if (id == R.id.nav_profile) {
-            if(webView!=null){
-                webView.destroy();
-            }
+                if(webView!=null){
+                    webView.destroy();
+                }
             ProfileFragment profileFragment=new ProfileFragment();
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction()

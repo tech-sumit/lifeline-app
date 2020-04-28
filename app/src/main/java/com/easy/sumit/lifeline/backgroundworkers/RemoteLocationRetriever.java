@@ -66,7 +66,8 @@ public class RemoteLocationRetriever{
                 stringMap.put("data",bundle.getString("data"));
                 Log.i("Data tobe posted",""+bundle.getString(Constants.USER_NAME)
                         +"\n"+bundle.getString("db_action")
-                        +"\n"+bundle.getString("location_level"));
+                        +"\n"+bundle.getString("location_level")
+                        +"\n"+bundle.getString("data"));
                 return stringMap;
             }
         });
