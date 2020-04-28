@@ -36,11 +36,8 @@ public class RegisterBackgroundWorker extends AsyncTask<String,Void,String> {
         String user_name = strings[7];
         String user_mail = strings[8];
         String user_pass = strings[9];
-        String lat = strings[10];
-        String lon = strings[11];
-
         try {
-            String check_username_url = "http://10.0.2.2:9090/dbproject/register.php";
+            String check_username_url = "http://10.0.2.2:9090/lifeline_app/register.php";
             HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(check_username_url).openConnection();
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
@@ -48,19 +45,27 @@ public class RegisterBackgroundWorker extends AsyncTask<String,Void,String> {
             OutputStream outputStream = httpURLConnection.getOutputStream();
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
-            String post_data = URLEncoder.encode("name", "UTF-8") + "=" + URLEncoder.encode(name, "UTF-8") + "&" +
-                    URLEncoder.encode("blood_group", "UTF-8") + "=" + URLEncoder.encode(blood_group, "UTF-8") + "&" +
-                    URLEncoder.encode("gender", "UTF-8") + "=" + URLEncoder.encode(gender, "UTF-8") + "&" +
-                    URLEncoder.encode("age", "UTF-8") + "=" + URLEncoder.encode(age, "UTF-8") + "&" +
-                    URLEncoder.encode("hiv_status", "UTF-8") + "=" + URLEncoder.encode(hiv_status, "UTF-8") + "&" +
-                    URLEncoder.encode("address", "UTF-8") + "=" + URLEncoder.encode(address, "UTF-8") + "&" +
-                    URLEncoder.encode("contact_no", "UTF-8") + "=" + URLEncoder.encode(contact_no, "UTF-8") + "&" +
-                    URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8") + "&" +
-                    URLEncoder.encode("user_mail", "UTF-8") + "=" + URLEncoder.encode(user_mail, "UTF-8") + "&" +
-                    URLEncoder.encode("user_pass", "UTF-8") + "=" + URLEncoder.encode(user_pass, "UTF-8") + "&" +
-                    URLEncoder.encode("lat", "UTF-8") + "=" + URLEncoder.encode(lat, "UTF-8") + "&" +
-                    URLEncoder.encode("lon", "UTF-8") + "=" + URLEncoder.encode(lon, "UTF-8");
-
+            String post_data =
+                    URLEncoder.encode("user_name", "UTF-8") + "=" +
+                            URLEncoder.encode(user_name, "UTF-8") + "&" +
+                    URLEncoder.encode("user_mail", "UTF-8") + "=" +
+                            URLEncoder.encode(user_mail, "UTF-8") + "&" +
+                    URLEncoder.encode("user_pass", "UTF-8") + "=" +
+                            URLEncoder.encode(user_pass, "UTF-8") + "&" +
+                    URLEncoder.encode("name", "UTF-8") + "=" +
+                            URLEncoder.encode(name, "UTF-8") + "&" +
+                    URLEncoder.encode("blood_group", "UTF-8") + "=" +
+                            URLEncoder.encode(blood_group, "UTF-8") + "&" +
+                    URLEncoder.encode("gender", "UTF-8") + "=" +
+                            URLEncoder.encode(gender, "UTF-8") + "&" +
+                    URLEncoder.encode("age", "UTF-8") + "=" +
+                            URLEncoder.encode(age, "UTF-8") + "&" +
+                    URLEncoder.encode("hiv_status", "UTF-8") + "=" +
+                            URLEncoder.encode(hiv_status, "UTF-8") + "&" +
+                    URLEncoder.encode("address", "UTF-8") + "=" +
+                            URLEncoder.encode(address, "UTF-8") + "&" +
+                    URLEncoder.encode("contact_no", "UTF-8") + "=" +
+                            URLEncoder.encode(contact_no, "UTF-8");
             bufferedWriter.write(post_data);
             bufferedWriter.flush();
             bufferedWriter.close();

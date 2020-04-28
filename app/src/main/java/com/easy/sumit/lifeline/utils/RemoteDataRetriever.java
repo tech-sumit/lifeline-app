@@ -13,20 +13,23 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class CheckUsernameBackgroundWorker extends AsyncTask<String,Void,String> {
+public class RemoteDataRetriever extends AsyncTask<String,Void,String> {
+
     private String result = "";
 
     private AsyncResponse asyncResponse;
 
-    public CheckUsernameBackgroundWorker(AsyncResponse asyncResponse) {
+    public RemoteDataRetriever(AsyncResponse asyncResponse) {
         this.asyncResponse=asyncResponse;
     }
 
     @Override
     protected String doInBackground(String... strings) {
         String user_name = strings[0];
+        String db_action= strings[1];
+        String total_data=strings[2];
         try {
-            String check_username_url = "http://10.0.2.2:9090/lifeline_app/check_username.php";
+            String check_username_url = "http://10.0.2.2:9090/lifeline_app/getData.php";
             HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(check_username_url).openConnection();
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
@@ -34,8 +37,21 @@ public class CheckUsernameBackgroundWorker extends AsyncTask<String,Void,String>
             OutputStream outputStream = httpURLConnection.getOutputStream();
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
 
-            String post_data = URLEncoder.encode("user_name", "UTF-8") + "=" + URLEncoder.encode(user_name, "UTF-8");
+            String post_data =
+                    URLEncoder.encode("user_name", "UTF-8") + "=" +
+                            URLEncoder.encode(user_name, "UTF-8") + "&" +
+                            URLEncoder.encode("db_action", "UTF-8") + "=" +
+                            URLEncoder.encode(db_action, "UTF-8")+ "&" +
+                            URLEncoder.encode("total_data", "UTF-8") + "=" +
+                            URLEncoder.encode(total_data, "UTF-8");
+            if(strings.length>3){
+                for(int i=3;i<strings.length;i++){
+                    post_data+="&"+
+                            URLEncoder.encode("data"+(i-3),"UTF-8") + "=" +
+                            URLEncoder.encode(strings[i],"UTF-8");
+                }
 
+            }
             bufferedWriter.write(post_data);
             bufferedWriter.flush();
             bufferedWriter.close();

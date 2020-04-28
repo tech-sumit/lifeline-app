@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -14,6 +15,8 @@ import com.easy.sumit.lifeline.utils.LoginBackgroundWorker;
 public class LoginActivity extends AppCompatActivity implements AsyncResponse{
 
     private EditText user_name,user_pass;
+    private boolean login_status;
+    private String personName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,5 +54,41 @@ public class LoginActivity extends AppCompatActivity implements AsyncResponse{
         alertDialog.setTitle("Login");
         alertDialog.setMessage(output);
         alertDialog.show();
+        if(!output.equals("")){
+            login_status=checkLogin(output);
+            if(login_status){
+                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("user_name",user_name.getText().toString());
+                bundle.putString("personName",personName);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                Log.i("LOGIN","Login Success");
+            }
+            else{
+                Log.i("LOGIN","Login Failed");
+            }
+        }
+        else{
+            Log.e("Output Exception","Output String is null : "+output);
+        }
+    }
+
+    private boolean checkLogin(String output){
+        try{
+            StringBuilder outputBuilder=new StringBuilder(output);
+            if(outputBuilder.substring(0,13).equals("Login success")){
+                personName=outputBuilder.substring(22);
+                login_status=true;
+            }
+            else
+            {
+                login_status=false;
+            }
+
+        }catch(StringIndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
+        return login_status;
     }
 }

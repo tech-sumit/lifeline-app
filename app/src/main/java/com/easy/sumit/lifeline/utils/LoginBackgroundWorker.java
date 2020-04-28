@@ -27,7 +27,7 @@ public class LoginBackgroundWorker extends AsyncTask<String,Void,String> {
         String user_pass = strings[1];
 
         try {
-            String login_url = "http://10.0.2.2:9090/dbproject/login.php";
+            String login_url = "http://10.0.2.2:9090/lifeline_app/login.php";
             HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(login_url).openConnection();
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setDoOutput(true);
