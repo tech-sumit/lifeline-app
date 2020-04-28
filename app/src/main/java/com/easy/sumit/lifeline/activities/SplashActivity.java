@@ -16,6 +16,7 @@ import com.easy.sumit.lifeline.R;
 import com.easy.sumit.lifeline.fragments.TermsConditionsFragment;
 import com.easy.sumit.lifeline.datamodal.URLList;
 import com.easy.sumit.lifeline.utils.Constants;
+import com.easy.sumit.lifeline.utils.NewsService;
 import com.easy.sumit.lifeline.utils.UrlUpdateService;
 
 public class SplashActivity extends AppCompatActivity {
@@ -34,6 +35,7 @@ public class SplashActivity extends AppCompatActivity {
 
         URLList.setDefaultPreferences(this);
         startService(new Intent(SplashActivity.this, UrlUpdateService.class));
+        startService(new Intent(SplashActivity.this, NewsService.class));
 
         SharedPreferences pref3 = getSharedPreferences("lifeline_urls", Context.MODE_PRIVATE);
         Log.i("***Data Update Pref.***","Urls{"+

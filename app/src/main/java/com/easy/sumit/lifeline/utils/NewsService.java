@@ -4,21 +4,80 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.easy.sumit.lifeline.datamodal.Person;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewsService extends Service {
-    long cacheExpiration = 7200;
-    FirebaseRemoteConfigSettings remoteConfigSettings;
+    long newsRefreshRate = 7200;
+    Thread thread=null;
     public NewsService() {}
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.i("UrlUpdateService","onCreate()");
+        thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                while(true){
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.i("Config","On the go!!!");
+                            final SharedPreferences pref = getApplicationContext().getSharedPreferences("lifeline_news", Context.MODE_PRIVATE);
+                            final SharedPreferences.Editor editor = pref.edit();
+                            StringRequest stringRequest =new StringRequest(Request.Method.POST,
+                                    /*URL*/"",
+                                    new Response.Listener<String>() {
+                                        @Override
+                                        public void onResponse(String response) {
+                                            JSONObject jsonObject= null;
+                                            try {
+                                                jsonObject = new JSONObject(response);
+                                                editor.putString("lifeline_news_data",jsonObject.getString("lifeline_news_data"));
+                                                editor.apply();
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            error.printStackTrace();
+                                        }
+                                    }){
+                                @Override
+                                protected Map<String, String> getParams() throws AuthFailureError {
+                                    Person person=new Person();
+                                    person.setAllByPreferences(getApplicationContext());
+                                    Map<String ,String > stringMap=new HashMap<>();
+                                    stringMap.put("user_name",""+person.getUser_name());
+                                    stringMap.put("db_action","14");
+                                    return stringMap;
+                                }
+                            };
+                        }
+                    },newsRefreshRate);
+                }
+            }
+        });
     }
 
     @Override
@@ -29,44 +88,17 @@ public class NewsService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i("UrlUpdateService","onStart()");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                Log.i("Config","On the go!!!");
-                SharedPreferences pref = getApplicationContext().getSharedPreferences("lifeline_news", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = pref.edit();
-/*
-                editor.putString("call_log",jsonObject.getString("call_log"));
-                editor.putString("getData",jsonObject.getString("getData"));
-                editor.putString("check_username",jsonObject.getString("check_username"));
-                editor.putString("eula",jsonObject.getString("eula"));
-                editor.putString("getLocation",jsonObject.getString("getLocation"));
-                editor.putString("login",jsonObject.getString("login"));
-                editor.putString("register",jsonObject.getString("register"));
-                editor.putString("webpage",jsonObject.getString("webpage"));
-                editor.putString("flag","true");
-                editor.apply();
-                Log.i("***Data Update Pref.***","Urls{"+
-                        "\n"+pref.getString("call_log",null)+
-                        "\n"+pref.getString("getData",null)+
-                        "\n"+pref.getString("check_username",null)+
-                        "\n"+pref.getString("eula",null)+
-                        "\n"+pref.getString("getLocation",null)+
-                        "\n"+pref.getString("login",null)+
-                        "\n"+pref.getString("register",null)+
-                        "\n"+pref.getString("webpage",null)+
-                        "\n}");
-           */ }
-
-        }).start();
-
+        if(thread!=null){
+            thread.start();
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
-        startService(new Intent(getApplicationContext(), NewsService.class));
+        if(thread!=null){
+            thread.stop();
+        }
     }
 }
