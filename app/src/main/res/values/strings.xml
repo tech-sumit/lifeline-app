@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Lifeline</string>
+    <string-array name="blood_groups">
+        <item>AB+</item>
+        <item>AB-</item>
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>O+</item>
+        <item>O-</item>
+    </string-array>
+
+    <string-array name="gender">
+        <item>M</item>
+        <item>F</item>
+    </string-array>
+
+    <string-array name="hiv_status">
+        <item>Positive</item>
+        <item>Negative</item>
+    </string-array>
+</resources>
