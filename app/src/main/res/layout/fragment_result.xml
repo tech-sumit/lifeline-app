@@ -5,20 +5,11 @@
     tools:context="com.easy.sumit.lifeline.Fragments.ResultFragment"
     android:id="@+id/resultLayout">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/scrollView3"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" >
-
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listResultView" />
-    </ScrollView>
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listResultView"
+        android:choiceMode="singleChoice"
+        android:layout_alignParentLeft="true" />
 
 </RelativeLayout>

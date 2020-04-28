@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -23,7 +24,7 @@ public class ResultFragment extends Fragment {
     ListView listResultView;
     String output="";
     String itemTitles[];
-    ArrayAdapter<CharSequence> arrayAdapter;
+    ArrayAdapter<String> arrayAdapter;
     List<String> itemList;
 
     @Override
@@ -51,24 +52,35 @@ public class ResultFragment extends Fragment {
             Log.i("******OUTPUT******",output);
             itemTitles=new String[jsonArray.length()];
             JSONObject json;
+
             for(int i=0;i<jsonArray.length();i++){
                 json=jsonArray.getJSONObject(i);
+                itemTitles[i]="";
                 itemTitles[i]+="Name: "+json.getString("name");
-                itemTitles[i]+="\nGender: "+json.getString("gender");
-                itemTitles[i]+="\nHIV Status: "+json.getString("hiv_status");
-                itemTitles[i]+="\nAddress: "+json.getString("address");
-                itemTitles[i]+="\nContact No. "+json.getString("contact_no");
+                itemTitles[i]+=" Gender: "+json.getString("gender");
+                itemTitles[i]+=" HIV Status: "+json.getString("hiv_status");
+                itemTitles[i]+=" Address: "+json.getString("address");
+                itemTitles[i]+=" Contact No. "+json.getString("contact_no");
             }
+            arrayAdapter= new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,itemTitles);
             for(int i=0;i<itemTitles.length;i++){
-                arrayAdapter.add(itemTitles[i]);
                 Log.i("***Data***",itemTitles[i]);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         listResultView= (ListView) getActivity().findViewById(R.id.listResultView);
         listResultView.setAdapter(arrayAdapter);
+        listResultView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.i("***Item Selected***",adapterView.getSelectedItem().toString());
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 }
