@@ -1,4 +1,4 @@
-package com.easy.sumit.lifeline.utils;
+package com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

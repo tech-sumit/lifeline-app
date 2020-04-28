@@ -1,15 +1,13 @@
 package com.easy.sumit.lifeline.Activities;
 
 import android.Manifest;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,23 +15,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.easy.sumit.lifeline.R;
-import com.easy.sumit.lifeline.utils.AsyncResponse;
-import com.easy.sumit.lifeline.utils.RegisterBackgroundWorker;
+import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
+import com.easy.sumit.lifeline.utils.BackgroundWorkers.RegisterBackgroundWorker;
+import com.easy.sumit.lifeline.utils.Constants;
 
-public class RegisterActivity extends AppCompatActivity implements AsyncResponse {
+public class RegisterActivity extends AppCompatActivity{
 
     private EditText person_name, person_age, person_address, person_contact;
     private Spinner person_blood_group, person_gender, person_hiv_status;
-    private RegisterBackgroundWorker registerBackgroundWorker;
-    private String blood_group = "";
-    private String gender = "";
-    private String hiv_status = "";
-    private String user_name = "";
-    private String user_mail = "";
-    private String user_pass = "";
-    private String state="";
-    private String district="";
-    private String sub_district="";
+    private Person person;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,22 +38,22 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
         person_blood_group = (Spinner) findViewById(R.id.person_blood_group);
         person_gender = (Spinner) findViewById(R.id.person_gender);
         person_hiv_status = (Spinner) findViewById(R.id.person_hiv_status);
-
+        person=new Person();
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null){
-            user_name = bundle.getString("user_name");
-            user_mail = bundle.getString("user_mail");
-            user_pass = bundle.getString("user_pass");
-            state = bundle.getString("state");
-            district= bundle.getString("district");
-            sub_district = bundle.getString("sub_district");
+            person.setUser_name(bundle.getString(Constants.USER_NAME));
+            person.setUser_mail(bundle.getString(Constants.USER_MAIL));
+            person.setUser_pass(bundle.getString(Constants.USER_PASS));
+            person.setState(bundle.getString(Constants.STATE));
+            person.setDistrict(bundle.getString(Constants.DISTRICT));
+            person.setSub_district(bundle.getString(Constants.SUB_DISTRICT));
         }
 
         initArrayAdapter();
         person_blood_group.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                blood_group = person_blood_group.getSelectedItem().toString();
+                person.setBlood_group(person_blood_group.getSelectedItem().toString());
             }
 
             @Override
@@ -74,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
         person_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                gender = person_gender.getSelectedItem().toString();
+                person.setGender(person_gender.getSelectedItem().toString());
             }
 
             @Override
@@ -85,7 +75,7 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
         person_hiv_status.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                hiv_status = person_hiv_status.getSelectedItem().toString();
+                person.setHiv_status(person_hiv_status.getSelectedItem().toString());
             }
 
             @Override
@@ -124,44 +114,17 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
     }
 
     public void onRegister(View view) {
-        String name = person_name.getText().toString();
-        String age = person_age.getText().toString();
-        String address = person_address.getText().toString();
-        String contact_no = person_contact.getText().toString();
-        String IMEI_NO=getIMEI();
-
-        registerBackgroundWorker = new RegisterBackgroundWorker(this);
-        registerBackgroundWorker.execute(name,
-                blood_group,
-                gender,
-                age,
-                hiv_status,
-                address,
-                contact_no,
-                user_name,
-                user_mail,
-                user_pass,
-                state,
-                district,
-                sub_district,
-                IMEI_NO);
-    }
-
-    @Override
-    public void processFinish(String output) {
-        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-        alertDialog.setTitle("Register");
-        alertDialog.setMessage(output);
-        alertDialog.show();
-        registerBackgroundWorker.cancel(true);
-        Log.i("Output:",""+output);
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
-    }
-
-    @Override
-    protected void onStop() {
-        finish();
-        super.onStop();
+        person.setName(person_name.getText().toString());
+        person.setAge(person_age.getText().toString());
+        person.setAddress(person_address.getText().toString());
+        person.setContact_no(person_contact.getText().toString());
+        person.setImei_no(getIMEI());
+        if(Integer.parseInt(person.getAge())>17){
+            RegisterBackgroundWorker registerBackgroundWorker = new RegisterBackgroundWorker(this);
+            registerBackgroundWorker.updateData(person);
+            registerBackgroundWorker.start();
+        }else{
+            Snackbar.make(view,"Age must be at least 18 years",Snackbar.LENGTH_SHORT).show();
+        }
     }
 }

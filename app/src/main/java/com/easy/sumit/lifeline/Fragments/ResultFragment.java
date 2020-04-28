@@ -14,8 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.easy.sumit.lifeline.R;
-import com.easy.sumit.lifeline.utils.CustomAdapter;
-import com.easy.sumit.lifeline.utils.ListModel;
+import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.CustomAdapter;
+import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.ListModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,7 +56,6 @@ public class ResultFragment extends Fragment {
     @Override
     public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
         super.onInflate(activity, attrs, savedInstanceState);
-        listResultView = (ListView) activity.findViewById(R.id.list);
     }
 
     @Override

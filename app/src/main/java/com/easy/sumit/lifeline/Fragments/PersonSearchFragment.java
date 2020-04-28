@@ -1,11 +1,9 @@
 package com.easy.sumit.lifeline.Fragments;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +14,19 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.easy.sumit.lifeline.R;
-import com.easy.sumit.lifeline.utils.AsyncResponse;
-import com.easy.sumit.lifeline.utils.RemoteDataRetriever;
-import com.easy.sumit.lifeline.utils.RemoteLocationRetriever;
+import com.easy.sumit.lifeline.utils.BackgroundWorkers.RemoteDataRetriever;
+import com.easy.sumit.lifeline.utils.BackgroundWorkers.RemoteLocationRetriever;
+import com.easy.sumit.lifeline.utils.Constants;
 
-public class PersonSearchFragment extends Fragment implements AsyncResponse,View.OnClickListener{
+public class PersonSearchFragment extends Fragment implements View.OnClickListener{
 
     private String user_name;
 
-    private Spinner personBloodGroup;
+    public Spinner personBloodGroup;
     private Spinner stateSpinner;
     private Spinner districtSpinner;
     private Spinner sub_districtSpinner;
-    private Button buttonSearch;
+    public Button buttonSearch;
     private String bloodGroup="";
     private String state="";
     private String district="";
@@ -36,14 +34,13 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
     private int d=0;
     private int s=0;
     private int u=0;
-    private RemoteDataRetriever remoteDataRetriever;
     private RemoteLocationRetriever remoteLocationRetriever;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            user_name = getArguments().getString("user_name");
+            user_name = getArguments().getString(Constants.USER_NAME);
 
         }
         else{
@@ -67,7 +64,7 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
         stateSpinner= (Spinner) getActivity().findViewById(R.id.stateSelector);
         districtSpinner= (Spinner) getActivity().findViewById(R.id.districtSelector);
         sub_districtSpinner= (Spinner) getActivity().findViewById(R.id.sub_districtSelector);
-
+        remoteLocationRetriever=new RemoteLocationRetriever(getActivity());
         ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.state,
                 android.R.layout.simple_dropdown_item_1line);
@@ -85,7 +82,6 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 bloodGroup = personBloodGroup.getSelectedItem().toString();
-                Log.i("Blood Group Selected",bloodGroup);
             }
 
             @Override
@@ -97,36 +93,19 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
     }
 
     @Override
-    public void processFinish(String output) {
-        if(!output.equals("")) {
-            ResultFragment resultFragment = new ResultFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("output", output);
-            resultFragment.setArguments(bundle);
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.personSearchFragment, resultFragment)
-                    .commit();
-
-            /*fragmentManager.beginTransaction()
-                    .add(resultFragment,"ResultFragment").commit();
-            */
-            buttonSearch.setVisibility(View.INVISIBLE);
-            buttonSearch.setClickable(false);
-            personBloodGroup.setVisibility(View.INVISIBLE);
-            personBloodGroup.setClickable(false);
-            remoteDataRetriever.cancel(true);
-        }
-        else{
-            Snackbar.make(getView(),"Sorry, no data found",Snackbar.LENGTH_SHORT);
-        }
-    }
-
-    @Override
     public void onClick(View view) {
-        remoteDataRetriever=new RemoteDataRetriever(this);
+        RemoteDataRetriever remoteDataRetriever = new RemoteDataRetriever(this);
+        Bundle bundle=new Bundle();
+        bundle.putString(Constants.USER_NAME,user_name);
+        bundle.putString("db_action","2");
+        bundle.putString("total_data","4");
+        bundle.putString("data"+1,bloodGroup);
+        bundle.putString("data"+2,state);
+        bundle.putString("data"+3,district);
+        bundle.putString("data"+4,sub_district);
         if(!bloodGroup.equals("")) {
-            remoteDataRetriever.execute(user_name, "2","4", bloodGroup,state,district,sub_district);
+            remoteDataRetriever.updateData(bundle);
+            remoteDataRetriever.start();
         }
         else{
             Snackbar.make(view,
@@ -144,10 +123,14 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             state=stateSpinner.getSelectedItem().toString();
             Log.d("***INFO***","State:"+state);
-            remoteLocationRetriever=new RemoteLocationRetriever(personSearchFragment.getActivity(),districtSpinner);
-            remoteLocationRetriever.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR,user_name,"1","2",state);
-
-            s = 1;
+            Bundle bundle=new Bundle();
+            bundle.putString(Constants.USER_NAME,user_name);
+            bundle.putString("db_action","1");
+            bundle.putString("location_level","2");
+            bundle.putString("data",state);
+            remoteLocationRetriever.updateData(districtSpinner,bundle);
+            remoteLocationRetriever.start();
+            s=1;
             d=0;
             u=0;
         }
@@ -165,9 +148,13 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             district=districtSpinner.getSelectedItem().toString();
-            Log.d("***INFO***","District:"+district);
-            remoteLocationRetriever=new RemoteLocationRetriever(personSearchFragment.getActivity(),sub_districtSpinner);
-            remoteLocationRetriever.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR,user_name,"1","3",district);
+            Bundle bundle=new Bundle();
+            bundle.putString(Constants.USER_NAME,user_name);
+            bundle.putString("db_action","1");
+            bundle.putString("location_level","3");
+            bundle.putString("data",district);
+            remoteLocationRetriever.updateData(sub_districtSpinner,bundle);
+            remoteLocationRetriever.start();
 
             d=1;
             u=0;
@@ -185,7 +172,6 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
         }
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-            Log.d("***INFO***","Sub district:"+sub_district);
             sub_district=sub_districtSpinner.getSelectedItem().toString();
 
             u=1;
@@ -196,5 +182,4 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse,View
 
         }
     }
-
 }

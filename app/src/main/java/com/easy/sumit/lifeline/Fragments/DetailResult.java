@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.easy.sumit.lifeline.R;
+import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
+import com.easy.sumit.lifeline.utils.Constants;
 import com.easy.sumit.lifeline.utils.ContactHandler;
 
 import org.json.JSONArray;
@@ -24,12 +26,7 @@ import org.json.JSONException;
 public class DetailResult extends Fragment {
 
     private static JSONArray jsonArray;
-    private String name;
-    private String blood_group;
-    private String gender;
-    private String address;
-    private String contact_no;
-    private String hiv_status;
+    private Person person;
 
     private TextView name_text;
     private TextView gender_text;
@@ -50,12 +47,12 @@ public class DetailResult extends Fragment {
         DetailResult fragment = new DetailResult();
         Bundle args = new Bundle();
         try {
-            args.putString("name", jsonarray.getJSONObject(view_count).getString("name"));
-            args.putString("blood_group", jsonarray.getJSONObject(view_count).getString("blood_group"));
-            args.putString("gender", jsonarray.getJSONObject(view_count).getString("gender"));
-            args.putString("address", jsonarray.getJSONObject(view_count).getString("address"));
-            args.putString("contact_no", jsonarray.getJSONObject(view_count).getString("contact_no"));
-            args.putString("hiv_status", jsonarray.getJSONObject(view_count).getString("hiv_status"));
+            args.putString(Constants.NAME, jsonarray.getJSONObject(view_count).getString("name"));
+            args.putString(Constants.BLOOD_GROUP, jsonarray.getJSONObject(view_count).getString("blood_group"));
+            args.putString(Constants.GENDER, jsonarray.getJSONObject(view_count).getString("gender"));
+            args.putString(Constants.ADDRESS, jsonarray.getJSONObject(view_count).getString("address"));
+            args.putString(Constants.CONTACT_NO, jsonarray.getJSONObject(view_count).getString("contact_no"));
+            args.putString(Constants.HIV_STATUS, jsonarray.getJSONObject(view_count).getString("hiv_status"));
             fragment.setArguments(args);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -71,12 +68,13 @@ public class DetailResult extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            name = getArguments().getString("name");
-            blood_group = getArguments().getString("blood_group");
-            gender = getArguments().getString("gender");
-            address = getArguments().getString("address");
-            contact_no = getArguments().getString("contact_no");
-            hiv_status = getArguments().getString("hiv_status");
+            person=new Person();
+            person.setName(getArguments().getString(Constants.NAME));
+            person.setBlood_group(getArguments().getString(Constants.BLOOD_GROUP));
+            person.setGender(getArguments().getString(Constants.GENDER));
+            person.setAddress(getArguments().getString(Constants.ADDRESS));
+            person.setContact_no(getArguments().getString(Constants.CONTACT_NO));
+            person.setHiv_status(getArguments().getString(Constants.HIV_STATUS));
             json_length = jsonArray.length() - 1;
         } else {
             Log.e("ERROR:", "Empty JSONArray, Bundle has null parameters.");
@@ -104,18 +102,11 @@ public class DetailResult extends Fragment {
 
 
         contactHandler = new ContactHandler(getContext());
-        Log.i("Name:", name);
-        Log.i("Gender:", gender);
-        Log.i("Address:", address);
-        Log.i("Blood Group:", blood_group);
-        Log.i("HIV Status:", hiv_status);
-
-        name_text.setText(name);
-        gender_text.setText("Gender:" + gender);
-        address_text.setText(address);
-        bloog_group_text.setText(blood_group);
-        hiv_status_text.setText("HIV Status: " + hiv_status);
-        Log.i("json_length", "" + json_length);
+        name_text.setText(person.getName());
+        gender_text.setText("Gender:" + person.getGender());
+        address_text.setText(person.getAddress());
+        bloog_group_text.setText(person.getBlood_group());
+        hiv_status_text.setText("HIV Status: " + person.getHiv_status());
         if(view_count==0){
             previous_button.setEnabled(false);
         }
@@ -123,12 +114,11 @@ public class DetailResult extends Fragment {
             next_button.setEnabled(false);
         }
         call_button.setOnClickListener(view1 -> {
-            contactHandler.setContact(contact_no);
-            Log.i("contact_no",contact_no);
+            contactHandler.setContact(person.getContact_no());
             contactHandler.createContact();
             Intent intent = new Intent(Intent.ACTION_CALL);
-            intent.setData(Uri.parse("tel:"+contact_no));
-                    startActivity(intent);
+            intent.setData(Uri.parse("tel:"+person.getContact_no()));
+            startActivity(intent);
             ((TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE))
                     .listen(new PhoneEndListener(),
                     PhoneStateListener.LISTEN_CALL_STATE);
@@ -142,12 +132,11 @@ public class DetailResult extends Fragment {
                     address_text.setText(jsonArray.getJSONObject(view_count).getString("address"));
                     bloog_group_text.setText(jsonArray.getJSONObject(view_count).getString("blood_group"));
                     hiv_status_text.setText("HIV Status:" + jsonArray.getJSONObject(view_count).getString("hiv_status"));
-                    contact_no = jsonArray.getJSONObject(view_count).getString("contact_no");
+                    person.setContact_no(jsonArray.getJSONObject(view_count).getString("contact_no"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 previous_button.setEnabled(true);
-                Log.i("view_count", "" + view_count);
             }
             if (view_count == (json_length)) {
                 next_button.setEnabled(false);
@@ -162,12 +151,11 @@ public class DetailResult extends Fragment {
                     address_text.setText(jsonArray.getJSONObject(view_count).getString("address"));
                     bloog_group_text.setText(jsonArray.getJSONObject(view_count).getString("blood_group"));
                     hiv_status_text.setText("HIV Status:" + jsonArray.getJSONObject(view_count).getString("hiv_status"));
-                    contact_no = jsonArray.getJSONObject(view_count).getString("contact_no");
+                    person.setContact_no(jsonArray.getJSONObject(view_count).getString("contact_no"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 next_button.setEnabled(true);
-                Log.i("view_count", "" + view_count);
             }
             if (view_count == 0) {
                 previous_button.setEnabled(false);

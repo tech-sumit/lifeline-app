@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.easy.sumit.lifeline.Fragments.PersonSearchFragment;
 import com.easy.sumit.lifeline.Fragments.ProfileFragment;
 import com.easy.sumit.lifeline.R;
+import com.easy.sumit.lifeline.utils.Constants;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -33,8 +34,8 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         Bundle bundle=getIntent().getExtras();
-        user_name=bundle.getString("user_name");
-        personName=bundle.getString("personName");
+        user_name=bundle.getString(Constants.USER_NAME);
+        personName=bundle.getString(Constants.NAME);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_profile) {
             ProfileFragment profileFragment=new ProfileFragment();
             Bundle bundle=new Bundle();
-            bundle.putString("user_name",user_name);
+            bundle.putString(Constants.USER_NAME,user_name);
             profileFragment.setArguments(bundle);
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction()
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_person) {
             PersonSearchFragment personSearchFragment=new PersonSearchFragment();
             Bundle bundle=new Bundle();
-            bundle.putString("user_name",user_name);
+            bundle.putString(Constants.USER_NAME,user_name);
             personSearchFragment.setArguments(bundle);
             FragmentManager fragmentManager=getSupportFragmentManager();
             fragmentManager.beginTransaction()
