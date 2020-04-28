@@ -1,6 +1,7 @@
 package com.easy.sumit.lifeline.Activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private String personName="",user_name="";
-    private TextView user_name_view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        user_name_view= (TextView) findViewById(R.id.user_name_Nav);
+        TextView user_name_view = (TextView) findViewById(R.id.user_name_Nav);
         user_name_view.setText(personName);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.nav_profile) {

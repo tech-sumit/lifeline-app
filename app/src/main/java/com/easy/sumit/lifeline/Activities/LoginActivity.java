@@ -2,6 +2,7 @@ package com.easy.sumit.lifeline.Activities;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -34,20 +35,13 @@ public class LoginActivity extends AppCompatActivity implements AsyncResponse{
         String user_pass_text = user_pass.getText().toString();
 
         LoginBackgroundWorker loginBackgroundWorker=new LoginBackgroundWorker(this);
-        loginBackgroundWorker.execute(user_name_text, user_pass_text);
+        loginBackgroundWorker.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR,user_name_text, user_pass_text);
 
     }
 
     public void onRegister(View view){
         Intent intent=new Intent(this,PreRegisterActivity.class);
         startActivity(intent);
-    }
-
-    @Override
-    protected void onStop() {
-        finish();
-        alertDialog.dismiss();
-        super.onStop();
     }
 
     @Override
@@ -93,4 +87,11 @@ public class LoginActivity extends AppCompatActivity implements AsyncResponse{
         }
         return login_status;
     }
+
+    @Override
+    protected void onStop() {
+        finish();
+        super.onStop();
+    }
+
 }

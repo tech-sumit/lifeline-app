@@ -21,6 +21,9 @@ public class ProfileFragment extends Fragment implements AsyncResponse{
 
     private TextView personName,personMail,personAddress,personContact,personBloodGroup;
     private String user_name="";
+
+    private RemoteDataRetriever remoteDataRetriver;
+
     public ProfileFragment() {
 
     }
@@ -41,7 +44,7 @@ public class ProfileFragment extends Fragment implements AsyncResponse{
         personBloodGroup= (TextView) getView().findViewById(R.id.personBloodGroup);
 
         user_name=getArguments().getString("user_name");
-        RemoteDataRetriever remoteDataRetriver=new RemoteDataRetriever(this);
+        remoteDataRetriver=new RemoteDataRetriever(this);
         remoteDataRetriver.execute(user_name,"1","0");
     }
 
@@ -55,6 +58,7 @@ public class ProfileFragment extends Fragment implements AsyncResponse{
             personAddress.setText(json.getString("address"));
             personContact.setText("Contact No. "+json.getString("contact_no"));
             personBloodGroup.setText(json.getString("blood_group"));
+            remoteDataRetriver.cancel(true);
         } catch (JSONException e) {
             e.printStackTrace();
         }

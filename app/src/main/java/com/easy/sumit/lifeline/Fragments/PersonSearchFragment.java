@@ -1,6 +1,7 @@
 package com.easy.sumit.lifeline.Fragments;
 
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,16 +19,27 @@ import android.widget.Toast;
 import com.easy.sumit.lifeline.R;
 import com.easy.sumit.lifeline.utils.AsyncResponse;
 import com.easy.sumit.lifeline.utils.RemoteDataRetriever;
+import com.easy.sumit.lifeline.utils.RemoteLocationRetriever;
 
-public class PersonSearchFragment extends Fragment implements AsyncResponse{
+public class PersonSearchFragment extends Fragment implements AsyncResponse,View.OnClickListener{
 
     private String user_name;
 
     private Spinner personBloodGroup;
+    private Spinner stateSpinner;
+    private Spinner districtSpinner;
+    private Spinner sub_districtSpinner;
     private Button buttonSearch;
     private View view;
     private ArrayAdapter<CharSequence> arrayAdapterBloodGroup;
+    private ArrayAdapter arrayAdapter;
     private String bloodGroup="";
+    private String state="";
+    private String district="";
+    private String sub_district="";
+    private int s=0,d=0,u=0;
+    private RemoteDataRetriever remoteDataRetriever;
+    private RemoteLocationRetriever remoteLocationRetriever;
 
     public PersonSearchFragment(){
 
@@ -62,7 +74,18 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse{
         buttonSearch= (Button) getActivity().findViewById(R.id.buttonSearch);
 
         personBloodGroup= (Spinner) getActivity().findViewById(R.id.spinnerBloodGroup);
+        stateSpinner= (Spinner) getActivity().findViewById(R.id.stateSelector);
+        districtSpinner= (Spinner) getActivity().findViewById(R.id.districtSelector);
+        sub_districtSpinner= (Spinner) getActivity().findViewById(R.id.sub_districtSelector);
 
+        arrayAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.state,
+                android.R.layout.simple_dropdown_item_1line);
+        stateSpinner.setAdapter(arrayAdapter);
+
+        stateSpinner.setOnItemSelectedListener(new StateEventListener(this));
+        districtSpinner.setOnItemSelectedListener(new DistrictEventListener(this));
+        sub_districtSpinner.setOnItemSelectedListener(new SubDistrictEventListener(this));
         arrayAdapterBloodGroup = ArrayAdapter.
                 createFromResource(getContext(),
                         R.array.blood_groups,
@@ -80,15 +103,7 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse{
 
             }
         });
-        RemoteDataRetriever remoteDataRetriever=new RemoteDataRetriever(this);
-        buttonSearch.setOnClickListener(view1 -> {
-            if(!bloodGroup.equals("")) {
-                remoteDataRetriever.execute(user_name, "2","1", bloodGroup);
-            }
-            else{
-                Toast.makeText(getActivity(),"Please select blood group",Toast.LENGTH_SHORT).show();
-            }
-        });
+        buttonSearch.setOnClickListener(this);
     }
 
     @Override
@@ -104,6 +119,79 @@ public class PersonSearchFragment extends Fragment implements AsyncResponse{
         buttonSearch.setClickable(false);
         personBloodGroup.setVisibility(View.INVISIBLE);
         personBloodGroup.setClickable(false);
+        remoteDataRetriever.cancel(true);
+    }
+
+    @Override
+    public void onClick(View view) {
+        remoteDataRetriever=new RemoteDataRetriever(this);
+        if(!bloodGroup.equals("")) {
+            remoteDataRetriever.execute(user_name, "2","4", bloodGroup,state,district,sub_district);
+        }
+        else{
+            Toast.makeText(getActivity(),"Please select blood group",Toast.LENGTH_SHORT).show();
+        }
+    }
+    class StateEventListener implements AdapterView.OnItemSelectedListener{
+        PersonSearchFragment personSearchFragment;
+        public StateEventListener(PersonSearchFragment personSearchFragment){
+            this.personSearchFragment=personSearchFragment;
+        }
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            state=stateSpinner.getSelectedItem().toString();
+            Log.d("***INFO***","State:"+state);
+            remoteLocationRetriever=new RemoteLocationRetriever(personSearchFragment.getActivity(),districtSpinner);
+            remoteLocationRetriever.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR,user_name,"1","2",state);
+
+            s=1;
+            d=0;
+            u=0;
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+    }
+    class DistrictEventListener implements AdapterView.OnItemSelectedListener {
+        PersonSearchFragment personSearchFragment;
+        public DistrictEventListener(PersonSearchFragment personSearchFragment){
+            this.personSearchFragment=personSearchFragment;
+        }
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            district=districtSpinner.getSelectedItem().toString();
+            Log.d("***INFO***","District:"+district);
+            remoteLocationRetriever=new RemoteLocationRetriever(personSearchFragment.getActivity(),sub_districtSpinner);
+            remoteLocationRetriever.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR,user_name,"1","3",district);
+
+            d=1;
+            u=0;
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+    }
+    class SubDistrictEventListener implements AdapterView.OnItemSelectedListener {
+        PersonSearchFragment personSearchFragment;
+        public SubDistrictEventListener(PersonSearchFragment personSearchFragment){
+            this.personSearchFragment=personSearchFragment;
+        }
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            Log.d("***INFO***","Sub district:"+sub_district);
+            sub_district=sub_districtSpinner.getSelectedItem().toString();
+
+            u=1;
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
     }
 
 }

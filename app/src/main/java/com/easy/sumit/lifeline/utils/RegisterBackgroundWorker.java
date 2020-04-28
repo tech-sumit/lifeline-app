@@ -36,6 +36,9 @@ public class RegisterBackgroundWorker extends AsyncTask<String,Void,String> {
         String user_name = strings[7];
         String user_mail = strings[8];
         String user_pass = strings[9];
+        String state = strings[10];
+        String district = strings[11];
+        String sub_district = strings[12];
         try {
             String check_username_url = "http://10.0.2.2:9090/lifeline_app/register.php";
             HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(check_username_url).openConnection();
@@ -65,7 +68,15 @@ public class RegisterBackgroundWorker extends AsyncTask<String,Void,String> {
                     URLEncoder.encode("address", "UTF-8") + "=" +
                             URLEncoder.encode(address, "UTF-8") + "&" +
                     URLEncoder.encode("contact_no", "UTF-8") + "=" +
-                            URLEncoder.encode(contact_no, "UTF-8");
+                            URLEncoder.encode(contact_no, "UTF-8")+ "&" +
+                    URLEncoder.encode("state", "UTF-8") + "=" +
+                            URLEncoder.encode(state, "UTF-8")+ "&" +
+                    URLEncoder.encode("district", "UTF-8") + "=" +
+                            URLEncoder.encode(district, "UTF-8") + "&" +
+                    URLEncoder.encode("sub_district", "UTF-8") + "=" +
+                            URLEncoder.encode(sub_district, "UTF-8");
+
+
             bufferedWriter.write(post_data);
             bufferedWriter.flush();
             bufferedWriter.close();

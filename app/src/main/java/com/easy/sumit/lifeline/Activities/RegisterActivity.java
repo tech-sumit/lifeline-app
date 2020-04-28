@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,13 +19,16 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
 
     private EditText person_name, person_age, person_address, person_contact;
     private Spinner person_blood_group, person_gender, person_hiv_status;
-
+    private RegisterBackgroundWorker registerBackgroundWorker;
     private String blood_group = "";
     private String gender = "";
     private String hiv_status = "";
     private String user_name = "";
     private String user_mail = "";
     private String user_pass = "";
+    private String state="";
+    private String district="";
+    private String sub_district="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,9 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
             user_name = bundle.getString("user_name");
             user_mail = bundle.getString("user_mail");
             user_pass = bundle.getString("user_pass");
+            state = bundle.getString("state");
+            district= bundle.getString("district");
+            sub_district = bundle.getString("sub_district");
         }
 
         initArrayAdapter();
@@ -107,7 +114,7 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
         String address = person_address.getText().toString();
         String contact_no = person_contact.getText().toString();
 
-        RegisterBackgroundWorker registerBackgroundWorker = new RegisterBackgroundWorker(this);
+        registerBackgroundWorker = new RegisterBackgroundWorker(this);
         registerBackgroundWorker.execute(name,
                 blood_group,
                 gender,
@@ -117,7 +124,10 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
                 contact_no,
                 user_name,
                 user_mail,
-                user_pass);
+                user_pass,
+                state,
+                district,
+                sub_district);
     }
 
     @Override
@@ -126,6 +136,8 @@ public class RegisterActivity extends AppCompatActivity implements AsyncResponse
         alertDialog.setTitle("Register");
         alertDialog.setMessage(output);
         alertDialog.show();
+        registerBackgroundWorker.cancel(true);
+        Log.i("Output:",""+output);
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }

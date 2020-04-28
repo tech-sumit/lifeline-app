@@ -1,6 +1,5 @@
 package com.easy.sumit.lifeline.Activities;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +14,7 @@ import com.easy.sumit.lifeline.utils.CheckUsernameBackgroundWorker;
 public class PreRegisterActivity extends AppCompatActivity implements AsyncResponse{
 
     private EditText user_name,user_mail,user_pass,user_pass_conf;
+    private CheckUsernameBackgroundWorker checkUsernameBackgroundWorker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class PreRegisterActivity extends AppCompatActivity implements AsyncRespo
                 !user_pass_conf.getText().toString().equals("")){
 
             if(user_pass.getText().toString().equals(user_pass_conf.getText().toString())){
-                CheckUsernameBackgroundWorker checkUsernameBackgroundWorker=
+                checkUsernameBackgroundWorker=
                         new CheckUsernameBackgroundWorker(this);
                 checkUsernameBackgroundWorker.execute(user_name.getText().toString());
             }
@@ -48,14 +48,11 @@ public class PreRegisterActivity extends AppCompatActivity implements AsyncRespo
 
     @Override
     public void processFinish(String output) {
-        AlertDialog alertDialog;
         if(output.equals("Successful")) {
-            alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.setTitle("Register");
-            alertDialog.setMessage(output);
-            alertDialog.show();
+            Toast.makeText(this,""+output,Toast.LENGTH_LONG).show();
+            checkUsernameBackgroundWorker.cancel(true);
 
-            Intent intent = new Intent(this, RegisterActivity.class);
+            Intent intent = new Intent(this, RegisterLocation.class);
             Bundle bundle = new Bundle();
             bundle.putString("user_name", user_name.getText().toString());
             bundle.putString("user_mail", user_mail.getText().toString());
@@ -66,10 +63,7 @@ public class PreRegisterActivity extends AppCompatActivity implements AsyncRespo
         }
 
         else{
-            alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.setTitle("Register");
-            alertDialog.setMessage(output);
-            alertDialog.show();
+            Toast.makeText(this,""+output,Toast.LENGTH_LONG).show();
         }
     }
 

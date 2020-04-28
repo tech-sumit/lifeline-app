@@ -18,13 +18,9 @@ public class CustomAdapter extends BaseAdapter implements OnClickListener {
 
     private static LayoutInflater inflater = null;
     ListModel tempValues = null;
-    int i = 0;
-    private Fragment fragment;
     private ArrayList data;
-    public CustomAdapter(Fragment a, ArrayList d) {
-
-        fragment = a;
-        data = d;
+    public CustomAdapter(Fragment fragment, ArrayList data) {
+        this.data = data;
         inflater = (LayoutInflater) fragment.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     public int getCount() {
@@ -52,21 +48,20 @@ public class CustomAdapter extends BaseAdapter implements OnClickListener {
             holder.hivText = (TextView) vi.findViewById(R.id.hiv_text);
             holder.genderText = (TextView) vi.findViewById(R.id.gender_text);
             vi.setTag(holder);
-        } else
+        } else {
             holder = (ViewHolder) vi.getTag();
+        }
 
         if (data.size() <= 0) {
             holder.name.setText("No Data");
-
-        } else {
+        }
+        else {
             tempValues = null;
             tempValues = (ListModel) data.get(position);
 
             holder.name.setText(tempValues.getName());
             holder.genderText.setText(tempValues.getGender());
             holder.hivText.setText(tempValues.getHIVStatus());
-
-            //vi.setOnClickListener(new OnItemClickListener(position));
         }
         return vi;
     }

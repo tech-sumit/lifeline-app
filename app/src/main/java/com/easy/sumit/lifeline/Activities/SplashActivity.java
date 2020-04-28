@@ -13,7 +13,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        int SPLASH_TIME_OUT = 3000;
+        final int SPLASH_TIME_OUT = 3000;
         new Handler().postDelayed(() -> {
             Intent i = new Intent(SplashActivity.this, LoginActivity.class);
             startActivity(i);
