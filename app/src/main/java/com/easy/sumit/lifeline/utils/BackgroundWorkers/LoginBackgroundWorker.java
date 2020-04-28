@@ -23,8 +23,6 @@ import com.easy.sumit.lifeline.activities.MainActivity;
 import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
 import com.easy.sumit.lifeline.utils.Constants;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,11 +51,12 @@ public class LoginBackgroundWorker{
                         bundle.putString("last_activity", "LoginActivity.java");
                         intent.putExtras(bundle);
                         SharedPreferences sharedPreferences = loginActivity.getSharedPreferences("lifeline",
-                                loginActivity.MODE_PRIVATE);
+                                Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("login_status", "true");
-
+                        editor.putString(Constants.LOGIN_STATUS, "true");
+                        editor.apply();
                         loginActivity.startActivity(intent);
+                        loginActivity.finish();
                         Log.i("LOGIN", "Login Success" + response);
                     } else {
                         Log.i("LOGIN", "Login Failed" + response);
@@ -77,19 +76,8 @@ public class LoginBackgroundWorker{
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String ,String > stringMap=new HashMap<>();
-                String IMEI_NO=getIMEI();
-                /*
-                    stringMap.put(URLEncoder.encode("user_name", "UTF-8"),
-
-                            URLEncoder.encode(person.getUser_name(),"UTF-8"));
-                    stringMap.put(URLEncoder.encode("user_pass", "UTF-8"),
-                            URLEncoder.encode(person.getUser_pass(),"UTF-8"));
-                    stringMap.put(URLEncoder.encode("IMEI_NO", "UTF-8"),
-                            URLEncoder.encode(IMEI_NO,"UTF-8"));
-                */
                 stringMap.put("user_name",""+person.getUser_name());
                 stringMap.put("user_pass",""+person.getUser_pass());
-                stringMap.put("IMEI_NO",""+IMEI_NO);
                 return stringMap;
             }
         };

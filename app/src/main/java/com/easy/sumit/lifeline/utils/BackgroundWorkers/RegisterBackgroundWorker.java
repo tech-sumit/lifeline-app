@@ -1,6 +1,7 @@
 package com.easy.sumit.lifeline.utils.BackgroundWorkers;
 
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -38,10 +39,12 @@ public class RegisterBackgroundWorker{
                 Toast.makeText(registerActivity, response, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(registerActivity, LoginActivity.class);
                 registerActivity.startActivity(intent);
+                registerActivity.finish();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                registerActivity.progressDialog.dismiss();
                 error.printStackTrace();
                 Toast.makeText(registerActivity, "Connection Failed", Toast.LENGTH_LONG).show();
             }
@@ -49,6 +52,21 @@ public class RegisterBackgroundWorker{
         {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
+                Log.i("INFO","Username: "+person.getUser_name()+
+                        "\nMail: "+person.getUser_mail()+
+                        "\nPassword"+person.getUser_pass()+
+                        "\nName: "+person.getName()+
+                        "\nAge: "+person.getAge()+
+                        "\nBlood group: "+person.getBlood_group()+
+                        "\nGender: "+person.getGender()+
+                        "\nAddress: "+person.getAddress()+
+                        "\nContact no.: "+person.getContact_no()+
+                        "\nCountry: "+person.getCountry()+
+                        "\nState: "+person.getState()+
+                        "\nDistrict: "+person.getDistrict()+
+                        "\nSub district: "+person.getSub_district()+
+                        "\nLast donated: "+person.getLast_donated());
+
                 Map<String,String> stringMap=new HashMap<>();
                 stringMap.put("user_name",person.getUser_name());
                 stringMap.put("user_mail",person.getUser_mail());
@@ -57,20 +75,20 @@ public class RegisterBackgroundWorker{
                 stringMap.put("blood_group",person.getBlood_group());
                 stringMap.put("gender",person.getGender());
                 stringMap.put("age",person.getAge());
-                stringMap.put("hiv_status",person.getHiv_status());
+                stringMap.put("last_donated",person.getLast_donated());
                 stringMap.put("address",person.getAddress());
                 stringMap.put("contact_no",person.getContact_no());
                 stringMap.put("state",person.getState());
                 stringMap.put("district",person.getDistrict());
                 stringMap.put("sub_district",person.getSub_district());
-                stringMap.put("IMEI_NO",person.getImei_no());
 
                 String fID = FirebaseInstanceId.getInstance().getToken();
                 stringMap.put("firebaseID",fID);
                 return stringMap;
+
             }
         };
-        RequestQueue requestQueue= Volley.newRequestQueue(registerActivity.getApplicationContext());
+        RequestQueue requestQueue= Volley.newRequestQueue(registerActivity);
         requestQueue.add(stringRequest);
     }
 }

@@ -2,6 +2,7 @@ package com.easy.sumit.lifeline.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -91,7 +92,33 @@ public class RegisterLocation extends AppCompatActivity{
         bundle.putString(Constants.SUB_DISTRICT,sub_district);
         intent.putExtras(bundle);
         startActivity(intent);
+        finish();
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        Bundle bundle=new Bundle();
+        bundle.putString(Constants.USER_NAME,user_name);
+        bundle.putString(Constants.USER_MAIL,user_mail);
+        bundle.putString(Constants.USER_PASS,user_pass);
+        bundle.putString(Constants.STATE,state);
+        bundle.putString(Constants.DISTRICT,district);
+        bundle.putString(Constants.SUB_DISTRICT,sub_district);
+        outState.putAll(bundle);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        user_name=savedInstanceState.getString(Constants.USER_NAME);
+        user_mail=savedInstanceState.getString(Constants.USER_MAIL);
+        user_pass=savedInstanceState.getString(Constants.USER_PASS);
+        state=savedInstanceState.getString(Constants.STATE);
+        district=savedInstanceState.getString(Constants.DISTRICT);
+        sub_district=savedInstanceState.getString(Constants.SUB_DISTRICT);
+    }
+
     class StateEventListener implements AdapterView.OnItemSelectedListener {
         RegisterLocation registerLocation;
         public StateEventListener(RegisterLocation registerLocation){

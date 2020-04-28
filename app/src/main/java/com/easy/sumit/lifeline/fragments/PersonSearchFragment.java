@@ -45,6 +45,14 @@ public class PersonSearchFragment extends Fragment implements View.OnClickListen
         super.onCreate(savedInstanceState);
         person=new Person();
         person.setAllByPreferences(getContext());
+        if(savedInstanceState!=null){
+            if(!savedInstanceState.isEmpty()){
+                personBloodGroup.setSelection(Integer.parseInt(savedInstanceState.getString(Constants.BLOOD_GROUP)));
+                stateSpinner.setSelection(Integer.parseInt(savedInstanceState.getString(Constants.STATE)));
+                districtSpinner.setSelection(Integer.parseInt(savedInstanceState.getString(Constants.DISTRICT)));
+                sub_districtSpinner.setSelection(Integer.parseInt(savedInstanceState.getString(Constants.SUB_DISTRICT)));
+            }
+        }
     }
 
     @Override
@@ -103,7 +111,7 @@ public class PersonSearchFragment extends Fragment implements View.OnClickListen
         bundle.putString("data"+3,district);
         bundle.putString("data"+4,sub_district);
         progressDialog=new ProgressDialog(this.getContext());
-        progressDialog.setMessage("Searching.");
+        progressDialog.setMessage("Searching...");
         progressDialog.show();
         if(!bloodGroup.equals("")&&!isBanned()) {
             remoteDataRetriever.updateData(bundle);
@@ -127,9 +135,21 @@ public class PersonSearchFragment extends Fragment implements View.OnClickListen
         }
         return status;
     }
-    class StateEventListener implements AdapterView.OnItemSelectedListener{
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Bundle bundle=new Bundle();
+        bundle.putString(Constants.BLOOD_GROUP, String.valueOf(personBloodGroup.getSelectedItemPosition()));
+        bundle.putString(Constants.STATE, String.valueOf(stateSpinner.getSelectedItemPosition()));
+        bundle.putString(Constants.DISTRICT, String.valueOf(districtSpinner.getSelectedItemPosition()));
+        bundle.putString(Constants.SUB_DISTRICT, String.valueOf(sub_districtSpinner.getSelectedItemPosition()));
+        outState.putAll(bundle);
+    }
+
+    private class StateEventListener implements AdapterView.OnItemSelectedListener{
         PersonSearchFragment personSearchFragment;
-        public StateEventListener(PersonSearchFragment personSearchFragment){
+        StateEventListener(PersonSearchFragment personSearchFragment){
             this.personSearchFragment=personSearchFragment;
         }
         @Override
@@ -153,9 +173,9 @@ public class PersonSearchFragment extends Fragment implements View.OnClickListen
 
         }
     }
-    class DistrictEventListener implements AdapterView.OnItemSelectedListener {
+    private class DistrictEventListener implements AdapterView.OnItemSelectedListener {
         PersonSearchFragment personSearchFragment;
-        public DistrictEventListener(PersonSearchFragment personSearchFragment){
+        DistrictEventListener(PersonSearchFragment personSearchFragment){
             this.personSearchFragment=personSearchFragment;
         }
         @Override
@@ -179,9 +199,9 @@ public class PersonSearchFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    class SubDistrictEventListener implements AdapterView.OnItemSelectedListener {
+    private class SubDistrictEventListener implements AdapterView.OnItemSelectedListener {
         PersonSearchFragment personSearchFragment;
-        public SubDistrictEventListener(PersonSearchFragment personSearchFragment){
+        SubDistrictEventListener(PersonSearchFragment personSearchFragment){
             this.personSearchFragment=personSearchFragment;
         }
         @Override

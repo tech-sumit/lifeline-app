@@ -20,62 +20,68 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/user_name_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="30dp"
-                android:hint="Username" />
+                android:hint="Username"
+                android:textColor="@color/buttonColor" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:ems="10"
                 android:id="@+id/user_mail_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/user_name_register"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="30dp"
-                android:hint="e-Mail" />
+                android:ems="10"
+                android:hint="e-Mail"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/buttonColor" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
                 android:id="@+id/user_pass_register"
-                android:layout_below="@+id/user_mail_register"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="30dp"
-                android:hint="Password" />
-
-            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/user_pass_conf_register"
-                android:layout_below="@+id/user_pass_register"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/user_mail_register"
                 android:layout_marginTop="30dp"
-                android:hint="Confirm Password" />
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textColor="@color/buttonColor" />
+
+            <EditText
+                android:id="@+id/user_pass_conf_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/user_pass_register"
+                android:layout_marginTop="30dp"
+                android:ems="10"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:textColor="@color/buttonColor" />
 
             <Button
+                android:id="@+id/buttonRegister1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Register"
-                android:id="@+id/buttonRegister1"
-                android:layout_below="@+id/user_pass_conf_register"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/user_pass_conf_register"
                 android:layout_marginTop="30dp"
+                android:background="@color/buttonBackgroundColor"
                 android:nestedScrollingEnabled="false"
-                android:onClick="onPreRegister" />
+                android:onClick="onPreRegister"
+                android:text="Register"
+                android:textColor="@color/buttonColor" />
 
         </LinearLayout>
     </ScrollView>

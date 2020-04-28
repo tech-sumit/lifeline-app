@@ -27,32 +27,20 @@ public class FirebaseMessagingServiceAdapter extends FirebaseMessagingService {
 
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
-        // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-            Map<String ,String> stringMap=remoteMessage.getData();
-            user_name=stringMap.get("data");
-            Log.i("user_name",""+user_name);
+            Map<String, String> stringMap = remoteMessage.getData();
+            user_name = stringMap.get("data");
+            Log.i("user_name", "" + user_name);
         }
-        //sendNotification(remoteMessage.getNotification().getBody());
         sendNotification("Is this a valid call ?");
         Log.i("Firebase Device Token", FirebaseInstanceId.getInstance().getToken());
 
-        // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
     }
-    // [END receive_message]
-
-    /**
-     * Create and show a simple notification containing the received FCM message.
-     *
-     * @param messageBody FCM message body received.
-     */
     private void sendNotification(String messageBody) {
         Intent intent = new Intent(this, NotificationActivity.class);
         intent.putExtra("user_name",user_name);

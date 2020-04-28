@@ -45,7 +45,7 @@ public class CustomAdapter extends BaseAdapter implements OnClickListener {
 
             holder = new ViewHolder();
             holder.name = (TextView) vi.findViewById(R.id.name_text);
-            holder.hivText = (TextView) vi.findViewById(R.id.hiv_text);
+            holder.hivText = (TextView) vi.findViewById(R.id.last_donated_text);
             holder.genderText = (TextView) vi.findViewById(R.id.gender_text);
             vi.setTag(holder);
         } else {
@@ -61,7 +61,7 @@ public class CustomAdapter extends BaseAdapter implements OnClickListener {
 
             holder.name.setText(tempValues.getName());
             holder.genderText.setText(tempValues.getGender());
-            holder.hivText.setText(tempValues.getHIVStatus());
+            holder.hivText.setText(tempValues.getLastDonated());
         }
         return vi;
     }

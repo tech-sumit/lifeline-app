@@ -9,14 +9,12 @@ public class Constants {
     public static final String BLOOD_GROUP="";
     public static final String GENDER="GENDER";
     public static final String AGE="AGE";
-    public static final String HIV_STATUS="HIV_STATUS";
     public static final String ADDRESS="ADDRESS";
     public static final String CONTACT_NO="CONTACT_NO";
     public static final String COUNTRY="COUNTRY";
     public static final String STATE="STATE";
     public static final String DISTRICT="DISTRICT";
     public static final String SUB_DISTRICT="SUB_DISTRICT";
-    public static final String IMEI_NO="IMEI_NO";
-    public static final String BLOCK_COUNT="BLOCK_COUNT";
-
+    public static final String LOGIN_STATUS="LOGIN_STATUS";
+    public static final String LAST_DONATED = "LAST_DONATED";
 }

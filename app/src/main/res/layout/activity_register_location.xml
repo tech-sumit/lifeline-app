@@ -16,21 +16,23 @@
         android:id="@+id/linearLayout">
 
         <TextView
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_margin="10dp"
             android:text="Set Location"
-            android:id="@+id/textView3"
             android:textAlignment="center"
-            android:layout_margin="10dp" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/buttonColor" />
 
         <TextView
+            android:id="@+id/textState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="State"
-            android:id="@+id/textState"
             android:textAlignment="textStart"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/buttonColor"
             android:textSize="20dp" />
 
         <Spinner
@@ -40,12 +42,13 @@
             android:textAlignment="center" />
 
         <TextView
+            android:id="@+id/textDistrict"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="District"
-            android:id="@+id/textDistrict"
             android:textAlignment="textStart"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/buttonColor"
             android:textSize="20dp" />
 
         <Spinner
@@ -55,13 +58,14 @@
             android:textAlignment="center" />
 
         <TextView
+            android:id="@+id/textSubdistrict"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Sub District"
-            android:id="@+id/textSubdistrict"
             android:layout_gravity="center_horizontal"
+            android:text="Sub District"
             android:textAlignment="textStart"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/buttonColor"
             android:textSize="20dp" />
 
         <Spinner
@@ -71,12 +75,14 @@
             android:textAlignment="center" />
 
         <Button
+            android:id="@+id/submitButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Submit"
-            android:id="@+id/submitButton"
             android:layout_gravity="center_horizontal"
-            android:textAlignment="center" />
+            android:background="@color/buttonBackgroundColor"
+            android:text="Submit"
+            android:textAlignment="center"
+            android:textColor="@color/buttonColor" />
 
     </LinearLayout>
 

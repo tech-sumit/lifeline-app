@@ -22,11 +22,11 @@ public class ListModel {
         person.setGender(gender);
     }
 
-    public String getHIVStatus() {
-        return person.getHiv_status();
+    public String getLastDonated() {
+        return person.getLast_donated();
     }
 
-    public void setHIVStatus(String hivStatus) {
-        person.setHiv_status(hivStatus);
+    public void setLastDonated(String LastDonated) {
+        person.setLast_donated(LastDonated);
     }
 }

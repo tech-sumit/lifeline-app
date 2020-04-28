@@ -2,6 +2,7 @@ package com.easy.sumit.lifeline.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,7 +17,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.R;
-import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
 import com.easy.sumit.lifeline.utils.Constants;
 
 import java.io.UnsupportedEncodingException;
@@ -27,7 +27,6 @@ import java.util.Map;
 public class PreRegisterActivity extends AppCompatActivity{
 
     private EditText user_name,user_mail,user_pass,user_pass_conf;
-    private Person person;
     String check_username_url = "http://10.0.2.2:9090/lifeline_app/check_username.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,6 @@ public class PreRegisterActivity extends AppCompatActivity{
         user_mail= (EditText) findViewById(R.id.user_mail_register);
         user_pass= (EditText) findViewById(R.id.user_pass_register);
         user_pass_conf= (EditText) findViewById(R.id.user_pass_conf_register);
-        person=new Person();
     }
     public void onPreRegister(View view){
         if(!user_name.getText().toString().equals("") &&
@@ -63,8 +61,9 @@ public class PreRegisterActivity extends AppCompatActivity{
                                 bundle.putString(Constants.USER_PASS, user_pass.getText().toString());
                                 intent.putExtras(bundle);
                                 startActivity(intent);
+                                finish();
                             } else {
-                                Snackbar.make(getCurrentFocus(), "" + response, Snackbar.LENGTH_SHORT);
+                                Toast.makeText(PreRegisterActivity.this,""+response,Toast.LENGTH_LONG).show();
                             }
 
                         }
@@ -77,7 +76,7 @@ public class PreRegisterActivity extends AppCompatActivity{
                     }){
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
-                            Map stringMap=new HashMap<>();
+                            Map<String, String> stringMap=new HashMap<>();
                             try {
                                 stringMap.put(URLEncoder.encode("user_name", "UTF-8"),
                                         URLEncoder.encode(user_name.getText().toString(), "UTF-8"));
@@ -109,5 +108,28 @@ public class PreRegisterActivity extends AppCompatActivity{
                           Snackbar.LENGTH_SHORT)
                     .show();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        /*
+        private EditText user_name,user_mail,user_pass,user_pass_conf;
+         */
+        Bundle bundle=new Bundle();
+        bundle.putString(Constants.USER_NAME,user_name.getText().toString());
+        bundle.putString(Constants.USER_MAIL,user_mail.getText().toString());
+        bundle.putString(Constants.USER_PASS,user_pass.getText().toString());
+        bundle.putString("USER_PASS_CONF",user_pass_conf.getText().toString());
+        outState.putAll(bundle);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        user_name.setText(savedInstanceState.getString(Constants.USER_NAME));
+        user_mail.setText(savedInstanceState.getString(Constants.USER_MAIL));
+        user_pass.setText(savedInstanceState.getString(Constants.USER_PASS));
+        user_pass_conf.setText(savedInstanceState.getString("USER_PASS_CONF"));
     }
 }

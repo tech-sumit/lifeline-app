@@ -1,8 +1,8 @@
 package com.easy.sumit.lifeline.utils.BackgroundWorkers;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -36,18 +36,21 @@ public class RemoteDataRetriever{
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (!response.equals("")) {
+                personSearchFragment.progressDialog.dismiss();
+
+                Log.i("Responce",""+response);
+                if (!response.equals("null")){
                     ResultFragment resultFragment = new ResultFragment();
                     Bundle bundle1 = new Bundle();
                     bundle1.putString("output", response);
                     resultFragment.setArguments(bundle1);
-                    personSearchFragment.progressDialog.dismiss();
                     FragmentManager fragmentManager = personSearchFragment.getFragmentManager();
                     fragmentManager.beginTransaction()
                             .replace(R.id.content_home_relative_layout, resultFragment)
+                            .addToBackStack("ResultFragment")
                             .commit();
                 } else {
-                    Snackbar.make(personSearchFragment.getView(), "Sorry, no data found", Snackbar.LENGTH_SHORT);
+                    Toast.makeText(personSearchFragment.getContext(),"Sorry, no data found",Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {

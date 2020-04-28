@@ -66,7 +66,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <!-- TODO: Remove or change this placeholder name -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pref_dream_text_key">pref_dream_text</string>
     <string name="pref_dream_text_default">zzzZZZzzz</string>
@@ -84,5 +83,6 @@
     <string name="interstitial_ad_unit_id">ca-app-pub-3940256099942544/1033173712</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="title_activity_test">TESTActivity</string>
 
 </resources>

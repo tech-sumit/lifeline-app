@@ -6,4 +6,6 @@
     <color name="black">#cc0202</color>
     <color name="red">#cc0202</color>
     <color name="colorBackground">#ffffff</color>
+    <color name="buttonColor">#e57373</color>
+    <color name="buttonBackgroundColor">#fff9c4</color>
 </resources>

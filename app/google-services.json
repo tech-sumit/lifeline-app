@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "481008846220",
-    "firebase_url": "https://lifeline-1361c.firebaseio.com",
-    "project_id": "lifeline-1361c",
-    "storage_bucket": "lifeline-1361c.appspot.com"
+    "project_number": "523124846054",
+    "firebase_url": "https://lifeline-fe8c2.firebaseio.com",
+    "project_id": "lifeline-fe8c2",
+    "storage_bucket": "lifeline-fe8c2.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:481008846220:android:a26ec2325b4e7bb6",
+        "mobilesdk_app_id": "1:523124846054:android:a26ec2325b4e7bb6",
         "android_client_info": {
           "package_name": "com.easy.sumit.lifeline"
         }
       },
       "oauth_client": [
         {
-          "client_id": "481008846220-lph6occ1bpoh84vqe0ih1j99769p3g3h.apps.googleusercontent.com",
+          "client_id": "523124846054-5qti1v6v1h6im334uqnna0706pnb882n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.easy.sumit.lifeline",
+            "certificate_hash": "0a4dbfeee9b597aaebc8eb694f7607fc370ca7af"
+          }
+        },
+        {
+          "client_id": "523124846054-1bom63ir64sf2nvjfj6t1rc3s177ijrp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDV9XaTrlQTfYKgoRd4il17i16i5UEwxms"
+          "current_key": "AIzaSyCBuK1bUCc7rTN_B2ACu6fr_C3MXkVKdBk"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523124846054-1bom63ir64sf2nvjfj6t1rc3s177ijrp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

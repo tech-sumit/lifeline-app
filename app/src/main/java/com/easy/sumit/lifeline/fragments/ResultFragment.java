@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.easy.sumit.lifeline.R;
@@ -24,9 +23,7 @@ import java.util.ArrayList;
 
 public class ResultFragment extends Fragment {
 
-    private ListView listResultView;
     private String output = "";
-    private ArrayAdapter<String> arrayAdapter;
     private ArrayList<ListModel> arrayList = new ArrayList<>();
     private int OUTPUT_STATUS = 0;
     private JSONArray jsonArray;
@@ -38,6 +35,11 @@ public class ResultFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             output = getArguments().getString("output");
+            if(savedInstanceState!=null){
+                if(!savedInstanceState.isEmpty()){
+                    output=savedInstanceState.getString("output");
+                }
+            }
             if (output.equals("null")) {
                 OUTPUT_STATUS = 1;
             } else {
@@ -68,7 +70,7 @@ public class ResultFragment extends Fragment {
 
                     data.setName("Name: " + json.getString("name"));
                     data.setGender("Gender: " + json.getString("gender"));
-                    data.setHIVStatus("HIV Status: " + json.getString("hiv_status"));
+                    data.setLastDonated("Last Donated: " + json.getString("last_donated"));
 
                     arrayList.add(data);
                 }
@@ -79,7 +81,7 @@ public class ResultFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            listResultView = (ListView) getActivity().findViewById(R.id.list);
+            ListView listResultView = (ListView) getActivity().findViewById(R.id.list);
             Log.i("**ResultFragment","ResultFragment Started");
             listResultView.setAdapter(adapter);
             Log.i("**ResultFragment","List adapter innicialised");
@@ -102,7 +104,15 @@ public class ResultFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-            listResultView.setVisibility(View.INVISIBLE);
-            listResultView.setClickable(false);
+        //listResultView.setVisibility(View.INVISIBLE);
+        //listResultView.setClickable(false);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Bundle bundle=new Bundle();
+        bundle.putString("output",output);
+        outState.putAll(bundle);
     }
 }

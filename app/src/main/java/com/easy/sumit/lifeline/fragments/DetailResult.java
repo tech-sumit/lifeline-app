@@ -25,7 +25,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.R;
-import com.easy.sumit.lifeline.activities.SecurityActivity;
 import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
 import com.easy.sumit.lifeline.utils.Constants;
 import com.easy.sumit.lifeline.utils.ContactHandler;
@@ -39,13 +38,14 @@ import java.util.Map;
 public class DetailResult extends Fragment {
 
     private static JSONArray jsonArray;
-    private Person person;
+    private Person person=new Person();
+
 
     private TextView name_text;
     private TextView gender_text;
     private TextView address_text;
     private TextView blood_group_text;
-    private TextView hiv_status_text;
+    private TextView last_donated_text;
     private Button previous_button;
     private Button next_button;
     private ContactHandler contactHandler;
@@ -66,7 +66,7 @@ public class DetailResult extends Fragment {
             args.putString(Constants.GENDER, jsonarray.getJSONObject(view_count).getString("gender"));
             args.putString(Constants.ADDRESS, jsonarray.getJSONObject(view_count).getString("address"));
             args.putString(Constants.CONTACT_NO, jsonarray.getJSONObject(view_count).getString("contact_no"));
-            args.putString(Constants.HIV_STATUS, jsonarray.getJSONObject(view_count).getString("hiv_status"));
+            args.putString(Constants.LAST_DONATED, jsonarray.getJSONObject(view_count).getString("last_donated"));
             fragment.setArguments(args);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -76,20 +76,30 @@ public class DetailResult extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            person=new Person();
+        if (!getArguments().isEmpty()) {
             person.setUser_name(getArguments().getString(Constants.USER_NAME));
             person.setName(getArguments().getString(Constants.NAME));
             person.setBlood_group(getArguments().getString(Constants.BLOOD_GROUP));
             person.setGender(getArguments().getString(Constants.GENDER));
             person.setAddress(getArguments().getString(Constants.ADDRESS));
             person.setContact_no(getArguments().getString(Constants.CONTACT_NO));
-            person.setHiv_status(getArguments().getString(Constants.HIV_STATUS));
+            person.setLast_donated(getArguments().getString(Constants.LAST_DONATED));
             if(jsonArray!=null){
                 json_length = jsonArray.length() - 1;
             }
         } else {
             Log.e("ERROR:", "Empty JSONArray, Bundle has null parameters.");
+        }
+        if(savedInstanceState!=null){
+            if(!savedInstanceState.isEmpty()){
+                person.setUser_name(savedInstanceState.getString(Constants.USER_NAME));
+                person.setName(savedInstanceState.getString(Constants.NAME));
+                person.setBlood_group(savedInstanceState.getString(Constants.BLOOD_GROUP));
+                person.setGender(savedInstanceState.getString(Constants.GENDER));
+                person.setAddress(savedInstanceState.getString(Constants.ADDRESS));
+                person.setContact_no(savedInstanceState.getString(Constants.CONTACT_NO));
+                person.setLast_donated(savedInstanceState.getString(Constants.LAST_DONATED));
+            }
         }
     }
 
@@ -101,55 +111,47 @@ public class DetailResult extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        name_text = (TextView) getActivity().findViewById(R.id.nameText);
-        gender_text = (TextView) getActivity().findViewById(R.id.genderText);
-        address_text = (TextView) getActivity().findViewById(R.id.addressText);
-        blood_group_text = (TextView) getActivity().findViewById(R.id.bloodGroupText);
-        hiv_status_text = (TextView) getActivity().findViewById(R.id.hivStatusText);
-        Button call_button = (Button) getActivity().findViewById(R.id.call_button);
-        previous_button = (Button) getActivity().findViewById(R.id.previousButton);
-        next_button = (Button) getActivity().findViewById(R.id.nextButton);
+        name_text = (TextView) view.findViewById(R.id.nameText);
+        gender_text = (TextView) view.findViewById(R.id.genderText);
+        address_text = (TextView) view.findViewById(R.id.addressText);
+        blood_group_text = (TextView) view.findViewById(R.id.bloodGroupText);
+        last_donated_text = (TextView) view.findViewById(R.id.lastDonatedText);
+        Button call_button = (Button) view.findViewById(R.id.call_button);
+        previous_button = (Button) view.findViewById(R.id.previousButton);
+        next_button = (Button) view.findViewById(R.id.nextButton);
 
 
         contactHandler = new ContactHandler(getActivity());
         name_text.setText(person.getName());
-        gender_text.setText("Gender:" + person.getGender());
+        gender_text.setText("Gender:".concat(person.getGender()));
         address_text.setText(person.getAddress());
         blood_group_text.setText(person.getBlood_group());
-        hiv_status_text.setText("HIV Status: " + person.getHiv_status());
+        last_donated_text.setText("Last Donated:".concat(person.getLast_donated()));
         if(view_count==0){
             previous_button.setEnabled(false);
         }
+
         if (view_count == json_length) {
             next_button.setEnabled(false);
         }
+
         call_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 contactHandler.setContact(person.getContact_no());
                 //contactHandler.createContact();
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse("tel:" + person.getContact_no()));
                 startActivity(intent);
+                Log.e("*****INFO*****","INSIDE Call button clicked");
                 ((TelephonyManager) getActivity().getSystemService(Context.TELEPHONY_SERVICE))
                         .listen(new PhoneEndListener(),
                                 PhoneStateListener.LISTEN_CALL_STATE);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent1 = new Intent(getContext(), SecurityActivity.class);
-                        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent1.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        intent1.putExtra("NameN", "" + person.getName());
-                        startActivity(intent1);
-                    }
-                }, 500);
-
             }
         });
+
         next_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,10 +159,10 @@ public class DetailResult extends Fragment {
                     view_count++;
                     try {
                         name_text.setText(jsonArray.getJSONObject(view_count).getString("name"));
-                        gender_text.setText("Gender:" + jsonArray.getJSONObject(view_count).getString("gender"));
+                        gender_text.setText("Gender:".concat(jsonArray.getJSONObject(view_count).getString("gender")));
                         address_text.setText(jsonArray.getJSONObject(view_count).getString("address"));
                         blood_group_text.setText(jsonArray.getJSONObject(view_count).getString("blood_group"));
-                        hiv_status_text.setText("HIV Status:" + jsonArray.getJSONObject(view_count).getString("hiv_status"));
+                        last_donated_text.setText("Last Donated:".concat(jsonArray.getJSONObject(view_count).getString("last_donated")));
                         person.setContact_no(jsonArray.getJSONObject(view_count).getString("contact_no"));
                         person.setUser_name(jsonArray.getJSONObject(view_count).getString("user_name"));
                     } catch (JSONException e) {
@@ -176,15 +178,14 @@ public class DetailResult extends Fragment {
         previous_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (view_count > 0) {
                     view_count--;
                     try {
                         name_text.setText(jsonArray.getJSONObject(view_count).getString("name"));
-                        gender_text.setText("Gender:" + jsonArray.getJSONObject(view_count).getString("gender"));
+                        gender_text.setText("Gender:".concat(jsonArray.getJSONObject(view_count).getString("gender")));
                         address_text.setText(jsonArray.getJSONObject(view_count).getString("address"));
                         blood_group_text.setText(jsonArray.getJSONObject(view_count).getString("blood_group"));
-                        hiv_status_text.setText("HIV Status:" + jsonArray.getJSONObject(view_count).getString("hiv_status"));
+                        last_donated_text.setText("Last Donated:".concat(jsonArray.getJSONObject(view_count).getString("last_donated")));
                         person.setContact_no(jsonArray.getJSONObject(view_count).getString("contact_no"));
                         person.setUser_name(jsonArray.getJSONObject(view_count).getString("user_name"));
                     } catch (JSONException e) {
@@ -198,6 +199,21 @@ public class DetailResult extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Bundle bundle=new Bundle();
+        bundle.putString(Constants.USER_NAME,person.getUser_name());
+        bundle.putString(Constants.NAME,person.getName());
+        bundle.putString(Constants.BLOOD_GROUP,person.getBlood_group());
+        bundle.putString(Constants.GENDER,person.getGender());
+        bundle.putString(Constants.ADDRESS,person.getAddress());
+        bundle.putString(Constants.CONTACT_NO,person.getContact_no());
+        bundle.putString(Constants.LAST_DONATED,person.getLast_donated());
+        outState.putAll(bundle);
+    }
+
     private class PhoneEndListener extends PhoneStateListener {
         @Override
         public void onCallStateChanged ( int state, String incomingNumber){
@@ -206,53 +222,44 @@ public class DetailResult extends Fragment {
                     //Hangup
                     case TelephonyManager.CALL_STATE_IDLE:
 
-                        //if (previousState==TelephonyManager.CALL_STATE_OFFHOOK) {
-                            //contactHandler.deleteContact();
-                            StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                                    "http://10.0.2.2:9090/lifeline_app/fcmnotify.php", new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    Log.i("***INFO***", "Notification Sent:" + response);
-                                }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    error.printStackTrace();
-                                    Toast.makeText(getActivity(), "Connection Failed", Toast.LENGTH_LONG).show();
-                                }
-                            }){
-                                @Override
-                                protected Map<String, String> getParams() throws AuthFailureError {
-                                    Map<String, String> stringMap = new HashMap<>();
-                                    stringMap.put("user_name", person.getUser_name());
-                                    stringMap.put("choice", "2");
-                                    return stringMap;
-                                }
-                            };
-                            RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-                            requestQueue.add(stringRequest);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    contactHandler.deleteLog();
-                                }
-                            }, 1000);
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                                "http://10.0.2.2:9090/lifeline_app/fcmnotify.php", new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.i("***INFO***", "Notification Sent:" + response);
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                error.printStackTrace();
+                                Toast.makeText(getActivity(), "Connection Failed", Toast.LENGTH_LONG).show();
+                            }
+                        }){
+                            @Override
+                            protected Map<String, String> getParams() throws AuthFailureError {
+                                Map<String, String> stringMap = new HashMap<>();
+                                stringMap.put("user_name", person.getUser_name());
+                                stringMap.put("choice", "2");
+                                return stringMap;
+                            }
+                        };
+                        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                        requestQueue.add(stringRequest);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                contactHandler.deleteLog();
+                            }
+                        }, 1000);
                         //}
                         previousState=TelephonyManager.CALL_STATE_IDLE;
                         Log.i("Call Status", "CALL_STATE_IDLE");
                         break;
                     //Outgoing
                     case TelephonyManager.CALL_STATE_OFFHOOK:
-                        if(previousState==TelephonyManager.CALL_STATE_IDLE){
-                        /*  new Handler().postDelayed(() -> {
-                                Intent intent=new Intent(getContext(),SecurityActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                intent.putExtra("name",""+person.getName());
-                                startActivity(intent);
-                            },500);
+                        /*
+                        if(previousState==TelephonyManager.CALL_STATE_IDLE){}
                         */
-                        }
                         previousState=TelephonyManager.CALL_STATE_OFFHOOK;
                         Log.i("Call Status", "CALL_STATE_OFFHOOK");
                         break;
