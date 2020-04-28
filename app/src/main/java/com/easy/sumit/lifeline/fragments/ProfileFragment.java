@@ -1,6 +1,8 @@
 package com.easy.sumit.lifeline.fragments;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -27,10 +29,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.R;
+import com.easy.sumit.lifeline.activities.LoginActivity;
 import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ProfileFragment extends Fragment{
     Person person = new Person();
@@ -59,7 +64,7 @@ public class ProfileFragment extends Fragment{
         personLastDonated = (TextView) getView().findViewById(R.id.personLastDonatedView);
         TextView personBloodGroup = (TextView) getView().findViewById(R.id.personBloodGroupView);
         TextView personGender= (TextView) getView().findViewById(R.id.personGenderView);
-        TextView personAge= (TextView) getView().findViewById(R.id.personAgeView);
+        final TextView personAge= (TextView) getView().findViewById(R.id.personAgeView);
         personState= (TextView) getView().findViewById(R.id.personStateView);
         personDistrict= (TextView) getView().findViewById(R.id.personDistrictView);
         personSubdistrict= (TextView) getView().findViewById(R.id.personSubdistrictView);
@@ -94,6 +99,9 @@ public class ProfileFragment extends Fragment{
                 Button changeLocation= (Button) view1.findViewById(R.id.changeLocation);
                 Button changeContactNo= (Button) view1.findViewById(R.id.changeContactNo);
                 Button changeSecurityQuestion= (Button) view1.findViewById(R.id.changeSecurityQuestion);
+                Button changeAge= (Button) view1.findViewById(R.id.changeAge);
+                final Button deleteAccount= (Button) view1.findViewById(R.id.deleteAccount);
+
                 changePassword.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -141,7 +149,7 @@ public class ProfileFragment extends Fragment{
                                                     RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
                                                     requestQueue.add(stringRequest);
                                                 }else{
-                                                    Toast.makeText(getContext(),"Password length is short",Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getContext(),"Password length must be greater than 5",Toast.LENGTH_SHORT).show();
                                                 }
                                             }else{
                                                 Toast.makeText(getContext(),"Passwords not match",Toast.LENGTH_SHORT).show();
@@ -374,6 +382,127 @@ public class ProfileFragment extends Fragment{
                         });
                     }
                 });
+
+
+                changeAge.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        View ageChangeView = View.inflate(getContext(), R.layout.update_age_layout, null);
+                        final Dialog changeAgeDialog = new Dialog(getContext());
+                        changeAgeDialog.setContentView(ageChangeView);
+                        final EditText newAge = (EditText) changeAgeDialog.findViewById(R.id.newAge);
+                        Button updateAge= (Button) changeAgeDialog.findViewById(R.id.updateAge);
+                        changeAgeDialog.show();
+
+                        updateAge.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if(!newAge.getText().equals("")) {
+                                    try{
+                                        if(Integer.parseInt(newAge.getText().toString())>17){
+                                            String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                                            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    Toast.makeText(getContext(), "" + response, Toast.LENGTH_SHORT).show();
+                                                    changeAgeDialog.cancel();
+                                                    dialog.cancel();
+                                                    person.setAge(newAge.getText().toString());
+                                                    person.updatePreferences(getContext());
+                                                    personAge.setText("Age: "+person.getAge());
+                                                }
+                                            }, new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    error.printStackTrace();
+                                                }
+                                            }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> stringMap = new HashMap<>();
+                                                    stringMap.put("user_name", "" + person.getUser_name());
+                                                    stringMap.put("db_action", "12");
+                                                    stringMap.put("total_data", "1");
+                                                    stringMap.put("age", "" + newAge.getText().toString());
+                                                    return stringMap;
+                                                }
+                                            };
+                                            RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                                            requestQueue.add(stringRequest);
+                                        } else{
+                                            Toast.makeText(getContext(), "Age must be greater than 18 years", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }catch (NumberFormatException e){
+                                        e.printStackTrace();
+                                        Toast.makeText(getContext(),"Invalid age",Toast.LENGTH_SHORT).show();
+                                    }
+                                } else{
+                                    Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                });
+
+                deleteAccount.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        View deleteAccountView = View.inflate(getContext(), R.layout.delete_account_layout, null);
+                        final Dialog deleteAccountDialog = new Dialog(getContext());
+                        deleteAccountDialog.setContentView(deleteAccountView);
+                        Button yesButton= (Button) deleteAccountDialog.findViewById(R.id.yesDeleteButton);
+                        Button noButton= (Button) deleteAccountDialog.findViewById(R.id.noDeleteButton);
+                        deleteAccountDialog.show();
+
+                        yesButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Toast.makeText(getContext(), "" + response, Toast.LENGTH_SHORT).show();
+                                        deleteAccountDialog.cancel();
+                                        dialog.cancel();
+                                        try {
+                                            SharedPreferences sharedPreferences=getContext().getSharedPreferences("lifeline",MODE_PRIVATE);
+                                            sharedPreferences.edit().clear().apply();
+                                            getActivity().finish();
+                                            Intent intent=new Intent(getContext(),LoginActivity.class);
+                                            startActivity(intent);
+                                        } catch (Throwable throwable) {
+                                            throwable.printStackTrace();
+                                        }
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        error.printStackTrace();
+                                    }
+                                }) {
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String, String> stringMap = new HashMap<>();
+                                        stringMap.put("user_name", "" + person.getUser_name());
+                                        stringMap.put("db_action", "13");
+                                        stringMap.put("total_data", "0");
+                                        return stringMap;
+                                    }
+                                };
+                                RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+                                requestQueue.add(stringRequest);
+                            }
+                        });
+                        noButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                deleteAccountDialog.cancel();
+                                dialog.cancel();
+                            }
+                        });
+                    }
+                });
+
             }
         });
     }

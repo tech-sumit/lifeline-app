@@ -4,6 +4,7 @@
     <color name="colorAccent">#ffd740</color>
     <color name="colorPrimary">#ff1945</color>
     <color name="colorBackground">#424242</color>
+    <color name="colorNavigation">#ff1945</color>
     <color name="colorButton">#ff1945</color>
     <color name="colorText">#ffffff</color>
     <color name="colorButtonForeground">#ffffff</color>

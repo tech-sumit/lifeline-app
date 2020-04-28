@@ -136,42 +136,47 @@ public class LoginActivity extends AppCompatActivity{
                     @Override
                     public void onClick(View v) {
                         if(!pass_text.getText().toString().equals("")){
-                            if(!conf_pass_text.getText().toString().equals("")) {
-                                if(pass_text.getText().toString().equals(conf_pass_text.getText().toString())) {
-                                    String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
-                                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-                                        @Override
-                                        public void onResponse(String response) {
-                                            Toast.makeText(LoginActivity.this, "" + response, Toast.LENGTH_SHORT).show();
-                                            forgotPasswordDialog.cancel();
-                                        }
-                                    }, new Response.ErrorListener() {
-                                        @Override
-                                        public void onErrorResponse(VolleyError error) {
-                                            error.printStackTrace();
-                                        }
-                                    }) {
-                                        @Override
-                                        protected Map<String, String> getParams() throws AuthFailureError {
-                                            Map<String, String> stringMap = new HashMap<>();
-                                            stringMap.put("user_name", "" + user_name_edittext.getText().toString());
-                                            stringMap.put("db_action", "10");
-                                            stringMap.put("total_data", "1");
-                                            stringMap.put("new_password", "" + pass_text.getText().toString());
-                                            return stringMap;
-                                        }
-                                    };
-                                    RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
-                                    requestQueue.add(stringRequest);
-                                } else {
-                                    Toast.makeText(LoginActivity.this, "Passwords not match", Toast.LENGTH_SHORT).show();
+                            if(pass_text.getText().toString().length()>5){
+                                if(!conf_pass_text.getText().toString().equals("")) {
+                                    if(pass_text.getText().toString().equals(conf_pass_text.getText().toString())) {
+                                        String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
+                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                Toast.makeText(LoginActivity.this, "" + response, Toast.LENGTH_SHORT).show();
+                                                forgotPasswordDialog.cancel();
+                                            }
+                                        }, new Response.ErrorListener() {
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                error.printStackTrace();
+                                            }
+                                        }) {
+                                            @Override
+                                            protected Map<String, String> getParams() throws AuthFailureError {
+                                                Map<String, String> stringMap = new HashMap<>();
+                                                stringMap.put("user_name", "" + user_name_edittext.getText().toString());
+                                                stringMap.put("db_action", "10");
+                                                stringMap.put("total_data", "1");
+                                                stringMap.put("new_password", "" + pass_text.getText().toString());
+                                                return stringMap;
+                                            }
+                                        };
+                                        RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+                                        requestQueue.add(stringRequest);
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Passwords not match", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else{
+                                    Toast.makeText(LoginActivity.this, "Please re-enter password", Toast.LENGTH_SHORT).show();
                                 }
-                            }else{
-                                Toast.makeText(LoginActivity.this, "Please re-enter password", Toast.LENGTH_SHORT).show();
+                            } else{
+                                Toast.makeText(LoginActivity.this, "Password length must be greater than 5", Toast.LENGTH_SHORT).show();
                             }
-                        }else{
+                        } else{
                             Toast.makeText(LoginActivity.this, "Please enter new password", Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 });
                 forgotPasswordDialog.show();
@@ -181,6 +186,8 @@ public class LoginActivity extends AppCompatActivity{
 
     public void onLogin(View view){
         user_name.setText(user_name.getText().toString().trim());
+        user_name.setText(user_name.getText().toString().replaceAll(" ",""));
+        user_name.setText(user_name.getText().toString().toLowerCase());
         user_pass.setText(user_pass.getText().toString().trim());
         if(user_name.getText().toString().isEmpty()||user_pass.getText().toString().isEmpty()){
             Toast.makeText(this,"Please fill all fields",Toast.LENGTH_SHORT).show();

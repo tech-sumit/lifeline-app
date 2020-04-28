@@ -135,12 +135,12 @@ public class DetailResult extends Fragment {
         last_donated_text.setText("Last Donated:".concat(person.getLast_donated()));
         if(view_count==0){
             previous_button.setEnabled(false);
-            previous_button.setBackgroundColor(Color.argb(255,239,83,80));
+            previous_button.setBackgroundColor(Color.argb(255,246,76,108));
         }
 
         if (view_count == json_length) {
             next_button.setEnabled(false);
-            next_button.setBackgroundColor(Color.argb(255,239,83,80));
+            next_button.setBackgroundColor(Color.argb(255,246,76,108));
         }
 
         call_button.setOnClickListener(new View.OnClickListener() {
@@ -175,11 +175,11 @@ public class DetailResult extends Fragment {
                         e.printStackTrace();
                     }
                     previous_button.setEnabled(true);
-                    previous_button.setBackgroundColor(Color.argb(255,229,57,53));
+                    previous_button.setBackgroundColor(Color.argb(255,255,25,69));
                 }
                 if (view_count == (json_length)) {
                     next_button.setEnabled(false);
-                    next_button.setBackgroundColor(Color.argb(255,239,83,80));
+                    next_button.setBackgroundColor(Color.argb(255,246,76,108));
                 }
             }
         });
@@ -200,11 +200,11 @@ public class DetailResult extends Fragment {
                         e.printStackTrace();
                     }
                     next_button.setEnabled(true);
-                    next_button.setBackgroundColor(Color.argb(255,229,57,53));
+                    next_button.setBackgroundColor(Color.argb(255,255,25,69));
                 }
                 if (view_count == 0) {
                     previous_button.setEnabled(false);
-                    previous_button.setBackgroundColor(Color.argb(255,239,83,80));
+                    previous_button.setBackgroundColor(Color.argb(255,246,76,108));
                 }
             }
         });

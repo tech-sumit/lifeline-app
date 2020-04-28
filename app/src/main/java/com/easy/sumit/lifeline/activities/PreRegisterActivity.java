@@ -67,6 +67,10 @@ public class PreRegisterActivity extends AppCompatActivity{
                 !sec_question.equals("")&&
                 !text_sec_answer.getText().toString().equals("")){
 
+            user_name.setText(user_name.getText().toString().trim());
+            user_name.setText(user_name.getText().toString().replaceAll(" ",""));
+            user_name.setText(user_name.getText().toString().toLowerCase());
+
             if(user_name.getText().toString().length()>6 &&
                     user_pass.getText().toString().length()>6){
 

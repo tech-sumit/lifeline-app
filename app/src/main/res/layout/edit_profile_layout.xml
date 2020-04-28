@@ -8,62 +8,87 @@
     android:orientation="vertical">
 
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="3dp"
-        android:background="@color/colorBackground"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/changeSecurityQuestion"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@color/colorButton"
-            android:text="Change your security question"
-            android:textColor="@color/colorButtonForeground" />
+            android:layout_margin="3dp"
+            android:background="@color/colorBackground"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/changeLocation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@color/colorButton"
-            android:text="Change your location"
-            android:textColor="@color/colorButtonForeground" />
+            <Button
+                android:id="@+id/changeSecurityQuestion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:text="Change your security question"
+                android:textColor="@color/colorButtonForeground" />
 
-        <Button
-            android:id="@+id/changePassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="7dp"
-            android:layout_weight="1"
-            android:background="@color/colorButton"
-            android:text="Change account password"
-            android:textColor="@color/colorButtonForeground" />
+            <Button
+                android:id="@+id/changeLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:text="Change your location"
+                android:textColor="@color/colorButtonForeground" />
 
-        <Button
-            android:id="@+id/changeLastDonated"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@color/colorButton"
-            android:text="Change last donated date"
-            android:textColor="@color/colorButtonForeground" />
+            <Button
+                android:id="@+id/changePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:text="Change account password"
+                android:textColor="@color/colorButtonForeground" />
 
-        <Button
-            android:id="@+id/changeContactNo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:background="@color/colorButton"
-            android:text="Change your contact no"
-            android:textColor="@color/colorButtonForeground" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/changeAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:text="Change your Age"
+                android:textColor="@color/colorButtonForeground" />
+
+            <Button
+                android:id="@+id/changeLastDonated"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:text="Change last donated date"
+                android:textColor="@color/colorButtonForeground" />
+
+            <Button
+                android:id="@+id/changeContactNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:text="Change your contact no"
+                android:textColor="@color/colorButtonForeground" />
+
+            <Button
+                android:id="@+id/deleteAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:background="@color/colorButton"
+                android:text="Delete Account"
+                android:textColor="@color/colorButtonForeground" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
