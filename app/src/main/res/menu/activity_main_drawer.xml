@@ -20,5 +20,9 @@
             android:icon="@drawable/ic_contact"
             android:title="Contact Us" />
 
+        <item
+            android:id="@+id/nav_log_out"
+            android:title="Log Out" />
     </group>
+
 </menu>

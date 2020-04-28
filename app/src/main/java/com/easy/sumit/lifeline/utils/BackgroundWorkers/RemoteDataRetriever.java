@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -32,30 +33,31 @@ public class RemoteDataRetriever{
     }
     public void start(){
         String url = "http://10.0.2.2:9090/lifeline_app/getData.php";
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(!response.equals("")) {
-                    ResultFragment resultFragment = new ResultFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("output",response);
-                    resultFragment.setArguments(bundle);
-                    FragmentManager fragmentManager = personSearchFragment.getFragmentManager();
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.personSearchFragment, resultFragment)
-                            .commit();
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, url, (Response.Listener<String>) response -> {
+            if(!response.equals("")) {
+                ResultFragment resultFragment = new ResultFragment();
+                Bundle bundle1 = new Bundle();
+                bundle1.putString("output",response);
+                resultFragment.setArguments(bundle1);
+                personSearchFragment.progressDialog.dismiss();
+                FragmentManager fragmentManager = personSearchFragment.getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.personSearchFragment, resultFragment)
+                        .commit();
 
-                    personSearchFragment.buttonSearch.setVisibility(View.INVISIBLE);
-                    personSearchFragment.buttonSearch.setClickable(false);
-                    personSearchFragment.personBloodGroup.setVisibility(View.INVISIBLE);
-                    personSearchFragment.personBloodGroup.setClickable(false);
-                }
-                else{
-                    Snackbar.make(personSearchFragment.getView(),"Sorry, no data found",Snackbar.LENGTH_SHORT);
-                }
-
+                personSearchFragment.buttonSearch.setVisibility(View.INVISIBLE);
+                personSearchFragment.buttonSearch.setClickable(false);
+                personSearchFragment.personBloodGroup.setVisibility(View.INVISIBLE);
+                personSearchFragment.personBloodGroup.setClickable(false);
             }
-        }, (Response.ErrorListener) Throwable::printStackTrace){
+            else{
+                Snackbar.make(personSearchFragment.getView(),"Sorry, no data found",Snackbar.LENGTH_SHORT);
+            }
+
+        },(Response.ErrorListener) error -> {
+                    error.printStackTrace();
+                    Toast.makeText(personSearchFragment.getContext(), "Connection Failed", Toast.LENGTH_LONG).show();
+                }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> stringMap=new HashMap<>();

@@ -1,8 +1,14 @@
 package com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.easy.sumit.lifeline.utils.Constants;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Person {
     private String user_name=null;
@@ -80,6 +86,7 @@ public class Person {
     public void setImei_no(String imei_no) {
         this.imei_no = imei_no;
     }
+
     public void setALL(Bundle bundle){
         user_name=bundle.getString(Constants.USER_NAME);
         user_pass=bundle.getString(Constants.USER_PASS);
@@ -96,6 +103,86 @@ public class Person {
         district=bundle.getString(Constants.DISTRICT);
         sub_district=bundle.getString(Constants.SUB_DISTRICT);
         imei_no=bundle.getString(Constants.IMEI_NO);
+    }
+
+    public void setAll(String jsonString){
+        try {
+            Log.i("Person.java","jsonString:"+jsonString);
+            JSONObject jsonObject=new JSONObject(jsonString);
+            if(!jsonObject.equals("")) {
+                user_name = jsonObject.getString("user_name");
+                user_pass = jsonObject.getString("user_pass");
+                user_mail = jsonObject.getString("user_mail");
+                name = jsonObject.getString("name");
+                blood_group = jsonObject.getString("blood_group");
+                gender = jsonObject.getString("gender");
+                age = jsonObject.getString("age");
+                hiv_status = jsonObject.getString("hiv_status");
+                address = jsonObject.getString("address");
+                contact_no = jsonObject.getString("contact_no");
+                country = jsonObject.getString("country");
+                state = jsonObject.getString("state");
+                district = jsonObject.getString("district");
+                sub_district = jsonObject.getString("sub_district");
+                imei_no = jsonObject.getString("IMEI_NO");
+                Log.i("***Data***","Person{\n"+getUser_name()+
+                                            "\n"+getUser_pass()+
+                                            "\n"+getUser_mail()+
+                                            "\n"+getName()+
+                                            "\n"+getBlood_group()+
+                                            "\n"+getGender()+
+                                            "\n"+getAge()+
+                                            "\n"+getHiv_status()+
+                                            "\n"+getAddress()+
+                                            "\n"+getContact_no()+
+                                            "\n"+getCountry()+
+                                            "\n"+getState()+
+                                            "\n"+getDistrict()+
+                                            "\n"+getSub_district()+
+                                            "\n"+getImei_no());
+            }else{
+                Log.e("ERROR","at Person.java empty jsonString in method public void setAll(String jsonString) ");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void setAllByPreferences(Context context){
+
+        SharedPreferences pref = context.getSharedPreferences("lifeline", Context.MODE_PRIVATE);
+        user_name=pref.getString("user_name",null);
+        user_pass=pref.getString("user_pass",null);
+        user_mail=pref.getString("user_mail",null);
+        name=pref.getString("name",null);
+        blood_group=pref.getString("blood_group",null);
+        gender=pref.getString("gender",null);
+        age=pref.getString("age",null);
+        hiv_status=pref.getString("hiv_status",null);
+        address=pref.getString("address",null);
+        contact_no=pref.getString("contact_no",null);
+        country=pref.getString("country",null);
+        state=pref.getString("state",null);
+        district=pref.getString("district",null);
+        sub_district=pref.getString("sub_district",null);
+        imei_no=pref.getString("imei_no",null);
+        Log.i("***Data by Pref.***","Person{"+
+                "\n"+getUser_name()+
+                "\n"+getUser_pass()+
+                "\n"+getUser_mail()+
+                "\n"+getName()+
+                "\n"+getBlood_group()+
+                "\n"+getGender()+
+                "\n"+getAge()+
+                "\n"+getHiv_status()+
+                "\n"+getAddress()+
+                "\n"+getContact_no()+
+                "\n"+getCountry()+
+                "\n"+getState()+
+                "\n"+getDistrict()+
+                "\n"+getSub_district()+
+                "\n"+getImei_no());
     }
 
     public String getUser_name(){
@@ -157,6 +244,7 @@ public class Person {
     public String getImei_no(){
         return imei_no;
     }
+
     public Bundle getALL(){
         Bundle bundle=new Bundle();
         bundle.putString(Constants.USER_NAME,user_name);
@@ -176,5 +264,41 @@ public class Person {
         bundle.putString(Constants.IMEI_NO,imei_no);
         return bundle;
     }
-
+    public void updatePreferences(Context context){
+        SharedPreferences pref = context.getSharedPreferences("lifeline", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("user_name",user_name);
+        editor.putString("user_pass",user_pass);
+        editor.putString("user_mail",user_mail);
+        editor.putString("name",name);
+        editor.putString("blood_group",blood_group);
+        editor.putString("gender",gender);
+        editor.putString("age",age);
+        editor.putString("hiv_status",hiv_status);
+        editor.putString("address",address);
+        editor.putString("contact_no",contact_no);
+        editor.putString("country",country);
+        editor.putString("state",state);
+        editor.putString("district",district);
+        editor.putString("sub_district",sub_district);
+        editor.putString("imei_no",imei_no);
+        editor.putString("login_status","true");
+        editor.apply();
+        Log.i("***Data Update Pref.***","Person{"+
+                "\n"+pref.getString("user_name",null)+
+                "\n"+pref.getString("user_pass",null)+
+                "\n"+pref.getString("user_mail",null)+
+                "\n"+pref.getString("name",null)+
+                "\n"+pref.getString("blood_group",null)+
+                "\n"+pref.getString("gender",null)+
+                "\n"+pref.getString("age",null)+
+                "\n"+pref.getString("hiv_status",null)+
+                "\n"+pref.getString("address",null)+
+                "\n"+pref.getString("contact_no",null)+
+                "\n"+pref.getString("country",null)+
+                "\n"+pref.getString("state",null)+
+                "\n"+pref.getString("district",null)+
+                "\n"+pref.getString("sub_district",null)+
+                "\n"+pref.getString("imei_no",null));
+    }
 }

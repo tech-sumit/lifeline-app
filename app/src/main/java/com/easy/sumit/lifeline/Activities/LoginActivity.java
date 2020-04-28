@@ -1,6 +1,7 @@
 package com.easy.sumit.lifeline.Activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -8,7 +9,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import com.easy.sumit.lifeline.R;
 import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
@@ -19,7 +19,7 @@ public class LoginActivity extends AppCompatActivity{
     private EditText user_name,user_pass;
     private boolean login_status;
     private String personName="";
-    private ProgressBar progressBar;
+    public ProgressDialog progressDialog;
     private Person person;
 
     @Override
@@ -40,7 +40,9 @@ public class LoginActivity extends AppCompatActivity{
     public void onLogin(View view){
         person.setUser_name(user_name.getText().toString());
         person.setUser_pass(user_pass.getText().toString());
-
+        progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("Authenticating, Please Wait.");
+        progressDialog.show();
         LoginBackgroundWorker loginBackgroundWorker=new LoginBackgroundWorker(this,person);
         loginBackgroundWorker.start();
     }
@@ -50,5 +52,9 @@ public class LoginActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 }

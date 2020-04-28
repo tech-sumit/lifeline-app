@@ -1,5 +1,6 @@
 package com.easy.sumit.lifeline.Fragments;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -14,13 +15,12 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.easy.sumit.lifeline.R;
+import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
 import com.easy.sumit.lifeline.utils.BackgroundWorkers.RemoteDataRetriever;
 import com.easy.sumit.lifeline.utils.BackgroundWorkers.RemoteLocationRetriever;
 import com.easy.sumit.lifeline.utils.Constants;
 
 public class PersonSearchFragment extends Fragment implements View.OnClickListener{
-
-    private String user_name;
 
     public Spinner personBloodGroup;
     private Spinner stateSpinner;
@@ -34,18 +34,15 @@ public class PersonSearchFragment extends Fragment implements View.OnClickListen
     private int d=0;
     private int s=0;
     private int u=0;
+    public ProgressDialog progressDialog;
+    private Person person;
     private RemoteLocationRetriever remoteLocationRetriever;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            user_name = getArguments().getString(Constants.USER_NAME);
-
-        }
-        else{
-            Log.e("ERROR","NO user_name recived as intent argument");
-        }
+        person=new Person();
+        person.setAllByPreferences(getContext());
     }
 
     @Override
@@ -96,13 +93,16 @@ public class PersonSearchFragment extends Fragment implements View.OnClickListen
     public void onClick(View view) {
         RemoteDataRetriever remoteDataRetriever = new RemoteDataRetriever(this);
         Bundle bundle=new Bundle();
-        bundle.putString(Constants.USER_NAME,user_name);
+        bundle.putString(Constants.USER_NAME,person.getUser_name());
         bundle.putString("db_action","2");
         bundle.putString("total_data","4");
         bundle.putString("data"+1,bloodGroup);
         bundle.putString("data"+2,state);
         bundle.putString("data"+3,district);
         bundle.putString("data"+4,sub_district);
+        progressDialog=new ProgressDialog(this.getContext());
+        progressDialog.setMessage("Searching.");
+        progressDialog.show();
         if(!bloodGroup.equals("")) {
             remoteDataRetriever.updateData(bundle);
             remoteDataRetriever.start();
@@ -124,7 +124,7 @@ public class PersonSearchFragment extends Fragment implements View.OnClickListen
             state=stateSpinner.getSelectedItem().toString();
             Log.d("***INFO***","State:"+state);
             Bundle bundle=new Bundle();
-            bundle.putString(Constants.USER_NAME,user_name);
+            bundle.putString(Constants.USER_NAME,person.getUser_name());
             bundle.putString("db_action","1");
             bundle.putString("location_level","2");
             bundle.putString("data",state);
@@ -149,7 +149,7 @@ public class PersonSearchFragment extends Fragment implements View.OnClickListen
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             district=districtSpinner.getSelectedItem().toString();
             Bundle bundle=new Bundle();
-            bundle.putString(Constants.USER_NAME,user_name);
+            bundle.putString(Constants.USER_NAME,person.getUser_name());
             bundle.putString("db_action","1");
             bundle.putString("location_level","3");
             bundle.putString("data",district);

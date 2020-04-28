@@ -1,7 +1,9 @@
 package com.easy.sumit.lifeline.utils;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,10 +19,12 @@ public class ContactHandler {
     private String displayName = "Lifeline";
     private String contact_no = "";
     private Context context;
+    private Activity  activity;
     private ArrayList<ContentProviderOperation> arrayList;
 
-    public ContactHandler(Context context) {
-        this.context = context;
+    public ContactHandler(Activity activity) {
+        this.activity=activity;
+        context=activity.getBaseContext();
     }
 
     public void setContact(String contact_no){
@@ -58,7 +62,7 @@ public class ContactHandler {
         }
         try {
             context.getContentResolver().applyBatch(ContactsContract.AUTHORITY, arrayList);
-            Log.i("CONTACT","ADDED Successfully, "+contact_no);
+            Log.i("**CONTACT","ADDED Successfully, "+contact_no);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,45 +88,19 @@ public class ContactHandler {
         } catch (Exception e) {
             e.getStackTrace();
         }
+        cursor.close();
     }
 
     public void deleteLog() {
-        try{
-            String logKey[] = {contact_no};
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            Cursor cursor = context
-                    .getContentResolver()
-                    .query(CallLog.Calls.CONTENT_URI,
-                            null, CallLog.Calls._ID + " = ? ", logKey, null);
-            boolean bol = cursor.moveToFirst();
-            if (bol) {
-                do {
-                    int idOfRowToDelete = cursor.getInt(cursor.getColumnIndex(CallLog.Calls._ID));
-                    context.getContentResolver().delete(Uri.withAppendedPath(CallLog.Calls.CONTENT_URI,
-                            String.valueOf(idOfRowToDelete)),null,null);
-                } while (cursor.moveToNext());
-            }
-
-            cursor.close();
-        }catch (UnsupportedOperationException e){
-            e.printStackTrace();
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity,
+                    new String[]{Manifest.permission.READ_CALL_LOG}, 1);
         }
+
+        ContentResolver contentResolver = context.getContentResolver();
+        String nameSelector = CallLog.Calls.NUMBER+"="+contact_no;
+        int num_deleted=contentResolver.delete(CallLog.Calls.CONTENT_URI,nameSelector,null);
+        Log.i("**Call Logs affected", "Count: " + num_deleted+"\nnameSelector:"+nameSelector);
     }
-    /*
-    12-29 19:08:54.408 2016-14977/? E/DatabaseUtils: Writing exception to parcel
-     java.lang.UnsupportedOperationException: Cannot delete that URL: content://call_log/calls/8
-         at com.android.providers.contacts.CallLogProvider.delete(CallLogProvider.java:368)
-         at android.content.ContentProvider$Transport.delete(ContentProvider.java:339)
-         at android.content.ContentProviderNative.onTransact(ContentProviderNative.java:206)
-         at android.os.Binder.execTransact(Binder.java:453)
-     */
 }
+

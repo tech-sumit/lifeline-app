@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,7 +39,10 @@ public class RemoteLocationRetriever{
         String url = "http://10.0.2.2:9090/lifeline_app/getLocation.php";
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url,
                 (Response.Listener<String>) response -> initSpinner(spinner,response),
-                (Response.ErrorListener) Throwable::printStackTrace){
+                (Response.ErrorListener) error -> {
+                    error.printStackTrace();
+                    Toast.makeText(activity, "Connection Failed", Toast.LENGTH_LONG).show();
+                }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> stringMap=new HashMap<>();

@@ -1,6 +1,7 @@
 package com.easy.sumit.lifeline.Activities;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ public class RegisterActivity extends AppCompatActivity{
     private EditText person_name, person_age, person_address, person_contact;
     private Spinner person_blood_group, person_gender, person_hiv_status;
     private Person person;
+    public ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +122,9 @@ public class RegisterActivity extends AppCompatActivity{
         person.setContact_no(person_contact.getText().toString());
         person.setImei_no(getIMEI());
         if(Integer.parseInt(person.getAge())>17){
+            progressDialog=new ProgressDialog(this);
+            progressDialog.setMessage("Please wait.");
+            progressDialog.show();
             RegisterBackgroundWorker registerBackgroundWorker = new RegisterBackgroundWorker(this);
             registerBackgroundWorker.updateData(person);
             registerBackgroundWorker.start();

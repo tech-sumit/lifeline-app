@@ -3,6 +3,7 @@ package com.easy.sumit.lifeline.utils.BackgroundWorkers;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -37,26 +38,35 @@ public class LoginBackgroundWorker{
     }
     public void start(){
         StringRequest stringRequest=new StringRequest(Request.Method.POST, login_url, (Response.Listener<String>) response -> {
-            Toast.makeText(loginActivity,response,Toast.LENGTH_LONG).show();
-            if(!response.equals("")){
-                login_status=checkLogin(response);
-                if(login_status){
-                    Intent intent=new Intent(loginActivity,MainActivity.class);
-                    Bundle bundle=new Bundle();
-                    bundle.putString(Constants.USER_NAME,person.getUser_name());
-                    bundle.putString(Constants.NAME,person.getName());
+            loginActivity.progressDialog.dismiss();
+            Toast.makeText(loginActivity, response, Toast.LENGTH_LONG).show();
+            if (!response.equals("")) {
+                login_status = checkLogin(response);
+                if (login_status) {
+                    Intent intent = new Intent(loginActivity, MainActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constants.USER_NAME, person.getUser_name());
+                    bundle.putString(Constants.NAME, person.getName());
+                    bundle.putString("last_activity", "LoginActivity.java");
                     intent.putExtras(bundle);
+                    SharedPreferences sharedPreferences = loginActivity.getSharedPreferences("lifeline",
+                            loginActivity.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("login_status", "true");
+
                     loginActivity.startActivity(intent);
-                    Log.i("LOGIN","Login Success");
+                    Log.i("LOGIN", "Login Success");
+                } else {
+                    Log.i("LOGIN", "Login Failed");
                 }
-                else{
-                    Log.i("LOGIN","Login Failed");
-                }
+            } else {
+                Log.e("Output Exception", "Output String is null : " + response);
             }
-            else{
-                Log.e("Output Exception","Output String is null : "+response);
-            }
-        }, (Response.ErrorListener) Throwable::printStackTrace){
+        }, (Response.ErrorListener) error -> {
+            error.printStackTrace();
+            loginActivity.progressDialog.dismiss();
+            Toast.makeText(loginActivity, "Connection Failed", Toast.LENGTH_LONG).show();
+        }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String ,String > stringMap=new HashMap<>();

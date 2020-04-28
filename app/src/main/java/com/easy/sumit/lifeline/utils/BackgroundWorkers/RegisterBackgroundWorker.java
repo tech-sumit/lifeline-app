@@ -1,7 +1,6 @@
 package com.easy.sumit.lifeline.utils.BackgroundWorkers;
 
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -13,6 +12,7 @@ import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.Activities.LoginActivity;
 import com.easy.sumit.lifeline.Activities.RegisterActivity;
 import com.easy.sumit.lifeline.utils.BackgroundWorkers.DataModal.Person;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,12 +31,16 @@ public class RegisterBackgroundWorker{
     public void start(){
         String url = "http://10.0.2.2:9090/lifeline_app/register.php";
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url, (Response.Listener<String>) response -> {
+            registerActivity.progressDialog.dismiss();
             Toast.makeText(registerActivity,response,Toast.LENGTH_LONG).show();
-            Log.i("Output:",""+response);
             Intent intent = new Intent(registerActivity, LoginActivity.class);
             registerActivity.startActivity(intent);
 
-        }, (Response.ErrorListener) Throwable::printStackTrace){
+        },(Response.ErrorListener) error -> {
+                    error.printStackTrace();
+                    Toast.makeText(registerActivity, "Connection Failed", Toast.LENGTH_LONG).show();
+                })
+        {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> stringMap=new HashMap<>();
@@ -55,6 +59,8 @@ public class RegisterBackgroundWorker{
                 stringMap.put("sub_district",person.getSub_district());
                 stringMap.put("IMEI_NO",person.getImei_no());
 
+                String fID = FirebaseInstanceId.getInstance().getToken();
+                stringMap.put("firebaseID",fID);
                 return stringMap;
             }
         };

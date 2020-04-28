@@ -12,7 +12,6 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.easy.sumit.lifeline.R;
@@ -48,9 +47,7 @@ public class PreRegisterActivity extends AppCompatActivity{
             if(user_pass.getText().toString().equals(user_pass_conf.getText().toString())){
 
                 StringRequest stringRequest=new StringRequest(Request.Method.POST, check_username_url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
+                        (Response.Listener<String>) response -> {
                             if(response.equals("Successful")) {
                                 Toast.makeText(PreRegisterActivity.this,""+response,Toast.LENGTH_LONG).show();
 
@@ -67,14 +64,10 @@ public class PreRegisterActivity extends AppCompatActivity{
                             else{
                                 Snackbar.make(getCurrentFocus(),""+response,Snackbar.LENGTH_SHORT);
                             }
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                        }
-                    }){
+                        },(Response.ErrorListener) error -> {
+                            error.printStackTrace();
+                            Toast.makeText(this, "Connection Failed", Toast.LENGTH_LONG).show();
+                        }){
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
                             Map stringMap=new HashMap<>();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.easy.sumit.lifeline" >
+    package="com.easy.sumit.lifeline">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
@@ -15,8 +15,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".Activities.SplashActivity" >
+        android:theme="@style/AppTheme">
+        <activity android:name=".Activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,19 +24,17 @@
             </intent-filter>
         </activity>
 
-        <!-- Notification Seervices
-        <service android:name="com.easy.sumit.lifeline.utils.Notifiaction.FirebaseMessagingServiceAdapter">
+        <!-- Notification Seervices -->
+        <service android:name=".utils.services.FirebaseMessagingServiceAdapter">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service android:name="com.easy.sumit.lifeline.utils.Notifiaction.FirebaseInstanceIDServiceAdapter">
+        <service android:name=".utils.services.FirebaseInstanceIDServiceAdapter">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        -->
 
         <activity android:name=".Activities.LoginActivity" />
         <activity android:name=".Activities.PreRegisterActivity" />
@@ -46,6 +44,7 @@
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.RegisterLocation" />
+        <!-- This service is only used on devices with API v17+ -->
     </application>
 
 </manifest>
